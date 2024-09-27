@@ -11,14 +11,11 @@ const Developer = ({ animationName = 'idle', ...props}) => {
 
   const { nodes, materials } = useGLTF('/models/animations/developer.glb')
 
-  const { animations: dancingAnimation } = useFBX('/models/animations/silly-dancing.fbx');
 
   const { animations: idleAnimation } = useFBX('/models/animations/idle.fbx');
   const { animations: saluteAnimation } = useFBX('/models/animations/salute.fbx');
   const { animations: clappingAnimation } = useFBX('/models/animations/clapping.fbx');
   const { animations: victoryAnimation } = useFBX('/models/animations/victory.fbx');
-
-  dancingAnimation[0].name = 'dancing'
 
   idleAnimation[0].name = 'idle';
   saluteAnimation[0].name = 'salute';
@@ -26,7 +23,7 @@ const Developer = ({ animationName = 'idle', ...props}) => {
   victoryAnimation[0].name = 'victory';
 
   const { actions } = useAnimations(
-    [dancingAnimation[0], saluteAnimation[0], clappingAnimation[0], victoryAnimation[0]],
+    [ idleAnimation[0], saluteAnimation[0], clappingAnimation[0], victoryAnimation[0]],
     group,
   );
   useEffect( () => {

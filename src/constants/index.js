@@ -211,43 +211,6 @@ export const navLinks = [
         },
       ],
     },
-    {
-      title: 'Imaginify - AI Photo Manipulation App',
-      desc: 'Imaginify is a groundbreaking Software-as-a-Service application that empowers users to create stunning photo manipulations using AI technology. With features like AI-driven image editing, a payments system, and a credits-based model.',
-      subdesc:
-        'Built with Next.js 14, Cloudinary AI, Clerk, and Stripe, Imaginify combines cutting-edge technology with a user-centric approach. It can be turned into a side income or even a full-fledged business.',
-      href: 'https://www.youtube.com/watch?v=Ahwoks_dawU',
-      texture: '/textures/project/project5.mp4',
-      logo: '/assets/project-logo5.png',
-      logoStyle: {
-        backgroundColor: '#1C1A43',
-        border: '0.2px solid #252262',
-        boxShadow: '0px 0px 60px 0px #635BFF4D',
-      },
-      spotlight: '/assets/spotlight5.png',
-      tags: [
-        {
-          id: 1,
-          name: 'React.js',
-          path: '/assets/react.svg',
-        },
-        {
-          id: 2,
-          name: 'TailwindCSS',
-          path: 'assets/tailwindcss.png',
-        },
-        {
-          id: 3,
-          name: 'TypeScript',
-          path: '/assets/typescript.png',
-        },
-        {
-          id: 4,
-          name: 'Framer Motion',
-          path: '/assets/framer.png',
-        },
-      ],
-    },
   ];
   
   export const calculateSizes = (isSmall, isMobile, isTablet) => {
@@ -264,29 +227,29 @@ export const navLinks = [
   export const workExperiences = [
     {
       id: 1,
-      name: 'Framer',
-      pos: 'Lead Web Developer',
-      duration: '2022 - Present',
-      title: "Framer serves as my go-to tool for creating interactive prototypes. I use it to bring designs to  life, allowing stakeholders to experience the user flow and interactions before development.",
-      icon: '/assets/framer.svg',
+      name: 'Mphasis',
+      pos: 'Senior Software Developer',
+      duration: 'Oct, 2023 - Present',
+      title: " Architected and engineered the development of a module from scratch, utilizing cutting edge technologies including JavaScript, React.js, Redux, React-Query and Material-UI, while following the Agile Scrum methodologies to facilitate efficient delivery through sprint planning and execution. Implemented Code Splitting, Lazy Loading, and Memoization techniques, along with React Query to achieve a 20% boost in application performance and response time, enhancing the overall user experience.",
+      icon: '/assets/Mphasis.png',
       animation: 'victory',
     },
     {
       id: 2,
-      name: 'Figma',
-      pos: 'Web Developer',
-      duration: '2020 - 2022',
-      title: "Figma is my collaborative design platform of choice. I utilize it to work seamlessly with team members and clients, facilitating real-time feedback and design iterations. Its cloud-based.",
-      icon: '/assets/figma.svg',
+      name: 'Mphasis',
+      pos: 'Software Developer',
+      duration: 'Sept, 2021 - Oct, 2023',
+      title: "Designed and implemented user-centric interfaces using React.js, Redux and JavaScript, incorporating key features such as routing, dashboard, user management, download manager which was implemented using lazy loading and code splitting techniques, which contributed to a revenue increase of 12k+ Euros for a diverse clientele",
+      icon: '/assets/Mphasis.png',
       animation: 'clapping',
     },
     {
       id: 3,
-      name: 'Notion',
-      pos: 'Junior Web Developer',
-      duration: '2019 - 2020',
-      title: "Notion helps me keep my projects organized. I use it for project management, task tracking, and as a central hub for documentation, ensuring that everything from design notes to.",
-      icon: '/assets/notion.svg',
+      name: 'Hermitcrabs Inc',
+      pos: 'Web Developer intern',
+      duration: 'Feb, 2021 - May, 2021',
+      title: "Contributed to various web development projects, optimizing websites for faster loading and implementing SEO strategies to improve organic search visibility. Gained hands-on experience with industry standard HubSpot, CMS and plugins, streamlining website development process.",
+      icon: '/assets/hermit.jfif',
       animation: 'salute',
     },
   ];
