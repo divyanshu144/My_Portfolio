@@ -30,7 +30,7 @@ const Contact = () => {
                     from_name: form.name,       // Sender's name
                     to_name: 'Divyanshu Charak', // Receiver's name
                     from_email: form.email,     // Sender's email
-                    to_email: 'divyanshucharak14@gmail.com', // Receiver's email
+                    to_email: 'divyanshucharak1407@gmail.com', // Receiver's email
                     message: form.message       // Message content
                 },
                 'HvkIJyo2oMNIiGQTa' // Public Key
@@ -63,7 +63,7 @@ const Contact = () => {
             <div className="contact-container">
             <h3 className="head-text">Contact Me</h3>
             <p className="text=lg text-white-600 mt-3">
-                Whether you're looking to build a new website, improve your existing platform, or bring a unique project to life, I'm here to help.
+                Open to data science and software engineering opportunities, research collaborations, and impactful projects.
             </p>
 
             <form ref={formRef} onSubmit={handleSubmit} className="mt-12 flex flex-col space-y-7">

@@ -31,14 +31,14 @@ const Footer = () => {
             <div className="social-icon">
                 <a
                 className="flex items-center gap-2 cursor-pointer text-white-600"
-                href="https://www.instagram.com/divyanshu_charak/"
+                href="mailto:divyanshucharak1407@gmail.com"
                 target="_blank"
                 rel="noreferrer">
                     <img src="/assets/instagram.svg" alt="instagram" className="w-8 h-8" />
                 </a>
             </div>
         </div>
-        <p className="text-white-500">@ 2024 Divyanshu. All rights reserved</p>
+        <p className="text-white-500">@ 2026 Divyanshu. All rights reserved</p>
     </section>
   )
 }

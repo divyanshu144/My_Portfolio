@@ -56,162 +56,119 @@ export const navLinks = [
     },
   ];
   
-  export const myProjects = [
-    {
-      title: 'Fooder: A Restaurant Discovery and Online Ordering Web App',
-      desc: 'Fooder is a web application that allows users to seamlessly sign in or register, browse a curated list of nearby restaurants, and explore detailed menus for each establishment. The app also enables users to add items to their cart and place orders online, making dining convenient and enjoyable. Through its user-friendly interface, Fooder simplifies the restaurant discovery and online ordering experience.',
-      subdesc:
-        'Built as a unique web app with React.js, Redux, Tailwind CSS, TypeScript, and Firebase, Fooder is designed for optimal performance and scalability.',
-      href: 'https://fooder-two.vercel.app/',
-      texture: '/textures/project/Fooder.mp4',
-      logo: '/assets/project-logo1.png',
-      logoStyle: {
-        backgroundColor: '#2A1816',
-        border: '0.2px solid #36201D',
-        boxShadow: '0px 0px 60px 0px #AA3C304D',
-      },
-      spotlight: '/assets/spotlight1.png',
-      tags: [
-        {
-          id: 1,
-          name: 'React.js',
-          path: '/assets/react.svg',
-        },
-        {
-          id: 2,
-          name: 'TailwindCSS',
-          path: 'assets/tailwindcss.png',
-        },
-        {
-          id: 3,
-          name: 'TypeScript',
-          path: '/assets/typescript.png',
-        },
-        {
-          id: 4,
-          name: 'Redux',
-          path: '/assets/redux.png',
-        },
-      ],
+export const myProjects = [
+  {
+    title: 'Fooder: Restaurant Discovery and Online Ordering',
+    desc: 'Fooder lets users sign in, browse nearby restaurants, explore menus, and place orders online through a clean, responsive experience.',
+    subdesc:
+      'Built with React.js, Redux, Tailwind CSS, TypeScript, and Firebase for authentication and scalable performance.',
+    href: 'https://github.com/divyanshu144/Fooder',
+    texture: '/textures/project/Fooder.mp4',
+    logo: '/assets/project-logo1.png',
+    logoStyle: {
+      backgroundColor: '#2A1816',
+      border: '0.2px solid #36201D',
+      boxShadow: '0px 0px 60px 0px #AA3C304D',
     },
-    {
-      title: 'Anonymous : Post Messages Anonymously',
-      desc: 'I have developed an anonymous web application where users can post messages without revealing their identity. The app integrates OpenAI API to provide message suggestions, enhancing the user experience. User authentication is implemented using NextAuth for secure and seamless login. Built with modern technologies like Next.js, React.js, Shadcn-UI, Tailwind CSS, and MongoDB, this web app offers both a clean design and a smooth, privacy-focused messaging platform.',
-      subdesc:
-        'Built with Next.js and React.js for seamless UI, Shadcn-UI and Tailwind CSS for modern design, and MongoDB for data storage. NextAuth handles secure authentication, while OpenAI API powers intelligent message suggestions.',
-      href: 'https://github.com/divyanshu144/True-feedback',
-      texture: '/textures/project/anonymous.mp4',
-      logo: '/assets/project-logo2.png',
-      logoStyle: {
-        backgroundColor: '#13202F',
-        border: '0.2px solid #17293E',
-        boxShadow: '0px 0px 60px 0px #2F6DB54D',
+    spotlight: '/assets/spotlight1.png',
+    tags: [
+      {
+        id: 1,
+        name: 'React.js',
+        path: '/assets/react.svg',
       },
-      spotlight: '/assets/spotlight2.png',
-      tags: [
-        {
-          id: 1,
-          name: 'Next.js',
-          path: '/assets/nextjs.png',
-        },
-        {
-          id: 2,
-          name: 'TailwindCSS',
-          path: 'assets/tailwindcss.png',
-        },
-        {
-          id: 3,
-          name: 'TypeScript',
-          path: '/assets/typescript.png',
-        },
-        {
-          id: 4,
-          name: 'Redux',
-          path: '/assets/redux.png',
-        },
-        {
-          id: 5,
-          name: 'MongoDB',
-          path: '/assets/mongodb.png',
-        },
-      ],
-    },
-    {
-      title: 'movieTime - Online Movie Streaming Web App',
-      desc: 'I developed an online movie streaming web app that leverages the TMDB API to display a vast collection of movies. Users must log in to access the movie library, which is organized into multiple categories for easy navigation. Additionally, users can watch movie trailers directly on the platform, enhancing the browsing experience.',
-      subdesc: 'Developed with React.js, Redux for state management, and Tailwind CSS for a responsive design. Firebase is used for secure user authentication, and the TMDB API powers the movie collection and trailer features.',
-      href: 'https://movie-time-olive-seven.vercel.app/',
-      texture: '/textures/project/movieTime.mp4',
-      logo: '/assets/movie-logo.jpg',
-      logoStyle: {
-        backgroundColor: '#60f5a1',
-        background:
-          'linear-gradient(0deg, #60F5A150, #60F5A150), linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(208, 213, 221, 0.8) 100%)',
-        border: '0.2px solid rgba(208, 213, 221, 1)',
-        boxShadow: '0px 0px 60px 0px rgba(35, 131, 96, 0.3)',
+      {
+        id: 2,
+        name: 'TailwindCSS',
+        path: 'assets/tailwindcss.png',
       },
-      spotlight: '/assets/spotlight3.png',
-      tags: [
-        {
-          id: 1,
-          name: 'React.js',
-          path: '/assets/react.svg',
-        },
-        {
-          id: 2,
-          name: 'TailwindCSS',
-          path: 'assets/tailwindcss.png',
-        },
-        {
-          id: 3,
-          name: 'TypeScript',
-          path: '/assets/typescript.png',
-        },
-        {
-          id: 4,
-          name: 'Redux',
-          path: '/assets/redux.png',
-        },
-      ],
-    },
-    {
-      title: 'MusicLearners: Online Learning Platform for Aspiring Musicians',
-      desc: 'MusicLearners an online web app designed for music learners to explore a variety of available courses. This project showcases the integration of Aceternity-UI, utilizing its features to enhance the user interface and overall user experience. Through this platform, aspiring musicians can easily discover and enroll in courses to advance their musical journey.',
-      subdesc:
-        'Built with Next.js for a dynamic user experience, Aceternity-UI for sleek and modern UI components, and JavaScript to power the apps functionality and interactivity.',
-      href: 'https://music-school-five-pi.vercel.app/',
-      texture: '/textures/project/music.mp4',
-      logo: '/assets/project-logo4.png',
-      logoStyle: {
-        backgroundColor: '#0E1F38',
-        border: '0.2px solid #0E2D58',
-        boxShadow: '0px 0px 60px 0px #2F67B64D',
+      {
+        id: 3,
+        name: 'TypeScript',
+        path: '/assets/typescript.png',
       },
-      spotlight: '/assets/spotlight4.png',
-      tags: [
-        {
-          id: 1,
-          name: 'Next.js',
-          path: '/assets/nextjs.png',
-        },
-        {
-          id: 2,
-          name: 'TailwindCSS',
-          path: 'assets/tailwindcss.png',
-        },
-        {
-          id: 3,
-          name: 'TypeScript',
-          path: '/assets/typescript.png',
-        },
-        {
-          id: 4,
-          name: 'Aceternity - UI',
-          path: '/assets/aceternity.png',
-        },
-      ],
+      {
+        id: 4,
+        name: 'Redux',
+        path: '/assets/redux.png',
+      },
+      {
+        id: 5,
+        name: 'SQL',
+        path: '/assets/sql.png',
+      },
+    ],
+  },
+  {
+    title: 'Lumen-flow: ClientOps Workflow Engine',
+    desc: 'An intelligent ClientOps engine that turns chat intent into workflows: detect, draft, approve, and advance.',
+    subdesc:
+      'Designed to route intent through a structured automation pipeline for faster client operations.',
+    href: 'https://github.com/divyanshu144/Lumen-flow',
+    texture: '/textures/project/anonymous.mp4',
+    logo: '/assets/project-logo2.png',
+    logoStyle: {
+      backgroundColor: '#13202F',
+      border: '0.2px solid #17293E',
+      boxShadow: '0px 0px 60px 0px #2F6DB54D',
     },
-  ];
+    spotlight: '/assets/spotlight2.png',
+    tags: [
+      {
+        id: 1,
+        name: 'ClientOps',
+        path: '/assets/git.png',
+      },
+      {
+        id: 2,
+        name: 'Automation',
+        path: '/assets/docker.png',
+      },
+      {
+        id: 3,
+        name: 'Workflow',
+        path: '/assets/nodejs.png',
+      },
+    ],
+  },
+  {
+    title: 'MSc Dissertation: UK Housing Energy Performance (EPC)',
+    desc: 'Analysed 1.8M UK EPC records to study long-term trends in SAP scores, CO2 emissions, and EPC bands.',
+    subdesc:
+      'Built scalable data pipelines, applied fixed-effects regression for policy-era analysis, and evaluated ML models for predictive performance.',
+    href: 'https://github.com/divyanshu144?tab=repositories',
+    texture: '/textures/project/music.mp4',
+    logo: '/assets/project-logo4.png',
+    logoStyle: {
+      backgroundColor: '#0E1F38',
+      border: '0.2px solid #0E2D58',
+      boxShadow: '0px 0px 60px 0px #2F67B64D',
+    },
+    spotlight: '/assets/spotlight4.png',
+    tags: [
+      {
+        id: 1,
+        name: 'Python',
+        path: '/assets/sql.png',
+      },
+      {
+        id: 2,
+        name: 'SQL',
+        path: '/assets/sql.png',
+      },
+      {
+        id: 3,
+        name: 'Statistical Modelling',
+        path: '/assets/git.png',
+      },
+      {
+        id: 4,
+        name: 'Machine Learning',
+        path: '/assets/docker.png',
+      },
+    ],
+  },
+];
   
   export const calculateSizes = (isSmall, isMobile, isTablet) => {
     return {
@@ -224,32 +181,15 @@ export const navLinks = [
     };
   };
   
-  export const workExperiences = [
-    {
-      id: 1,
-      name: 'Mphasis',
-      pos: 'Senior Software Developer',
-      duration: 'Oct, 2023 - Present',
-      title: " Architected and engineered the development of a module from scratch, utilizing cutting edge technologies including JavaScript, React.js, Redux, React-Query and Material-UI, while following the Agile Scrum methodologies to facilitate efficient delivery through sprint planning and execution. Implemented Code Splitting, Lazy Loading, and Memoization techniques, along with React Query to achieve a 20% boost in application performance and response time, enhancing the overall user experience.",
-      icon: '/assets/Mphasis.png',
-      animation: 'victory',
-    },
-    {
-      id: 2,
-      name: 'Mphasis',
-      pos: 'Software Developer',
-      duration: 'Sept, 2021 - Oct, 2023',
-      title: "Designed and implemented user-centric interfaces using React.js, Redux and JavaScript, incorporating key features such as routing, dashboard, user management, download manager which was implemented using lazy loading and code splitting techniques, which contributed to a revenue increase of 12k+ Euros for a diverse clientele",
-      icon: '/assets/Mphasis.png',
-      animation: 'clapping',
-    },
-    {
-      id: 3,
-      name: 'Hermitcrabs Inc',
-      pos: 'Web Developer intern',
-      duration: 'Feb, 2021 - May, 2021',
-      title: "Contributed to various web development projects, optimizing websites for faster loading and implementing SEO strategies to improve organic search visibility. Gained hands-on experience with industry standard HubSpot, CMS and plugins, streamlining website development process.",
-      icon: '/assets/hermit.jfif',
-      animation: 'salute',
-    },
+export const workExperiences = [
+  {
+    id: 1,
+    name: 'Mphasis',
+    pos: 'Software Engineer',
+    duration: 'Sept, 2021 - Sept, 2024',
+    title:
+      'Developed and maintained enterprise-scale web applications using React.js and Redux, built modular components integrated with backend APIs and SQL databases, optimized queries, and resolved data-exchange issues. Collaborated with backend, QA, and product teams in Agile Scrum and took ownership of a full application module end-to-end.',
+    icon: '/assets/Mphasis.png',
+    animation: 'victory',
+  },
   ];

@@ -8,7 +8,7 @@ const About = () => {
   const [hasCopied, setHasCopied] = useState(false);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(' divyanshucharak14@gmail.com');
+    navigator.clipboard.writeText('divyanshucharak1407@gmail.com');
     setHasCopied(true);
 
     setTimeout(() => {
@@ -26,8 +26,9 @@ const About = () => {
             <div>
               <p className="grid-headtext">Hi, I’m Divyanshu Charak</p>
               <p className="grid-subtext">
-                With 2+ years of experience, I have honed my skills in both frontend and backend dev, creating dynamic
-                and responsive websites.
+                MSc Statistical Data Science candidate at the University of Exeter with a background in software
+                engineering and data-driven product development. Received the Kudos & Fearless Award at Mphasis and
+                mentor undergraduates in Python and data structures.
               </p>
             </div>
           </div>
@@ -38,10 +39,10 @@ const About = () => {
             <img src="assets/techstack.png" alt="grid-2" className="w-full sm:h-[276px] h-fit object-contain rounded-lg" />
 
             <div>
-              <p className="grid-headtext">Tech Stack</p>
+              <p className="grid-headtext">Technical Skills</p>
               <p className="grid-subtext">
-                I specialize in a variety of languages, frameworks, and tools that allow me to build robust and scalable
-                applications
+                Python, R, SQL, C/C++, pandas, NumPy, scikit-learn, Power BI, Tableau, Streamlit, React.js, REST APIs,
+                Git, Docker, and Agile Scrum.
               </p>
             </div>
           </div>
@@ -62,8 +63,8 @@ const About = () => {
               />
             </div>
             <div>
-              <p className="grid-headtext">I’m very flexible with time zone communications & locations</p>
-              <p className="grid-subtext">I&apos;m based in Bangalore, India and open to remote work worldwide.</p>
+              <p className="grid-headtext">Flexible with time zones & locations</p>
+              <p className="grid-subtext">Based in Exeter, UK and open to remote work worldwide.</p>
               <Button name="Contact Me" isBeam containerClass="w-full mt-10" />
             </div>
           </div>
@@ -74,10 +75,10 @@ const About = () => {
             <img src="assets/grid3.png" alt="grid-3" className="w-full sm:h-[266px] h-fit object-contain" />
 
             <div>
-              <p className="grid-headtext">My Passion for Coding</p>
+              <p className="grid-headtext">Education</p>
               <p className="grid-subtext">
-                I love solving problems and building things through code. Programming isn&apos;t just my
-                profession—it&apos;s my passion. I enjoy exploring new technologies, and enhancing my skills.
+                University of Exeter, UK — MSc Statistical Data Science (Expected Jan 2026).
+                PES University, Bangalore — BE Computer Science & Engineering (Jul 2021), GPA 8/10.
               </p>
             </div>
           </div>
@@ -95,8 +96,9 @@ const About = () => {
               <p className="grid-subtext text-center">Contact me</p>
               <div className="copy-container" onClick={handleCopy}>
                 <img src={hasCopied ? 'assets/tick.svg' : 'assets/copy.svg'} alt="copy" />
-                <p className="lg:text-xl md:text-md font-medium text-gray_gradient text-white">divyanshucharak14@gmail.com</p>
+                <p className="lg:text-xl md:text-md font-medium text-gray_gradient text-white">divyanshucharak1407@gmail.com</p>
               </div>
+              <p className="grid-subtext text-center">+44 7407 103 440</p>
             </div>
           </div>
         </div>
