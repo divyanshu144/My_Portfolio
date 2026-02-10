@@ -18,38 +18,55 @@ const About = () => {
 
   return (
     <section className="c-space my-20" id="about">
-      <div className="grid xl:grid-cols-3 xl:grid-rows-6 md:grid-cols-2 grid-cols-1 gap-5 h-full">
+      <div className="about-masonry">
         <div className="col-span-1 xl:row-span-3">
-          <div className="grid-container">
-            <img src="assets/grid1.png" alt="grid-1" className="w-full sm:h-[276px] h-fit object-contain" />
-
-            <div>
-              <p className="grid-headtext">Hi, I’m Divyanshu Charak</p>
-              <p className="grid-subtext">
-                MSc Statistical Data Science candidate at the University of Exeter with a background in software
-                engineering and data-driven product development. Received the Kudos & Fearless Award at Mphasis and
-                mentor undergraduates in Python and data structures.
+          <div className="about-card about-card_compact">
+            <div className="about-media">
+              <img src="assets/grid1.png" alt="profile highlight" className="about-image" />
+            </div>
+            <div className="space-y-3">
+              <p className="about-kicker">About</p>
+              <p className="about-heading">Divyanshu Charak</p>
+              <p className="about-body">
+                MSc Statistical Data Science candidate at the University of Exeter with 3+ years of experience in
+                software engineering. I build scalable, data-driven web applications and enjoy turning complex
+                requirements into clear, reliable products.
               </p>
+              <div className="about-meta">Exeter, UK · Open to remote</div>
             </div>
           </div>
         </div>
 
         <div className="col-span-1 xl:row-span-3">
-          <div className="grid-container">
-            <img src="assets/techstack.png" alt="grid-2" className="w-full sm:h-[276px] h-fit object-contain rounded-lg" />
-
-            <div>
-              <p className="grid-headtext">Technical Skills</p>
-              <p className="grid-subtext">
-                Python, R, SQL, C/C++, pandas, NumPy, scikit-learn, Power BI, Tableau, Streamlit, React.js, REST APIs,
-                Git, Docker, and Agile Scrum.
+          <div className="about-card about-card_compact">
+            <div className="about-media">
+              <img src="assets/techstack.png" alt="tech stack" className="about-image" />
+            </div>
+            <div className="space-y-3">
+              <p className="about-kicker">Technical Strengths</p>
+              <p className="about-heading">Engineering + Data</p>
+              <p className="about-body">
+                Strengths in React.js, Redux, React Query, JavaScript, SQL, and REST APIs, plus Python, pandas, NumPy,
+                scikit-learn, and Streamlit for analytics, with PostgreSQL for data storage and querying.
               </p>
+              <div className="about-chips">
+                <span className="about-chip">React.js</span>
+                <span className="about-chip">Redux</span>
+                <span className="about-chip">React Query</span>
+                <span className="about-chip">JavaScript</span>
+                <span className="about-chip">Python</span>
+                <span className="about-chip">Streamlit</span>
+                <span className="about-chip">Docker</span>
+                <span className="about-chip">Git</span>
+                <span className="about-chip">PostgreSQL</span>
+                <span className="about-chip">C/C++</span>
+              </div>
             </div>
           </div>
         </div>
 
         <div className="col-span-1 xl:row-span-4">
-          <div className="grid-container">
+          <div className="about-card about-card_compact">
             <div className="rounded-3xl w-full sm:h-[326px] h-fit flex justify-center items-center">
               <Globe
                 height={326}
@@ -62,43 +79,71 @@ const About = () => {
                 bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
               />
             </div>
-            <div>
-              <p className="grid-headtext">Flexible with time zones & locations</p>
-              <p className="grid-subtext">Based in Exeter, UK and open to remote work worldwide.</p>
-              <Button name="Contact Me" isBeam containerClass="w-full mt-10" />
+            <div className="space-y-3">
+              <p className="about-kicker">Availability</p>
+              <p className="about-heading">Flexible across time zones</p>
+              <p className="about-body">Based in Exeter, UK and open to remote work worldwide.</p>
+              <Button name="Contact Me" isBeam containerClass="w-full mt-6" />
             </div>
           </div>
         </div>
 
-        <div className="xl:col-span-2 xl:row-span-3">
-          <div className="grid-container">
-            <img src="assets/grid3.png" alt="grid-3" className="w-full sm:h-[266px] h-fit object-contain" />
-
-            <div>
-              <p className="grid-headtext">Education</p>
-              <p className="grid-subtext">
-                University of Exeter, UK — MSc Statistical Data Science (Expected Jan 2026).
-                PES University, Bangalore — BE Computer Science & Engineering (Jul 2021), GPA 8/10.
+        <div>
+          <div className="about-card about-card_compact">
+            <div className="space-y-3">
+              <p className="about-kicker">Beyond Work</p>
+              <p className="about-heading">Free time</p>
+              <p className="about-body">
+                I work part-time as a barista at Starbucks and unwind with table tennis, badminton, reading, running,
+                gym sessions, and cycling.
               </p>
             </div>
           </div>
         </div>
 
-        <div className="xl:col-span-1 xl:row-span-2">
-          <div className="grid-container">
-            <img
-              src="assets/grid4.png"
-              alt="grid-4"
-              className="w-full md:h-[126px] sm:h-[276px] h-fit object-cover sm:object-top"
-            />
+        <div>
+          <div className="about-card about-card_compact">
+            <div className="about-media">
+              <img src="assets/grid3.png" alt="education" className="about-image" />
+            </div>
+            <div className="space-y-3">
+              <p className="about-kicker">Education</p>
+              <p className="about-heading">Academic focus</p>
+              <div className="about-list">
+                <div className="about-list_item">
+                  <p className="about-body">
+                    University of Exeter — MSc Statistical Data Science
+                  </p>
+                  <p className="about-meta">Jan 2025 - Jan 2026</p>
+                </div>
+                <div className="about-divider" />
+                <div className="about-list_item">
+                  <p className="about-body">PES University — BTech Computer Science</p>
+                  <p className="about-meta">2017 - 2021 · Grade 8/10</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-            <div className="space-y-2">
-              <p className="grid-subtext text-center">Contact me</p>
+        <div>
+          <div className="about-card">
+            <div className="about-media">
+              <img src="assets/grid4.png" alt="leadership" className="about-image object-cover" />
+            </div>
+            <div className="space-y-3">
+              <p className="about-kicker">Leadership</p>
+              <p className="about-heading">Ownership & collaboration</p>
+              <ul className="about-list">
+                <li className="about-body">Owned modules end-to-end and shipped production features.</li>
+                <li className="about-body">Partnered with QA, backend, and DB for integration quality.</li>
+                <li className="about-body">Mentored teammates and supported delivery planning.</li>
+              </ul>
               <div className="copy-container" onClick={handleCopy}>
                 <img src={hasCopied ? 'assets/tick.svg' : 'assets/copy.svg'} alt="copy" />
                 <p className="lg:text-xl md:text-md font-medium text-gray_gradient text-white">divyanshucharak1407@gmail.com</p>
               </div>
-              <p className="grid-subtext text-center">+44 7407 103 440</p>
+              <p className="about-meta text-center">+44 7407 103 440</p>
             </div>
           </div>
         </div>

@@ -34,8 +34,8 @@ const Experience = () => {
                 <div
                   key={index}
                   onClick={() => setAnimationName(item.animation.toLowerCase())}
-                  onPointerOver={() => setAnimationName(item.animation.toLowerCase())}
-                  onPointerOut={() => setAnimationName('idle')}
+                  onPointerEnter={() => setAnimationName(item.animation.toLowerCase())}
+                  onPointerLeave={() => setAnimationName('idle')}
                   className="work-content_container group">
                   <div className="flex flex-col h-full justify-start items-center py-2">
                     <div className="work-content_logo">

@@ -105,7 +105,7 @@ export const myProjects = [
     subdesc:
       'Designed to route intent through a structured automation pipeline for faster client operations.',
     href: 'https://github.com/divyanshu144/Lumen-flow',
-    texture: '/textures/project/anonymous.mp4',
+    texture: '/textures/project/project5.mp4',
     logo: '/assets/project-logo2.png',
     logoStyle: {
       backgroundColor: '#13202F',
@@ -137,7 +137,7 @@ export const myProjects = [
     subdesc:
       'Built scalable data pipelines, applied fixed-effects regression for policy-era analysis, and evaluated ML models for predictive performance.',
     href: 'https://github.com/divyanshu144?tab=repositories',
-    texture: '/textures/project/music.mp4',
+    texture: '/textures/project/project4.mp4',
     logo: '/assets/project-logo4.png',
     logoStyle: {
       backgroundColor: '#0E1F38',
@@ -185,11 +185,31 @@ export const workExperiences = [
   {
     id: 1,
     name: 'Mphasis',
-    pos: 'Software Engineer',
-    duration: 'Sept, 2021 - Sept, 2024',
+    pos: 'Senior Software Engineer',
+    duration: 'Oct, 2023 - Dec, 2024',
     title:
-      'Developed and maintained enterprise-scale web applications using React.js and Redux, built modular components integrated with backend APIs and SQL databases, optimized queries, and resolved data-exchange issues. Collaborated with backend, QA, and product teams in Agile Scrum and took ownership of a full application module end-to-end.',
+      'Architected and delivered a module from scratch using JavaScript, React.js, Redux, React Query, and Material-UI in Agile Scrum. Implemented code splitting, lazy loading, and memoization with React Query to boost performance and response time by 20%. Owned features end-to-end and collaborated with QA, backend, and DB teams for seamless integration.',
     icon: '/assets/Mphasis.png',
     animation: 'victory',
+  },
+  {
+    id: 2,
+    name: 'Mphasis',
+    pos: 'Software Engineer',
+    duration: 'Sep, 2021 - Sep, 2023',
+    title:
+      'Designed and implemented user-centric interfaces using React.js, Redux, and JavaScript for routing, dashboards, user management, and download workflows. Improved responsiveness by resolving state-management analytics and event-driven issues, contributing to a €12k+ revenue increase for clients.',
+    icon: '/assets/Mphasis.png',
+    animation: 'clapping',
+  },
+  {
+    id: 3,
+    name: 'Hermitcrabs',
+    pos: 'Web Developer Intern',
+    duration: 'Feb, 2021 - Apr, 2021',
+    title:
+      'Supported CMS-driven web builds and front-end enhancements for B2B marketing sites, with a focus on CSS and JavaScript for rapid iteration and page performance.',
+    icon: '/assets/hermit.jfif',
+    animation: 'salute',
   },
   ];
