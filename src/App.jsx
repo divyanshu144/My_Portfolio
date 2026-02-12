@@ -6,6 +6,7 @@ import Projects from './sections/Projects'
 import Contact from './sections/Contact'
 import Footer from './sections/Footer'
 import Experience from './sections/Experience'
+import AIAssistant from './components/AIAssistant'
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
       <br/>
       <br/>
       <Footer/>
+      <AIAssistant />
    </main>
   )
 }

@@ -1,0 +1,84 @@
+{
+  "name": "Divyanshu Charak",
+  "location": "Exeter, UK",
+  "contact": {
+    "email": "divyanshucharak1407@gmail.com",
+    "phone": "+44 7407 103 440",
+    "linkedin": "https://www.linkedin.com/in/divyanshu-charak-a1820516a/",
+    "github": "https://github.com/divyanshu144"
+  },
+  "summary": "MSc Statistical Data Science candidate at the University of Exeter with 3+ years of software engineering experience building scalable, data-driven web applications.",
+  "skills": {
+    "engineering": ["JavaScript", "React.js", "Redux", "React Query", "REST APIs", "SQL", "Git", "Docker"],
+    "data": ["Python", "pandas", "NumPy", "scikit-learn", "Streamlit", "PostgreSQL", "C/C++"]
+  },
+  "education": [
+    {
+      "institution": "University of Exeter",
+      "degree": "MSc Statistical Data Science",
+      "dates": "Jan 2025 - Jan 2026"
+    },
+    {
+      "institution": "PES University",
+      "degree": "BTech Computer Science",
+      "dates": "2017 - 2021",
+      "grade": "8/10"
+    }
+  ],
+  "experience": [
+    {
+      "company": "Mphasis",
+      "title": "Senior Software Engineer",
+      "dates": "Oct 2023 - Dec 2024",
+      "highlights": [
+        "Architected and delivered a module from scratch using JavaScript, React.js, Redux, React Query, and Material-UI in Agile Scrum.",
+        "Implemented code splitting, lazy loading, and memoization with React Query to improve performance and response time by 20%.",
+        "Owned features end-to-end and collaborated with QA, backend, and DB teams for seamless integration."
+      ]
+    },
+    {
+      "company": "Mphasis",
+      "title": "Software Engineer",
+      "dates": "Sep 2021 - Sep 2023",
+      "highlights": [
+        "Designed and implemented user-centric interfaces using React.js, Redux, and JavaScript for routing, dashboards, user management, and download workflows.",
+        "Resolved state-management analytics and event-driven issues, contributing to a €12k+ revenue increase for clients."
+      ]
+    },
+    {
+      "company": "Hermitcrabs",
+      "title": "Web Developer Intern",
+      "dates": "Feb 2021 - Apr 2021",
+      "highlights": [
+        "Supported CMS-driven web builds and front-end enhancements for B2B marketing sites.",
+        "Focused on CSS and JavaScript for rapid iteration and page performance."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Fooder",
+      "repo": "https://github.com/divyanshu144/Fooder",
+      "summary": "Restaurant discovery and online ordering web app with authentication, menus, and cart/checkout.",
+      "tech": ["React.js", "Redux", "Tailwind CSS", "TypeScript", "Firebase"]
+    },
+    {
+      "name": "Lumen-flow",
+      "repo": "https://github.com/divyanshu144/Lumen-flow",
+      "summary": "ClientOps workflow engine that turns chat intent into detect → draft → approve → advance workflows.",
+      "tech": ["Automation", "Workflow", "ClientOps"]
+    },
+    {
+      "name": "UK Housing Energy Performance (EPC)",
+      "repo": "https://github.com/divyanshu144",
+      "summary": "MSc dissertation analyzing 1.8M EPC records for energy efficiency trends, policy impacts, and predictive modeling.",
+      "tech": ["Python", "SQL", "Statistical Modeling", "Machine Learning"]
+    }
+  ],
+  "leadership": [
+    "Owned modules end-to-end and shipped production features.",
+    "Partnered with QA, backend, and DB teams for integration quality.",
+    "Mentored teammates and supported delivery planning."
+  ],
+  "freeTime": ["Barista at Starbucks", "Table tennis", "Badminton", "Reading", "Running", "Gym", "Cycling"]
+}

@@ -212,6 +212,79 @@ body {
   .social-icon {
     @apply w-12 h-12 rounded-full flex justify-center items-center bg-black-300 border border-black-200;
   }
+
+  /* AI assistant */
+  .ai-fab {
+    @apply fixed bottom-6 right-6 z-50 px-4 py-2 rounded-full bg-white text-black font-semibold shadow-lg;
+  }
+
+  .ai-modal {
+    @apply fixed inset-0 z-50 flex items-center justify-center;
+  }
+
+  .ai-modal_overlay {
+    @apply absolute inset-0 bg-black/70 backdrop-blur-sm;
+  }
+
+  .ai-modal_panel {
+    @apply relative z-10 w-[92%] max-w-3xl bg-black-200 border border-black-300 rounded-2xl shadow-2xl p-6;
+  }
+
+  .ai-modal_header {
+    @apply flex items-center justify-between gap-4;
+  }
+
+  .ai-modal_title {
+    @apply text-xl font-semibold text-white;
+  }
+
+  .ai-modal_subtitle {
+    @apply text-sm text-white-500;
+  }
+
+  .ai-close {
+    @apply text-sm text-white-500 hover:text-white transition-colors;
+  }
+
+  .ai-tabs {
+    @apply flex gap-2 mt-5 flex-wrap;
+  }
+
+  .ai-tab {
+    @apply px-3 py-1 rounded-full border border-black-300 text-white-500 text-sm hover:text-white transition-colors;
+  }
+
+  .ai-tab_active {
+    @apply bg-white text-black border-white;
+  }
+
+  .ai-body {
+    @apply mt-5;
+  }
+
+  .ai-form {
+    @apply flex flex-col gap-3;
+  }
+
+  .ai-label {
+    @apply text-sm text-white-500;
+  }
+
+  .ai-input {
+    @apply w-full bg-black-300 border border-black-300 rounded-lg px-3 py-2 text-white;
+  }
+
+  .ai-btn {
+    @apply mt-2 bg-white text-black font-semibold px-4 py-2 rounded-lg w-fit;
+  }
+
+  .ai-output {
+    @apply mt-5;
+  }
+
+  .ai-output_box {
+    @apply w-full bg-black-300 border border-black-300 rounded-lg p-3 text-white whitespace-pre-wrap text-sm min-h-24;
+  }
 }
 
 .waving-hand {
