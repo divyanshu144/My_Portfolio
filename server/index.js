@@ -4,6 +4,9 @@ import cors from 'cors';
 import OpenAI from 'openai';
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 const port = process.env.PORT || 8787;
@@ -174,6 +177,14 @@ Generate:
     res.status(500).json({ error: 'Failed to generate interview coaching.' });
   }
 });
+
+if (process.env.NODE_ENV === 'production') {
+  const distPath = path.join(__dirname, '..', 'dist');
+  app.use(express.static(distPath));
+  app.get('*', (_req, res) => {
+    res.sendFile(path.join(distPath, 'index.html'));
+  });
+}
 
 app.listen(port, () => {
   console.log(`AI server running on http://localhost:${port}`);

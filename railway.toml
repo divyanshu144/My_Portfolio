@@ -1,0 +1,10 @@
+[build]
+builder = "nixpacks"
+buildCommand = "npm run build"
+
+[deploy]
+startCommand = "node server/index.js"
+restartPolicyType = "on_failure"
+
+[environments.production.variables]
+NODE_ENV = "production"
