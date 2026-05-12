@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { navLinks } from '../constants'
 
 const NavItems = () => {
@@ -24,7 +24,7 @@ const Navbar = () => {
     setIsOpen( (prevIsOpen) => !prevIsOpen)
   }
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-black/90">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md border-b border-white/5">
         <div className="max-w-7xl mx-auto">
             <div className="flex justify-between items-center py-5 mx-auto c-space">
                 <a href="/" className="text-neutral-400 font-bold text-xl hover:text-white transition-colors">
@@ -37,8 +37,16 @@ const Navbar = () => {
                     alt="toggle" />
                 </button>
 
-                <nav className="sm:flex hidden">
+                <nav className="sm:flex hidden items-center gap-4">
                   <NavItems/>
+                  <div className="flex items-center gap-3 ml-2 pl-4 border-l border-white/10">
+                    <a href="https://github.com/divyanshu144" target="_blank" rel="noreferrer" className="text-neutral-400 hover:text-white transition-colors" aria-label="GitHub">
+                      <img src="/assets/github.svg" alt="GitHub" className="w-5 h-5 opacity-60 hover:opacity-100 transition-opacity" />
+                    </a>
+                    <a href="https://www.linkedin.com/in/divyanshu-charak-a1820516a/" target="_blank" rel="noreferrer" className="text-neutral-400 hover:text-white transition-colors" aria-label="LinkedIn">
+                      <img src="/assets/linkedin.png" alt="LinkedIn" className="w-5 h-5 opacity-60 hover:opacity-100 transition-opacity" />
+                    </a>
+                  </div>
                 </nav>
             </div>
         </div>

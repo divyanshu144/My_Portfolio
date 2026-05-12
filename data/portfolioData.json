@@ -7,48 +7,73 @@
     "linkedin": "https://www.linkedin.com/in/divyanshu-charak-a1820516a/",
     "github": "https://github.com/divyanshu144"
   },
-  "summary": "MSc Statistical Data Science candidate at the University of Exeter with 3+ years of software engineering experience building scalable, data-driven web applications.",
+  "visa": {
+    "status": "UK Graduate Route visa — applied",
+    "details": "Applied for the UK Graduate Route visa (post-study open work permit) after completing the MSc at University of Exeter. The Graduate Route grants 2 years of unrestricted work rights in the UK with no employer sponsorship required.",
+    "right_to_work": "Once granted: unrestricted — no sponsorship required, eligible for any role, any employer in the UK for 2 years."
+  },
+  "targetRoles": [
+    "AI / ML Engineer",
+    "Data Engineer",
+    "Full-Stack Engineer",
+    "Backend Software Engineer"
+  ],
+  "summary": "Software engineer and MSc Statistical Data Science graduate (Merit, University of Exeter) with 3+ years of professional experience at Mphasis. I build production-grade AI systems, data pipelines, and full-stack applications — combining engineering rigour with a data-first mindset. Currently seeking roles in AI/ML engineering, data engineering, or full-stack / backend development in the UK.",
   "skills": {
-    "engineering": ["JavaScript", "React.js", "Redux", "React Query", "REST APIs", "SQL", "Git", "Docker"],
-    "data": ["Python", "pandas", "NumPy", "scikit-learn", "Streamlit", "PostgreSQL", "C/C++"]
+    "languages": ["Python", "JavaScript", "TypeScript", "SQL", "Java"],
+    "ai_ml": ["LLMs", "RAG", "OpenAI API", "scikit-learn", "XGBoost", "SHAP", "PyTorch", "Prompt Engineering"],
+    "backend_apis": ["FastAPI", "Express", "REST API design & integration", "PostgreSQL", "SQLite", "MongoDB"],
+    "data_etl": ["Pandas", "NumPy", "Airflow", "MLflow", "data pipeline design", "structured & semi-structured data"],
+    "devops": ["Git", "Docker", "Jenkins (CI/CD)", "Redis", "Railway"],
+    "frontend": ["React", "Next.js", "Redux", "React Query", "Tailwind CSS"]
   },
   "education": [
     {
       "institution": "University of Exeter",
+      "location": "Exeter, UK",
       "degree": "MSc Statistical Data Science",
-      "dates": "Jan 2025 - Jan 2026"
+      "dates": "Jan 2025 – Jan 2026",
+      "grade": "Merit",
+      "dissertation": "Causal & Predictive Modelling of UK Energy Policy Impacts — analysed 1.8M EPC records using causal inference, XGBoost, SHAP explainability, Airflow DAG orchestration, and FastAPI service layer."
     },
     {
       "institution": "PES University",
-      "degree": "BTech Computer Science",
-      "dates": "2017 - 2021",
-      "grade": "8/10"
+      "location": "Bengaluru, India",
+      "degree": "B.E. Computer Science and Engineering",
+      "dates": "2017 – Jul 2021",
+      "grade": "GPA 8.0/10"
     }
   ],
   "experience": [
     {
       "company": "Mphasis",
+      "location": "Bengaluru, India",
       "title": "Senior Software Engineer",
-      "dates": "Oct 2023 - Dec 2024",
+      "dates": "Oct 2023 – Dec 2024",
       "highlights": [
-        "Architected and delivered a module from scratch using JavaScript, React.js, Redux, React Query, and Material-UI in Agile Scrum.",
-        "Implemented code splitting, lazy loading, and memoization with React Query to improve performance and response time by 20%.",
-        "Owned features end-to-end and collaborated with QA, backend, and DB teams for seamless integration."
+        "Designed and delivered production-grade backend modules and REST API integrations within enterprise banking platforms, serving high-availability, client-facing systems.",
+        "Improved application performance by 20% through systematic profiling and optimisation of API interaction patterns, state management, and data-fetching workflows.",
+        "Led structured refactoring initiatives applying SOLID and DRY principles, reducing technical debt and improving maintainability across shared codebases.",
+        "Designed and implemented a Jenkins-based CI/CD pipeline automating build, test, and deployment stages.",
+        "Mentored junior engineers within a Scrum-based agile team."
       ]
     },
     {
       "company": "Mphasis",
+      "location": "Bengaluru, India",
       "title": "Software Engineer",
-      "dates": "Sep 2021 - Sep 2023",
+      "dates": "Sep 2021 – Sep 2023",
       "highlights": [
-        "Designed and implemented user-centric interfaces using React.js, Redux, and JavaScript for routing, dashboards, user management, and download workflows.",
-        "Resolved state-management analytics and event-driven issues, contributing to a €12k+ revenue increase for clients."
+        "Worked directly with client teams to translate business requirements into technical specifications, delivering bespoke workflow systems and dashboards integrating SQL databases, finance platform APIs, and third-party services.",
+        "Engineered a performance-optimised document processing pipeline, resolving a critical bottleneck and contributing to €12k+ additional revenue.",
+        "Resolved production defects and maintained system stability through structured debugging, regression-safe refactoring, and automated testing."
       ]
     },
     {
       "company": "Hermitcrabs",
+      "location": "Remote",
       "title": "Web Developer Intern",
-      "dates": "Feb 2021 - Apr 2021",
+      "dates": "Feb 2021 – Apr 2021",
       "highlights": [
         "Supported CMS-driven web builds and front-end enhancements for B2B marketing sites.",
         "Focused on CSS and JavaScript for rapid iteration and page performance."
@@ -57,28 +82,44 @@
   ],
   "projects": [
     {
+      "name": "DocChat",
+      "repo": "https://github.com/divyanshu144/DocChat",
+      "summary": "Production-grade AI assistant for natural language querying of documents (PDF, DOCX, TXT) — combining BM25 sparse search and dense embeddings fused via Reciprocal Rank Fusion for sub-second retrieval across 1,000+ chunks.",
+      "highlights": [
+        "Hybrid retrieval: BM25 sparse search + dense embeddings fused via RRF — sub-second retrieval across 1,000+ chunks.",
+        "Async ingestion pipeline (extract → chunk → embed → persist) with WAL-mode SQLite, Redis background queue, and token-level SSE streaming to the browser.",
+        "Fully documented REST API built with FastAPI, containerised with Docker."
+      ],
+      "tech": ["Python", "FastAPI", "SQLite", "Redis", "Docker"]
+    },
+    {
+      "name": "PromptOps",
+      "repo": "https://github.com/divyanshu144/promptOps_framework",
+      "summary": "Full-stack system for prompt versioning, automated LLM regression detection, and multi-provider AI evaluation (OpenAI GPT-4o, Ollama) — enabling repeatable, auditable AI workflows with version-controlled prompt history.",
+      "highlights": [
+        "Prompt versioning and automated LLM regression detection across model updates.",
+        "Parallel evaluation loop using asyncio.gather for multi-provider evaluation (OpenAI GPT-4o, Ollama) — significantly faster than sequential.",
+        "Deployed to Railway with full documentation; TypeScript/Next.js frontend, FastAPI backend."
+      ],
+      "tech": ["Python", "FastAPI", "Next.js", "TypeScript", "SQLite", "Railway"]
+    },
+    {
+      "name": "EPC South West",
+      "repo": "https://github.com/divyanshu144/EPC",
+      "summary": "End-to-end ETL and ML pipeline processing 1.8M+ UK EPC records (2008–2025) — ingestion, cleaning, feature engineering, causal modelling, and gradient-boosted prediction with SHAP explainability.",
+      "highlights": [
+        "ETL pipeline processing 1.8M+ EPC records with full cleaning and feature engineering.",
+        "XGBoost gradient-boosted prediction + SHAP explainability for energy policy impact analysis.",
+        "Reproducible CLI-driven workflow: Airflow DAG orchestration, MLflow experiment tracking, FastAPI service layer."
+      ],
+      "tech": ["Python", "Pandas", "XGBoost", "MLflow", "Airflow", "FastAPI"]
+    },
+    {
       "name": "Fooder",
       "repo": "https://github.com/divyanshu144/Fooder",
       "summary": "Restaurant discovery and online ordering web app with authentication, menus, and cart/checkout.",
       "tech": ["React.js", "Redux", "Tailwind CSS", "TypeScript", "Firebase"]
-    },
-    {
-      "name": "Lumen-flow",
-      "repo": "https://github.com/divyanshu144/Lumen-flow",
-      "summary": "ClientOps workflow engine that turns chat intent into detect → draft → approve → advance workflows.",
-      "tech": ["Automation", "Workflow", "ClientOps"]
-    },
-    {
-      "name": "UK Housing Energy Performance (EPC)",
-      "repo": "https://github.com/divyanshu144",
-      "summary": "MSc dissertation analyzing 1.8M EPC records for energy efficiency trends, policy impacts, and predictive modeling.",
-      "tech": ["Python", "SQL", "Statistical Modeling", "Machine Learning"]
     }
   ],
-  "leadership": [
-    "Owned modules end-to-end and shipped production features.",
-    "Partnered with QA, backend, and DB teams for integration quality.",
-    "Mentored teammates and supported delivery planning."
-  ],
-  "freeTime": ["Barista at Starbucks", "Table tennis", "Badminton", "Reading", "Running", "Gym", "Cycling"]
+  "interests": ["Part-time barista at Starbucks", "Table tennis", "Badminton", "Reading", "Running", "Gym", "Cycling"]
 }

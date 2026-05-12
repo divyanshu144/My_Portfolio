@@ -28,11 +28,11 @@ const About = () => {
               <p className="about-kicker">About</p>
               <p className="about-heading">Divyanshu Charak</p>
               <p className="about-body">
-                MSc Statistical Data Science candidate at the University of Exeter with 3+ years of experience in
-                software engineering. I build scalable, data-driven web applications and enjoy turning complex
-                requirements into clear, reliable products.
+                Software engineer and MSc Statistical Data Science graduate (Merit, University of Exeter) with 3+ years
+                at Mphasis. I build production-grade AI systems, data pipelines, and full-stack applications —
+                combining engineering rigour with a data-first mindset.
               </p>
-              <div className="about-meta">Exeter, UK · Open to remote</div>
+              <div className="about-meta">Exeter, UK · Open to remote · UK Graduate Route visa (applied)</div>
             </div>
           </div>
         </div>
@@ -44,22 +44,22 @@ const About = () => {
             </div>
             <div className="space-y-3">
               <p className="about-kicker">Technical Strengths</p>
-              <p className="about-heading">Engineering + Data</p>
+              <p className="about-heading">AI · Data · Full-Stack</p>
               <p className="about-body">
-                Strengths in React.js, Redux, React Query, JavaScript, SQL, and REST APIs, plus Python, pandas, NumPy,
-                scikit-learn, and Streamlit for analytics, with PostgreSQL for data storage and querying.
+                Python, FastAPI, RAG/LLMs, XGBoost, Airflow, MLflow — plus React, Next.js, TypeScript, and Docker
+                for production systems end-to-end.
               </p>
               <div className="about-chips">
-                <span className="about-chip">React.js</span>
-                <span className="about-chip">Redux</span>
-                <span className="about-chip">React Query</span>
-                <span className="about-chip">JavaScript</span>
-                <span className="about-chip">Python</span>
-                <span className="about-chip">Streamlit</span>
-                <span className="about-chip">Docker</span>
-                <span className="about-chip">Git</span>
-                <span className="about-chip">PostgreSQL</span>
-                <span className="about-chip">C/C++</span>
+                <span className="about-chip about-chip--ai">Python</span>
+                <span className="about-chip about-chip--ai">FastAPI</span>
+                <span className="about-chip about-chip--ai">LLMs / RAG</span>
+                <span className="about-chip about-chip--ai">XGBoost</span>
+                <span className="about-chip about-chip--ai">Airflow</span>
+                <span className="about-chip about-chip--fe">React</span>
+                <span className="about-chip about-chip--fe">Next.js</span>
+                <span className="about-chip about-chip--fe">TypeScript</span>
+                <span className="about-chip about-chip--ops">Docker</span>
+                <span className="about-chip about-chip--ops">PostgreSQL</span>
               </div>
             </div>
           </div>
@@ -114,12 +114,12 @@ const About = () => {
                   <p className="about-body">
                     University of Exeter — MSc Statistical Data Science
                   </p>
-                  <p className="about-meta">Jan 2025 - Jan 2026</p>
+                  <p className="about-meta">Jan 2025 – Jan 2026 · Merit</p>
                 </div>
                 <div className="about-divider" />
                 <div className="about-list_item">
-                  <p className="about-body">PES University — BTech Computer Science</p>
-                  <p className="about-meta">2017 - 2021 · Grade 8/10</p>
+                  <p className="about-body">PES University — B.E. Computer Science</p>
+                  <p className="about-meta">2017 – 2021 · GPA 8.0/10</p>
                 </div>
               </div>
             </div>

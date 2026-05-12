@@ -58,53 +58,48 @@ export const navLinks = [
   
 export const myProjects = [
   {
-    title: 'Fooder: Restaurant Discovery and Online Ordering',
-    desc: 'Fooder lets users sign in, browse nearby restaurants, explore menus, and place orders online through a clean, responsive experience.',
+    title: 'DocChat — Intelligent Document Assistant',
+    desc: 'AI assistant for natural language querying of documents (PDF, DOCX, TXT) — hybrid BM25 + dense embedding retrieval fused via RRF, delivering sub-second results across 1,000+ chunks.',
     subdesc:
-      'Built with React.js, Redux, Tailwind CSS, TypeScript, and Firebase for authentication and scalable performance.',
-    href: 'https://github.com/divyanshu144/Fooder',
-    texture: '/textures/project/Fooder.mp4',
+      'Async ingestion pipeline with WAL-mode SQLite, Redis background queue, and token-level SSE streaming. Fully documented REST API with FastAPI, containerised with Docker.',
+    href: 'https://github.com/divyanshu144/DocChat',
+    texture: '/textures/project/anonymous.mp4',
     logo: '/assets/project-logo1.png',
     logoStyle: {
-      backgroundColor: '#2A1816',
-      border: '0.2px solid #36201D',
-      boxShadow: '0px 0px 60px 0px #AA3C304D',
+      backgroundColor: '#0D1117',
+      border: '0.2px solid #1F2937',
+      boxShadow: '0px 0px 60px 0px #6366F14D',
     },
     spotlight: '/assets/spotlight1.png',
     tags: [
       {
         id: 1,
-        name: 'React.js',
-        path: '/assets/react.svg',
+        name: 'Python',
+        path: '/assets/sql.png',
       },
       {
         id: 2,
-        name: 'TailwindCSS',
-        path: 'assets/tailwindcss.png',
+        name: 'FastAPI',
+        path: '/assets/nodejs.png',
       },
       {
         id: 3,
-        name: 'TypeScript',
-        path: '/assets/typescript.png',
+        name: 'Docker',
+        path: '/assets/docker.png',
       },
       {
         id: 4,
-        name: 'Redux',
-        path: '/assets/redux.png',
-      },
-      {
-        id: 5,
-        name: 'SQL',
-        path: '/assets/sql.png',
+        name: 'Redis',
+        path: '/assets/git.png',
       },
     ],
   },
   {
-    title: 'Lumen-flow: ClientOps Workflow Engine',
-    desc: 'An intelligent ClientOps engine that turns chat intent into workflows: detect, draft, approve, and advance.',
+    title: 'PromptOps — LLM Evaluation & Automation',
+    desc: 'Full-stack system for prompt versioning, automated LLM regression detection, and multi-provider AI evaluation (OpenAI GPT-4o, Ollama) — repeatable, auditable AI workflows.',
     subdesc:
-      'Designed to route intent through a structured automation pipeline for faster client operations.',
-    href: 'https://github.com/divyanshu144/Lumen-flow',
+      'Parallel evaluation with asyncio.gather across providers; TypeScript/Next.js frontend, FastAPI backend, deployed to Railway with full documentation.',
+    href: 'https://github.com/divyanshu144/promptOps_framework',
     texture: '/textures/project/project5.mp4',
     logo: '/assets/project-logo2.png',
     logoStyle: {
@@ -116,27 +111,32 @@ export const myProjects = [
     tags: [
       {
         id: 1,
-        name: 'ClientOps',
-        path: '/assets/git.png',
+        name: 'Python',
+        path: '/assets/sql.png',
       },
       {
         id: 2,
-        name: 'Automation',
-        path: '/assets/docker.png',
+        name: 'FastAPI',
+        path: '/assets/nodejs.png',
       },
       {
         id: 3,
-        name: 'Workflow',
-        path: '/assets/nodejs.png',
+        name: 'Next.js',
+        path: '/assets/react.svg',
+      },
+      {
+        id: 4,
+        name: 'TypeScript',
+        path: '/assets/typescript.png',
       },
     ],
   },
   {
-    title: 'MSc Dissertation: UK Housing Energy Performance (EPC)',
-    desc: 'Analysed 1.8M UK EPC records to study long-term trends in SAP scores, CO2 emissions, and EPC bands.',
+    title: 'EPC South West — Large-Scale ML Pipeline',
+    desc: 'End-to-end ETL and ML pipeline processing 1.8M+ UK EPC records (2008–2025) — causal modelling, XGBoost prediction, and SHAP explainability for energy policy analysis.',
     subdesc:
-      'Built scalable data pipelines, applied fixed-effects regression for policy-era analysis, and evaluated ML models for predictive performance.',
-    href: 'https://github.com/divyanshu144?tab=repositories',
+      'Reproducible CLI-driven workflow with Airflow DAG orchestration, MLflow experiment tracking, and a FastAPI service layer — documented end-to-end for handoff and scaling.',
+    href: 'https://github.com/divyanshu144/EPC',
     texture: '/textures/project/project4.mp4',
     logo: '/assets/project-logo4.png',
     logoStyle: {
@@ -144,7 +144,7 @@ export const myProjects = [
       border: '0.2px solid #0E2D58',
       boxShadow: '0px 0px 60px 0px #2F67B64D',
     },
-    spotlight: '/assets/spotlight4.png',
+    spotlight: '/assets/spotlight3.png',
     tags: [
       {
         id: 1,
@@ -153,18 +153,18 @@ export const myProjects = [
       },
       {
         id: 2,
-        name: 'SQL',
-        path: '/assets/sql.png',
+        name: 'XGBoost',
+        path: '/assets/docker.png',
       },
       {
         id: 3,
-        name: 'Statistical Modelling',
+        name: 'Airflow',
         path: '/assets/git.png',
       },
       {
         id: 4,
-        name: 'Machine Learning',
-        path: '/assets/docker.png',
+        name: 'MLflow',
+        path: '/assets/nodejs.png',
       },
     ],
   },
@@ -186,9 +186,9 @@ export const workExperiences = [
     id: 1,
     name: 'Mphasis',
     pos: 'Senior Software Engineer',
-    duration: 'Oct, 2023 - Dec, 2024',
+    duration: 'Oct 2023 – Dec 2024',
     title:
-      'Architected and delivered a module from scratch using JavaScript, React.js, Redux, React Query, and Material-UI in Agile Scrum. Implemented code splitting, lazy loading, and memoization with React Query to boost performance and response time by 20%. Owned features end-to-end and collaborated with QA, backend, and DB teams for seamless integration.',
+      'Designed and delivered production-grade backend modules and REST API integrations within enterprise banking platforms. Improved application performance by 20% through profiling and optimisation of API patterns and state management. Led refactoring with SOLID/DRY principles and designed a Jenkins-based CI/CD pipeline. Mentored junior engineers in a Scrum team.',
     icon: '/assets/Mphasis.png',
     animation: 'victory',
   },
@@ -196,9 +196,9 @@ export const workExperiences = [
     id: 2,
     name: 'Mphasis',
     pos: 'Software Engineer',
-    duration: 'Sep, 2021 - Sep, 2023',
+    duration: 'Sep 2021 – Sep 2023',
     title:
-      'Designed and implemented user-centric interfaces using React.js, Redux, and JavaScript for routing, dashboards, user management, and download workflows. Improved responsiveness by resolving state-management analytics and event-driven issues, contributing to a €12k+ revenue increase for clients.',
+      'Translated client business requirements into bespoke workflow systems and dashboards integrating SQL databases, finance platform APIs, and third-party services. Engineered a performance-optimised document processing pipeline that resolved a critical bottleneck and contributed to €12k+ additional revenue. Maintained system stability through structured debugging and automated testing.',
     icon: '/assets/Mphasis.png',
     animation: 'clapping',
   },
@@ -206,10 +206,10 @@ export const workExperiences = [
     id: 3,
     name: 'Hermitcrabs',
     pos: 'Web Developer Intern',
-    duration: 'Feb, 2021 - Apr, 2021',
+    duration: 'Feb 2021 – Apr 2021',
     title:
       'Supported CMS-driven web builds and front-end enhancements for B2B marketing sites, with a focus on CSS and JavaScript for rapid iteration and page performance.',
     icon: '/assets/hermit.jfif',
     animation: 'salute',
   },
-  ];
+];

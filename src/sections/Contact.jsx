@@ -1,9 +1,10 @@
 import emailjs from '@emailjs/browser'
-import React, { useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 
 const Contact = () => {
     const formRef = useRef()
     const [loading, setLoading] = useState(false)
+    const [status, setStatus] = useState('idle') // 'idle' | 'success' | 'error'
     const [form, setForm] = useState({
         name: '',
         email: '',
@@ -36,20 +37,15 @@ const Contact = () => {
                 'HvkIJyo2oMNIiGQTa' // Public Key
             );
     
-            setLoading(false);   // Stop loading state
-            alert('Your message has been sent!'); // Success message
-
-            setForm({
-                name: '',
-                email: '',
-                message: ''
-            })
-    
+            setLoading(false);
+            setStatus('success');
+            setForm({ name: '', email: '', message: '' });
+            setTimeout(() => setStatus('idle'), 5000);
         } catch (error) {
-            setLoading(false);   // Stop loading state
-    
-            console.log(error);  // Log the error
-            alert("Something went wrong"); // Error message
+            setLoading(false);
+            console.error(error);
+            setStatus('error');
+            setTimeout(() => setStatus('idle'), 5000);
         }
 
 
@@ -62,7 +58,7 @@ const Contact = () => {
 
             <div className="contact-container">
             <h3 className="head-text">Contact Me</h3>
-            <p className="text=lg text-white-600 mt-3">
+            <p className="text-lg text-white-600 mt-3">
                 Open to data science and software engineering opportunities, research collaborations, and impactful projects.
             </p>
 
@@ -105,6 +101,12 @@ const Contact = () => {
                     {loading ? 'Sending...' : 'Send Message'}
                     <img src="/assets/arrow-up.png" alt="arrow-up" className="field-btn_arrow" />
                 </button>
+                {status === 'success' && (
+                  <p className="text-sm text-green-400 text-center">Message sent — I&apos;ll be in touch soon.</p>
+                )}
+                {status === 'error' && (
+                  <p className="text-sm text-red-400 text-center">Something went wrong. Please try again or email me directly.</p>
+                )}
             </form>
         </div>
         </div>

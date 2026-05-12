@@ -1,6 +1,6 @@
 import { PerspectiveCamera } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
-import React, { Suspense } from 'react'
+import { Suspense } from 'react'
 import HackerRoom from '../components/HackerRoom'
 import CanvasLoader from '../components/CanvasLoader'
 import { useMediaQuery } from 'react-responsive'
@@ -27,9 +27,11 @@ const Hero = () => {
             <p className="sm:text-3xl text-2xl font-bold text-white text-center font-generalsans">
                 Hi, I am Divyanshu Charak <span className="waving-hand">👋</span>
             </p>
-            <p className="hero_tag text-gray_gradient">
-                MSc Statistical Data Science Candidate
-            </p>
+            <div className="flex flex-wrap justify-center gap-2 mt-1">
+              <span className="hero-badge hero-badge--ai">AI Engineer</span>
+              <span className="hero-badge hero-badge--fs">Full-Stack Dev</span>
+              <span className="hero-badge hero-badge--ds">MSc Data Science</span>
+            </div>
         </div>
 
         <div className="w-full h-full absolute inset-0 mt-4">
