@@ -20,8 +20,12 @@ const DEFAULT_MODELS = {
 
 const apiKey = process.env.XAI_API_KEY || process.env.GROQ_API_KEY || process.env.OPENAI_API_KEY;
 
+if (!apiKey) {
+  console.error('No AI API key set. Add GROQ_API_KEY, XAI_API_KEY, or OPENAI_API_KEY to environment variables.');
+}
+
 export const ai = new OpenAI({
-  apiKey,
+  apiKey: apiKey || 'missing',
   ...(BASE_URLS[provider] && { baseURL: BASE_URLS[provider] }),
 });
 

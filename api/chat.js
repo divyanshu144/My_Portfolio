@@ -18,6 +18,7 @@ export default async function handler(req, res) {
     res.json({ text: response.choices[0].message.content });
   } catch (error) {
     console.error('Chat error:', error?.message || error);
-    res.status(500).json({ error: 'Failed to generate response.' });
+    const msg = error?.status === 401 ? 'AI API key is invalid or missing.' : 'Failed to generate response.';
+    res.status(500).json({ error: msg });
   }
 }
