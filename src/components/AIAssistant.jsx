@@ -109,7 +109,7 @@ const AIAssistant = () => {
       const raw = await res.text();
       let data = null;
       try { data = raw ? JSON.parse(raw) : null; } catch { /* non-JSON proxy error */ }
-      if (!res.ok || !data) throw new Error(data?.error || 'AI server is not running. Start it with: npm run server');
+      if (!res.ok || !data) throw new Error(data?.error || 'AI assistant is temporarily unavailable. Please try again shortly.');
       setMessages(prev => [...prev, { role: 'assistant', content: data.text || '' }]);
     } catch (err) {
       setMessages(prev => [...prev, { role: 'assistant', content: `⚠️ ${err?.message || 'Something went wrong.'}` }]);
@@ -130,7 +130,7 @@ const AIAssistant = () => {
       const raw = await res.text();
       let data = null;
       try { data = raw ? JSON.parse(raw) : null; } catch { /* non-JSON proxy error */ }
-      if (!res.ok || !data) throw new Error(data?.error || 'AI server is not running. Start it with: npm run server');
+      if (!res.ok || !data) throw new Error(data?.error || 'AI assistant is temporarily unavailable. Please try again shortly.');
       setOutput(data.text || '');
     } catch (err) {
       setOutput(`⚠️ ${err?.message || 'Something went wrong.'}`);
