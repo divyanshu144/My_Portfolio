@@ -58,78 +58,46 @@ export const navLinks = [
   
 export const myProjects = [
   {
-    title: 'DocChat — Intelligent Document Assistant',
-    desc: 'AI assistant for natural language querying of documents (PDF, DOCX, TXT) — hybrid BM25 + dense embedding retrieval fused via RRF, delivering sub-second results across 1,000+ chunks.',
+    title: 'JobFit Agent — AI Job-Application System',
+    desc: 'Full-stack AI assistant that scores job fit, runs structured gap analysis, and generates tailored cover letters and DOCX resumes — built as a real workflow system with persisted state, validated LLM outputs, and SSE-streamed progress.',
     subdesc:
-      'Async ingestion pipeline with WAL-mode SQLite, Redis background queue, and token-level SSE streaming. Fully documented REST API with FastAPI, containerised with Docker.',
-    href: 'https://github.com/divyanshu144/DocChat',
-    texture: '/textures/project/anonymous.mp4',
+      'Multi-agent pipeline (parse → score → gap → generate) with Pydantic v2 schemas, pgvector semantic profile memory, Celery background jobs, per-call cost tracking, and a Prometheus metrics endpoint. Ships with Docker Compose, local Kubernetes manifests, and AWS ECS Fargate CI/CD.',
+    href: 'https://github.com/divyanshu144/Job_Agent',
     logo: '/assets/project-logo1.png',
     logoStyle: {
       backgroundColor: '#0D1117',
-      border: '0.2px solid #1F2937',
-      boxShadow: '0px 0px 60px 0px #6366F14D',
+      border: '0.2px solid #1e2a36',
+      boxShadow: '0px 0px 60px 0px rgba(14,165,233,0.18)',
     },
-    spotlight: '/assets/spotlight1.png',
-    tags: [
-      {
-        id: 1,
-        name: 'Python',
-        path: '/assets/sql.png',
-      },
-      {
-        id: 2,
-        name: 'FastAPI',
-        path: '/assets/nodejs.png',
-      },
-      {
-        id: 3,
-        name: 'Docker',
-        path: '/assets/docker.png',
-      },
-      {
-        id: 4,
-        name: 'Redis',
-        path: '/assets/git.png',
-      },
-    ],
+    tags: ['FastAPI', 'Anthropic', 'Celery', 'pgvector', 'React', 'AWS ECS'],
   },
   {
-    title: 'PromptOps — LLM Evaluation & Automation',
-    desc: 'Full-stack system for prompt versioning, automated LLM regression detection, and multi-provider AI evaluation (OpenAI GPT-4o, Ollama) — repeatable, auditable AI workflows.',
+    title: 'DocChat — Agentic Research Assistant',
+    desc: 'Multi-source research assistant: ingest PDFs, YouTube videos, and web pages into a shared Qdrant vector store and ask questions across all of them — answers stream token-by-token with inline citation chips.',
     subdesc:
-      'Parallel evaluation with asyncio.gather across providers; TypeScript/Next.js frontend, FastAPI backend, deployed to Railway with full documentation.',
-    href: 'https://github.com/divyanshu144/promptOps_framework',
-    texture: '/textures/project/project5.mp4',
+      'Five-node LangGraph agent (Planner → Retriever → Synthesizer → Grounding → Critic) with replan loop, per-source filtering, conversation folders with drag-and-drop, JWT auth with silent refresh, and LangSmith tracing.',
+    href: 'https://github.com/divyanshu144/DocChat',
     logo: '/assets/project-logo2.png',
+    logoStyle: {
+      backgroundColor: '#0a1628',
+      border: '0.2px solid #1e2a36',
+      boxShadow: '0px 0px 60px 0px rgba(14,165,233,0.18)',
+    },
+    tags: ['FastAPI', 'LangGraph', 'Qdrant', 'Groq', 'React', 'PostgreSQL'],
+  },
+  {
+    title: 'PromptOps — Prompt-as-Code MLOps',
+    desc: 'Prompt engineering as a software discipline: version prompts by SHA-256 hash, run automated LLM-as-judge evaluation across a test suite, detect regressions, and optimize via parallel candidate generation.',
+    subdesc:
+      'Pluggable EvalHarness ABC (LLM judge or DeepEval G-Eval), 9× parallel mutation optimizer with SSE streaming, pass-rate tracking, A/B diff view, MLflow experiment logging, and multi-provider support (Ollama, OpenAI, Anthropic).',
+    href: 'https://github.com/divyanshu144/promptOps_framework',
+    logo: '/assets/project-logo3.png',
     logoStyle: {
       backgroundColor: '#13202F',
       border: '0.2px solid #17293E',
-      boxShadow: '0px 0px 60px 0px #2F6DB54D',
+      boxShadow: '0px 0px 60px 0px rgba(14,165,233,0.18)',
     },
-    spotlight: '/assets/spotlight2.png',
-    tags: [
-      {
-        id: 1,
-        name: 'Python',
-        path: '/assets/sql.png',
-      },
-      {
-        id: 2,
-        name: 'FastAPI',
-        path: '/assets/nodejs.png',
-      },
-      {
-        id: 3,
-        name: 'Next.js',
-        path: '/assets/react.svg',
-      },
-      {
-        id: 4,
-        name: 'TypeScript',
-        path: '/assets/typescript.png',
-      },
-    ],
+    tags: ['FastAPI', 'Next.js', 'MLflow', 'Anthropic', 'Ollama', 'SQLite'],
   },
   {
     title: 'EPC South West — Large-Scale ML Pipeline',
@@ -137,36 +105,13 @@ export const myProjects = [
     subdesc:
       'Reproducible CLI-driven workflow with Airflow DAG orchestration, MLflow experiment tracking, and a FastAPI service layer — documented end-to-end for handoff and scaling.',
     href: 'https://github.com/divyanshu144/EPC',
-    texture: '/textures/project/project4.mp4',
     logo: '/assets/project-logo4.png',
     logoStyle: {
       backgroundColor: '#0E1F38',
       border: '0.2px solid #0E2D58',
-      boxShadow: '0px 0px 60px 0px #2F67B64D',
+      boxShadow: '0px 0px 60px 0px rgba(14,165,233,0.18)',
     },
-    spotlight: '/assets/spotlight3.png',
-    tags: [
-      {
-        id: 1,
-        name: 'Python',
-        path: '/assets/sql.png',
-      },
-      {
-        id: 2,
-        name: 'XGBoost',
-        path: '/assets/docker.png',
-      },
-      {
-        id: 3,
-        name: 'Airflow',
-        path: '/assets/git.png',
-      },
-      {
-        id: 4,
-        name: 'MLflow',
-        path: '/assets/nodejs.png',
-      },
-    ],
+    tags: ['Python', 'XGBoost', 'Airflow', 'MLflow', 'FastAPI', 'SHAP'],
   },
 ];
   
