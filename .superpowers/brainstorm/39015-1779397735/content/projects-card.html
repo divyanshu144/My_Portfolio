@@ -1,0 +1,114 @@
+<h2>Projects Section — Replace the spotlight glow</h2>
+<p class="subtitle">The glowing spotlight image behind each project card is Aceternity's signature. Three cleaner alternatives.</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="border-accent" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#080c10;padding:1.25rem;border-radius:8px;font-family:'Inter',sans-serif;min-height:210px;position:relative;overflow:hidden;">
+      <!-- Subtle top-border accent instead of spotlight -->
+      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,transparent,#38bdf8,transparent);"></div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;height:100%;padding-top:14px;">
+        <!-- Left: project info -->
+        <div style="display:flex;flex-direction:column;justify-content:space-between;">
+          <div>
+            <div style="background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.15);border-radius:6px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
+              <span style="font-size:0.9rem;">⚡</span>
+            </div>
+            <div style="color:#f0f4f8;font-size:0.95rem;font-weight:700;margin-bottom:6px;letter-spacing:-0.01em;">PromptOps</div>
+            <div style="color:#64748b;font-size:0.68rem;line-height:1.6;margin-bottom:8px;">LLM Evaluation & Automation framework. SHA-256 prompt versioning, parallel eval engine, 9× speedup.</div>
+            <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px;">
+              <span style="background:#0f141a;border:1px solid #1e2a36;color:#64748b;font-size:0.55rem;padding:2px 6px;border-radius:3px;">Python</span>
+              <span style="background:#0f141a;border:1px solid #1e2a36;color:#64748b;font-size:0.55rem;padding:2px 6px;border-radius:3px;">FastAPI</span>
+              <span style="background:#0f141a;border:1px solid #1e2a36;color:#64748b;font-size:0.55rem;padding:2px 6px;border-radius:3px;">Next.js</span>
+            </div>
+          </div>
+          <div style="color:#38bdf8;font-size:0.65rem;display:flex;align-items:center;gap:4px;">View on GitHub <span>↗</span></div>
+        </div>
+        <!-- Right: 3D computer placeholder -->
+        <div style="background:#0a0e14;border:1px solid #1e2a36;border-radius:6px;display:flex;align-items:center;justify-content:center;">
+          <div style="text-align:center;">
+            <div style="font-size:2rem;margin-bottom:6px;">🖥</div>
+            <div style="color:#1e2a36;font-size:0.6rem;">3D demo</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Thin Accent Line</h3>
+      <p>A single 2px gradient line at the top of the card in sky blue. Replaces the full-bleed glow with something surgical. The accent color does the work — no giant blob of light needed. Very timeless.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="noise-texture" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#080c10;padding:1.25rem;border-radius:8px;font-family:'Inter',sans-serif;min-height:210px;position:relative;overflow:hidden;">
+      <!-- Noise + subtle gradient corner instead of spotlight -->
+      <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(56,189,248,0.04) 0%,transparent 50%);pointer-events:none;"></div>
+      <div style="position:absolute;top:0;left:0;right:0;bottom:0;opacity:0.4;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%224%22 height=%224%22><rect width=%224%22 height=%224%22 fill=%22%23080c10%22/><circle cx=%221%22 cy=%221%22 r=%220.5%22 fill=%22%23ffffff%22 opacity=%220.08%22/></svg>');pointer-events:none;border-radius:8px;"></div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;height:100%;position:relative;">
+        <div style="display:flex;flex-direction:column;justify-content:space-between;">
+          <div>
+            <div style="background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.15);border-radius:6px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
+              <span style="font-size:0.9rem;">⚡</span>
+            </div>
+            <div style="color:#f0f4f8;font-size:0.95rem;font-weight:700;margin-bottom:6px;letter-spacing:-0.01em;">PromptOps</div>
+            <div style="color:#64748b;font-size:0.68rem;line-height:1.6;margin-bottom:8px;">LLM Evaluation & Automation framework. SHA-256 prompt versioning, parallel eval engine, 9× speedup.</div>
+            <div style="display:flex;flex-wrap:wrap;gap:4px;">
+              <span style="background:#0f141a;border:1px solid #1e2a36;color:#64748b;font-size:0.55rem;padding:2px 6px;border-radius:3px;">Python</span>
+              <span style="background:#0f141a;border:1px solid #1e2a36;color:#64748b;font-size:0.55rem;padding:2px 6px;border-radius:3px;">FastAPI</span>
+              <span style="background:#0f141a;border:1px solid #1e2a36;color:#64748b;font-size:0.55rem;padding:2px 6px;border-radius:3px;">Next.js</span>
+            </div>
+          </div>
+          <div style="color:#38bdf8;font-size:0.65rem;display:flex;align-items:center;gap:4px;margin-top:10px;">View on GitHub <span>↗</span></div>
+        </div>
+        <div style="background:#0a0e14;border:1px solid #1e2a36;border-radius:6px;display:flex;align-items:center;justify-content:center;">
+          <div style="text-align:center;">
+            <div style="font-size:2rem;margin-bottom:6px;">🖥</div>
+            <div style="color:#1e2a36;font-size:0.6rem;">3D demo</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Subtle Noise + Corner Gradient</h3>
+      <p>Fine grain noise texture on the card background with a very faint corner gradient. The spotlight is toned down to a whisper — there's depth without the glow screaming. Feels handcrafted.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="numbered-editorial" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#080c10;padding:1.25rem;border-radius:8px;font-family:'Inter',sans-serif;min-height:210px;position:relative;overflow:hidden;">
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;height:100%;">
+        <div style="display:flex;flex-direction:column;justify-content:space-between;">
+          <div>
+            <!-- Large number like editorial design -->
+            <div style="color:#0f1a24;font-size:3.5rem;font-weight:800;line-height:1;letter-spacing:-0.04em;margin-bottom:-8px;user-select:none;">01</div>
+            <div style="color:#f0f4f8;font-size:0.95rem;font-weight:700;margin-bottom:6px;letter-spacing:-0.01em;">PromptOps</div>
+            <div style="height:1px;background:linear-gradient(to right,#1e2a36,transparent);margin-bottom:8px;"></div>
+            <div style="color:#64748b;font-size:0.68rem;line-height:1.6;margin-bottom:8px;">LLM Evaluation & Automation framework. SHA-256 prompt versioning, parallel eval engine, 9× speedup.</div>
+            <div style="display:flex;flex-wrap:wrap;gap:4px;">
+              <span style="background:#0f141a;border:1px solid #1e2a36;color:#64748b;font-size:0.55rem;padding:2px 6px;border-radius:3px;">Python</span>
+              <span style="background:#0f141a;border:1px solid #1e2a36;color:#64748b;font-size:0.55rem;padding:2px 6px;border-radius:3px;">FastAPI</span>
+              <span style="background:#0f141a;border:1px solid #1e2a36;color:#64748b;font-size:0.55rem;padding:2px 6px;border-radius:3px;">Next.js</span>
+            </div>
+          </div>
+          <div style="color:#38bdf8;font-size:0.65rem;display:flex;align-items:center;gap:4px;margin-top:10px;">View on GitHub <span>↗</span></div>
+        </div>
+        <div style="background:#0a0e14;border:1px solid #1e2a36;border-radius:6px;display:flex;align-items:center;justify-content:center;">
+          <div style="text-align:center;">
+            <div style="font-size:2rem;margin-bottom:6px;">🖥</div>
+            <div style="color:#1e2a36;font-size:0.6rem;">3D demo</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Editorial Numbers</h3>
+      <p>Large faded project numbers (01, 02, 03...) as background decoration instead of a spotlight glow. Inspired by Suyash's numbered sections — gives structure and personality without any light effects. Very distinctive.</p>
+    </div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:1.5rem;font-size:0.8rem;">The 3D demo computer on the right stays — just the left panel treatment changes. Click to select.</p>
