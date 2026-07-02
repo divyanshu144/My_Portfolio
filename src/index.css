@@ -237,6 +237,12 @@ body {
   .about-chip--ops {
     @apply text-slate-400 border-slate-600/30 bg-slate-600/10;
   }
+
+  /* project section tech tag chips */
+  .project-chip {
+    @apply px-2.5 py-1 rounded-full text-xs font-semibold border;
+    @apply text-sky-300 border-sky-500/30 bg-sky-500/10;
+  }
 }
 
 /* ─── AI Assistant ────────────────────────────────────────────── */
