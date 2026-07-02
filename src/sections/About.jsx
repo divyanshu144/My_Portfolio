@@ -21,9 +21,6 @@ const About = () => {
       <div className="about-masonry">
         <div className="col-span-1 xl:row-span-3">
           <div className="about-card about-card_compact">
-            <div className="about-media">
-              <img src="assets/grid1.png" alt="profile highlight" className="about-image" />
-            </div>
             <div className="space-y-3">
               <p className="about-kicker">About</p>
               <p className="about-heading">Divyanshu Charak</p>
@@ -39,9 +36,6 @@ const About = () => {
 
         <div className="col-span-1 xl:row-span-3">
           <div className="about-card about-card_compact">
-            <div className="about-media">
-              <img src="assets/techstack.png" alt="tech stack" className="about-image" />
-            </div>
             <div className="space-y-3">
               <p className="about-kicker">Technical Strengths</p>
               <p className="about-heading">AI · Data · Full-Stack</p>
@@ -60,6 +54,33 @@ const About = () => {
                 <span className="about-chip about-chip--fe">TypeScript</span>
                 <span className="about-chip about-chip--ops">Docker</span>
                 <span className="about-chip about-chip--ops">PostgreSQL</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div className="about-card about-card_compact">
+            <div className="space-y-3">
+              <p className="about-kicker">Impact</p>
+              <p className="about-heading">By the numbers</p>
+              <div className="grid grid-cols-2 gap-4 mt-2">
+                <div>
+                  <p className="text-3xl font-bold text-white tracking-tight">1.8M</p>
+                  <p className="about-meta mt-0.5">EPC records processed</p>
+                </div>
+                <div>
+                  <p className="text-3xl font-bold text-white tracking-tight">9×</p>
+                  <p className="about-meta mt-0.5">eval engine speedup</p>
+                </div>
+                <div>
+                  <p className="text-3xl font-bold text-white tracking-tight">20%</p>
+                  <p className="about-meta mt-0.5">app perf improvement</p>
+                </div>
+                <div>
+                  <p className="text-3xl font-bold text-white tracking-tight">40%</p>
+                  <p className="about-meta mt-0.5">test coverage increase</p>
+                </div>
               </div>
             </div>
           </div>
@@ -103,9 +124,6 @@ const About = () => {
 
         <div>
           <div className="about-card about-card_compact">
-            <div className="about-media">
-              <img src="assets/grid3.png" alt="education" className="about-image" />
-            </div>
             <div className="space-y-3">
               <p className="about-kicker">Education</p>
               <p className="about-heading">Academic focus</p>
@@ -128,9 +146,6 @@ const About = () => {
 
         <div>
           <div className="about-card">
-            <div className="about-media">
-              <img src="assets/grid4.png" alt="leadership" className="about-image object-cover" />
-            </div>
             <div className="space-y-3">
               <p className="about-kicker">Leadership</p>
               <p className="about-heading">Ownership & collaboration</p>

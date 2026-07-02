@@ -1,16 +1,14 @@
 import { PerspectiveCamera } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
-import { Suspense } from 'react'
+import { Suspense, useRef } from 'react'
 import HackerRoom from '../components/HackerRoom'
 import CanvasLoader from '../components/CanvasLoader'
 import { useMediaQuery } from 'react-responsive'
 import { calculateSizes } from '../constants'
-import Target from '../components/Target'
-import ReactLogo from '../components/ReactLogo'
-import Cube from '../components/Cube'
-import Rings from '../components/Rings'
 import HeroCamera from '../components/HeroCamera'
 import Button from '../components/Button'
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
 
 const Hero = () => {
 
@@ -20,6 +18,23 @@ const Hero = () => {
 
     const sizes = calculateSizes(isSmall, isMobile, isTablet)
 
+    const cardARef = useRef(null)
+    const cardBRef = useRef(null)
+    const cardCRef = useRef(null)
+
+    useGSAP(() => {
+      [cardARef, cardBRef, cardCRef].forEach((ref, i) => {
+        if (!ref.current) return
+        gsap.to(ref.current, {
+          y: '-=10',
+          duration: 3 + i * 0.7,
+          repeat: -1,
+          yoyo: true,
+          ease: 'sine.inOut',
+          delay: i * 0.9,
+        })
+      })
+    }, [])
 
   return (
    <section className="min-h-screen w-full flex flex-col relative">
@@ -35,27 +50,18 @@ const Hero = () => {
         </div>
 
         <div className="w-full h-full absolute inset-0 mt-4">
-            {/* <Leva/> */}
             <Canvas className="w-full h-full">
                 <Suspense fallback={<CanvasLoader/>}>
                     <PerspectiveCamera makeDefault position={[0,0,20]} />
 
                     <HeroCamera isMobile = {isMobile}>
-                        <HackerRoom 
-                            // scale={0.07} 
-                            position={sizes.deskPosition} 
+                        <HackerRoom
+                            position={sizes.deskPosition}
                             rotation={[0, -Math.PI, 0]}
                             scale={sizes.deskScale}
                         />
                     </HeroCamera>
 
-                    <group>
-                        <Target position={sizes.targetPosition} />
-                        <ReactLogo position={sizes.reactLogoPosition} />
-                        <Cube position={sizes.cubePosition} />
-                        <Rings position={sizes.ringPosition} />
-
-                    </group>
                     <ambientLight intensity={1} />
                     <directionalLight position ={[10,10,10]} intensity={0.5} />
                 </Suspense>
@@ -63,6 +69,26 @@ const Hero = () => {
             </Canvas>
 
         </div>
+
+        {/* Floating stat cards — desktop only */}
+        <div ref={cardARef} className="stat-card hidden sm:flex flex-col gap-1 bottom-32 left-8">
+          <p className="stat-card_label">ML Pipeline</p>
+          <p className="stat-card_value">1.8M</p>
+          <p className="stat-card_sub">EPC records processed</p>
+        </div>
+
+        <div ref={cardBRef} className="stat-card hidden sm:flex flex-col gap-1 top-40 right-8">
+          <p className="stat-card_label">PromptOps</p>
+          <p className="stat-card_value">9×</p>
+          <p className="stat-card_sub">eval engine speedup</p>
+        </div>
+
+        <div ref={cardCRef} className="stat-card hidden sm:flex flex-col gap-1 bottom-52 right-12">
+          <p className="stat-card_label">UK Work Rights</p>
+          <p className="stat-card_value">✓</p>
+          <p className="stat-card_sub">Graduate Route · no sponsorship</p>
+        </div>
+
         <div className="absolute bottom-7 left-0 right-0 w-full z-10 c-space">
             <a href="#about" className="w-fit">
                 <Button name="Let's work together" isBeam containerClass="sm:w-fit w-full sm:min-w-96" />
