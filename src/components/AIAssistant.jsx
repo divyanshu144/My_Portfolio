@@ -3,9 +3,7 @@ import portfolioData from '../../data/portfolioData.json';
 
 const tabs = [
   { id: 'chat', label: 'Chat' },
-  { id: 'resume', label: 'Resume' },
   { id: 'explainer', label: 'Explainer' },
-  { id: 'coach', label: 'Coach' },
 ];
 
 const defaultRepo = portfolioData.projects?.[0]?.repo || '';
@@ -77,14 +75,8 @@ const AIAssistant = () => {
   const [chatInput, setChatInput] = useState('');
   const messagesEndRef = useRef(null);
 
-  const [resumeInput, setResumeInput] = useState('');
-  const [resumeFocus, setResumeFocus] = useState('');
-  const [resumeTone, setResumeTone] = useState('professional');
   const [repoUrl, setRepoUrl] = useState(defaultRepo);
   const [repoQuestion, setRepoQuestion] = useState('');
-  const [coachRole, setCoachRole] = useState('');
-  const [coachCompany, setCoachCompany] = useState('');
-  const [coachFocus, setCoachFocus] = useState('');
 
   const projectOptions = useMemo(() => portfolioData.projects || [], []);
 
@@ -218,22 +210,6 @@ const AIAssistant = () => {
 
             {activeTab !== 'chat' && (
               <div className="ai-body">
-                {activeTab === 'resume' && (
-                  <form onSubmit={e => { e.preventDefault(); callApi('/api/resume', { jobDescription: resumeInput.trim(), focus: resumeFocus.trim(), tone: resumeTone }); }} className="ai-form">
-                    <label className="ai-label">Job description</label>
-                    <textarea className="ai-input" rows={5} value={resumeInput} onChange={e => setResumeInput(e.target.value)} placeholder="Paste the job description here." />
-                    <label className="ai-label">Focus (optional)</label>
-                    <input className="ai-input" value={resumeFocus} onChange={e => setResumeFocus(e.target.value)} placeholder="e.g., AI engineering, data pipelines, full-stack" />
-                    <label className="ai-label">Tone</label>
-                    <select className="ai-input" value={resumeTone} onChange={e => setResumeTone(e.target.value)}>
-                      <option value="professional">Professional</option>
-                      <option value="concise">Concise</option>
-                      <option value="bold">Bold</option>
-                    </select>
-                    <button className="ai-btn" type="submit" disabled={loading}>{loading ? 'Generating...' : 'Generate'}</button>
-                  </form>
-                )}
-
                 {activeTab === 'explainer' && (
                   <form onSubmit={e => { e.preventDefault(); if (repoUrl.trim()) callApi('/api/explain', { repoUrl: repoUrl.trim(), question: repoQuestion.trim() }); }} className="ai-form">
                     <label className="ai-label">Select a project</label>
@@ -243,18 +219,6 @@ const AIAssistant = () => {
                     <label className="ai-label">Question (optional)</label>
                     <input className="ai-input" value={repoQuestion} onChange={e => setRepoQuestion(e.target.value)} placeholder="e.g., Explain the architecture and key design decisions" />
                     <button className="ai-btn" type="submit" disabled={loading}>{loading ? 'Explaining...' : 'Explain'}</button>
-                  </form>
-                )}
-
-                {activeTab === 'coach' && (
-                  <form onSubmit={e => { e.preventDefault(); callApi('/api/coach', { role: coachRole.trim(), company: coachCompany.trim(), focus: coachFocus.trim() }); }} className="ai-form">
-                    <label className="ai-label">Target role</label>
-                    <input className="ai-input" value={coachRole} onChange={e => setCoachRole(e.target.value)} placeholder="e.g., AI Engineer, Data Scientist, Full-Stack Dev" />
-                    <label className="ai-label">Company (optional)</label>
-                    <input className="ai-input" value={coachCompany} onChange={e => setCoachCompany(e.target.value)} placeholder="e.g., Google, Palantir, startup" />
-                    <label className="ai-label">Focus (optional)</label>
-                    <input className="ai-input" value={coachFocus} onChange={e => setCoachFocus(e.target.value)} placeholder="e.g., ML systems, system design, behavioural" />
-                    <button className="ai-btn" type="submit" disabled={loading}>{loading ? 'Coaching...' : 'Generate'}</button>
                   </form>
                 )}
 
