@@ -2,11 +2,10 @@ import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { Suspense, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { Center, OrbitControls } from '@react-three/drei';
 
 import { myProjects } from '../constants/index.js';
 import CanvasLoader from '../components/Loading.jsx';
-import DemoComputer from '../components/DemoComputer.jsx';
+import ProjectDevice from '../components/ProjectDevice.jsx';
 
 const projectCount = myProjects.length;
 
@@ -69,11 +68,9 @@ const Projects = () => {
             </div>
 
             <div className="flex items-center justify-between flex-wrap gap-5">
-              <div className="flex items-center gap-3">
+              <div className="flex items-center flex-wrap gap-2">
                 {currentProject.tags.map((tag, index) => (
-                  <div key={index} className="tech-logo">
-                    <img src={tag.path} alt={tag.name} />
-                  </div>
+                  <span key={index} className="project-chip">{tag}</span>
                 ))}
               </div>
 
@@ -100,17 +97,13 @@ const Projects = () => {
         </div>
 
         <div className="border border-black-300 bg-black-200 rounded-lg h-96 md:h-full">
-          <Canvas>
-            <ambientLight intensity={Math.PI} />
-            <directionalLight position={[10, 10, 5]} />
-            <Center>
-              <Suspense fallback={<CanvasLoader />}>
-                <group scale={2} position={[0, -3, 0]} rotation={[0, -0.1, 0]}>
-                  <DemoComputer texture={currentProject.texture} />
-                </group>
-              </Suspense>
-            </Center>
-            <OrbitControls maxPolarAngle={Math.PI / 2} enableZoom={false} />
+          <Canvas camera={{ position: [0, 1, 6], fov: 45 }}>
+            <Suspense fallback={<CanvasLoader />}>
+              <ProjectDevice
+                selectedProjectIndex={selectedProjectIndex}
+                title={currentProject.title}
+              />
+            </Suspense>
           </Canvas>
         </div>
       </div>
