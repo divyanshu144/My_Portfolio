@@ -71,6 +71,7 @@ const ProjectDevice = ({ selectedProjectIndex, title }) => {
         autoRotateSpeed={0.6}
         maxPolarAngle={Math.PI / 2}
         enableZoom={false}
+        enablePan={false}
       />
     </>
   )
