@@ -44,7 +44,11 @@ body {
 
   /* button component */
   .btn {
-    @apply flex gap-4 items-center justify-center cursor-pointer p-3 rounded-md bg-black-300  transition-all active:scale-95 text-white mx-auto;
+    @apply flex gap-4 items-center justify-center cursor-pointer p-3 rounded-md transition-all active:scale-95 text-white mx-auto;
+    background: linear-gradient(135deg, #0ea5e9, #38bdf8);
+  }
+  .btn:hover {
+    box-shadow: 0 0 20px rgba(56,189,248,0.45);
   }
 
   .btn-ping {
@@ -201,7 +205,12 @@ body {
   }
 
   .field-btn {
-    @apply bg-black-500 px-5 py-2 min-h-12 rounded-lg shadow-black-200 shadow-2xl flex justify-center items-center text-lg text-white gap-3;
+    @apply px-5 py-2 min-h-12 rounded-lg shadow-black-200 shadow-2xl flex justify-center items-center text-lg text-white gap-3;
+    background: linear-gradient(135deg, #0ea5e9, #38bdf8);
+    transition: box-shadow 0.2s;
+  }
+  .field-btn:hover:not(:disabled) {
+    box-shadow: 0 0 20px rgba(56,189,248,0.45);
   }
 
   .field-btn_arrow {
@@ -268,7 +277,14 @@ body {
   box-shadow: 0 0 36px rgba(56,189,248,0.65);
   transform: scale(1.05);
 }
-.ai-fab_icon { font-size: 0.7rem; opacity: 0.85; }
+.ai-fab_avatar {
+  width: 1.25rem; height: 1.25rem; border-radius: 9999px;
+  background: rgba(255,255,255,0.2);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 0.45rem; font-weight: 700; flex-shrink: 0;
+  overflow: hidden;
+}
+.ai-fab_avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 9999px; }
 .ai-fab_pulse {
   position: absolute;
   top: 0.3rem;
@@ -484,6 +500,7 @@ select.ai-input option { background: #1C1C21; }
   position: absolute;
   background: #0f141a;
   border: 1px solid #1e2a36;
+  border-left: 2px solid rgba(56,189,248,0.45);
   border-radius: 0.75rem;
   padding: 0.75rem 1rem;
   pointer-events: none;

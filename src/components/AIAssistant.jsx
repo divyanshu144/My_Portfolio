@@ -63,6 +63,24 @@ const TypingDots = () => (
   </div>
 );
 
+const DivAvatar = ({ className }) => {
+  const [imgFailed, setImgFailed] = useState(false);
+  return (
+    <div className={className}>
+      {!imgFailed ? (
+        <img
+          src="/assets/div-avatar.jpg"
+          alt="Div"
+          style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '9999px' }}
+          onError={() => setImgFailed(true)}
+        />
+      ) : (
+        <span style={{ fontWeight: 700 }}>DC</span>
+      )}
+    </div>
+  );
+};
+
 const AIAssistant = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('chat');
@@ -70,7 +88,7 @@ const AIAssistant = () => {
   const [output, setOutput] = useState('');
 
   const [messages, setMessages] = useState([
-    { role: 'assistant', content: "Hi! I'm Divyanshu's AI assistant. Ask me anything — projects, skills, visa status, experience, or availability." }
+    { role: 'assistant', content: "Hey! I'm an AI trained on Divyanshu's portfolio. Ask about his projects, tech stack, or whether he needs UK sponsorship 🤙" }
   ]);
   const [chatInput, setChatInput] = useState('');
   const messagesEndRef = useRef(null);
@@ -139,7 +157,7 @@ const AIAssistant = () => {
     <>
       <button className="ai-fab" onClick={() => setIsOpen(true)}>
         <span className="ai-fab_pulse" />
-        <span className="ai-fab_icon">✦</span>
+        <DivAvatar className="ai-fab_avatar" />
         Ask Div
       </button>
 
@@ -151,10 +169,10 @@ const AIAssistant = () => {
 
             <div className="ai-modal_header">
               <div className="flex items-center gap-3">
-                <div className="ai-avatar">✦</div>
+                <DivAvatar className="ai-avatar" />
                 <div>
-                  <p className="ai-modal_title">Ask Div</p>
-                  <p className="ai-modal_subtitle">AI-powered portfolio assistant</p>
+                  <p className="ai-modal_title">Chat with Div</p>
+                  <p className="ai-modal_subtitle">Divyanshu's personal AI · ask me anything</p>
                 </div>
               </div>
               <button className="ai-close" onClick={() => setIsOpen(false)} aria-label="Close">✕</button>
@@ -176,7 +194,7 @@ const AIAssistant = () => {
                 <div className="ai-messages">
                   {messages.map((msg, i) => (
                     <div key={i} className={`ai-message ${msg.role === 'user' ? 'ai-message--user' : 'ai-message--assistant'}`}>
-                      {msg.role === 'assistant' && <div className="ai-message_avatar">✦</div>}
+                      {msg.role === 'assistant' && <DivAvatar className="ai-message_avatar" />}
                       <div className={`ai-message_bubble ${msg.role === 'user' ? 'ai-bubble--user' : 'ai-bubble--assistant'}`}>
                         {msg.role === 'assistant'
                           ? <MarkdownText text={msg.content} />
@@ -186,7 +204,7 @@ const AIAssistant = () => {
                   ))}
                   {loading && (
                     <div className="ai-message ai-message--assistant">
-                      <div className="ai-message_avatar">✦</div>
+                      <DivAvatar className="ai-message_avatar" />
                       <div className="ai-bubble--assistant rounded-2xl rounded-tl-sm"><TypingDots /></div>
                     </div>
                   )}
