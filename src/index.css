@@ -303,7 +303,7 @@ select.ai-input option { background: var(--eerie-black-1); }
 .ai-fab span, .ai-modal span { display: inline; }
 
 /* gold backgrounds need dark text */
-.ai-fab, .ai-avatar, .ai-tab_active, .ai-bubble--user, .ai-send, .ai-btn { color: var(--smoky-black); }
+.ai-fab, .ai-avatar, .ai-message_avatar, .ai-tab_active, .ai-send, .ai-btn { color: var(--smoky-black); }
 .ai-modal_title { color: var(--white-2); }
 .ai-bubble--typing { border-radius: 1rem; border-top-left-radius: 0.125rem; }
 .ai-label--spaced { margin-bottom: 0.5rem; }
