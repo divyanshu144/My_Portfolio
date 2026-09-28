@@ -172,7 +172,7 @@ const AIAssistant = () => {
                 <DivAvatar className="ai-avatar" />
                 <div>
                   <p className="ai-modal_title">Chat with Div</p>
-                  <p className="ai-modal_subtitle">Divyanshu's personal AI · ask me anything</p>
+                  <p className="ai-modal_subtitle">Divyanshu&apos;s personal AI · ask me anything</p>
                 </div>
               </div>
               <button className="ai-close" onClick={() => setIsOpen(false)} aria-label="Close">✕</button>

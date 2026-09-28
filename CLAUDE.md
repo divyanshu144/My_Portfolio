@@ -30,30 +30,31 @@ OPENAI_MODEL=gpt-4.1-mini   # optional, this is the default
 This is a single-page portfolio site with a separate Express backend for AI features.
 
 ### Frontend (`src/`)
-- **`App.jsx`** — root, composes all sections in order: Navbar → Hero → About → Projects → Experience → Contact → Footer, with a floating `AIAssistant` overlay
-- **`sections/`** — full-page sections (Hero, About, Projects, Experience, Contact, Footer, Navbar)
-- **`components/`** — reusable pieces; many are Three.js/R3F 3D models (HackerRoom, Developer, Cube, ReactLogo, Rings, Target, DemoComputer) rendered inside R3F `<Canvas>` elements in the sections
-- **`constants/index.js`** — all static data shown in the UI: nav links, project list (`myProjects`), work experience (`workExperiences`), and the `calculateSizes` responsive helper
-- **`index.css`** — all custom CSS including `.ai-*` utility classes for the AI Assistant modal
+- **`App.jsx`**: root; renders `Sidebar` plus five tabs (About, Resume, Portfolio, Blog, Contact), with a floating `AIAssistant` overlay
+- **`sections/`**: the sidebar and tab pages (Sidebar, About, Resume, Portfolio, Blog, Contact)
+- **`components/`**: `AIAssistant.jsx` (chat/resume/explain/coach modal)
+- **`constants/index.js`**: `SUBSTACK_URL` and `skillGroups`
+- **`vcard.css`** and **`index.css`**: styling (see Styling below)
 
-### Backend (`server/index.js`)
-Express server with four API routes, all backed by the OpenAI Responses API:
-- `POST /api/chat` — general portfolio Q&A
-- `POST /api/resume` — tailored resume + cover letter generation
-- `POST /api/explain` — GitHub repo explainer (fetches README via GitHub API)
-- `POST /api/coach` — interview coaching questions and answer outlines
+### Backend
+- `server/index.js`: Express dev server (AI routes below plus the two read-only routes mounted from `api/`).
+- `api/*.js`: Vercel serverless functions used in production: `chat`, `resume`, `explain`, `coach`, `health`, plus:
+  - `GET /api/blog`: Substack posts (RSS parsed in `api/_lib/substack.js`, `SUBSTACK_URL`, default `https://div1761180.substack.com`).
+  - `GET /api/projects`: `portfolioData.projects` enriched with live GitHub metadata (`api/_lib/github.js`, optional `GITHUB_TOKEN`).
+- Both read-only routes cache in memory for ~30 min and serve stale data if upstream fails.
 
-The server loads `data/portfolioData.json` at startup and injects it as system context into every OpenAI request. Vite proxies all `/api/*` requests to `http://localhost:8787` during dev.
+The AI routes are backed by the OpenAI Responses API (`POST /api/chat`, `/api/resume`, `/api/explain`, `/api/coach`). The server loads `data/portfolioData.json` at startup and injects it as system context. Vite proxies all `/api/*` requests to `http://localhost:8787` during dev.
 
 ### Key data files
-- **`data/portfolioData.json`** — single source of truth for Divyanshu's bio, skills, experience, education, and projects used by the backend AI context
-- **`src/constants/index.js`** — separate static data for the frontend UI (project cards, experience timeline); must be kept in sync with `portfolioData.json` when content changes
-
-### 3D rendering
-Three.js scenes use `@react-three/fiber` and `@react-three/drei`. Models are `.glb` files served from `public/`. The `CanvasLoader` component handles R3F loading state. `HeroCamera` wraps camera with GSAP-driven scroll animation.
+- `data/portfolioData.json`: single source of truth for bio, skills, education, experience and the project list (each project's `repo` URL drives the GitHub enrichment). Also injected into the AI context.
+- `src/constants/index.js`: only `SUBSTACK_URL` and `skillGroups` (display names/icons for skill groups).
 
 ### Styling
-Tailwind CSS with a custom dark-mode palette (see `tailwind.config.js`). Custom font: `General Sans`. Animations use GSAP (`gsap` + `@gsap/react`). The `react-responsive` hook drives breakpoint logic via `calculateSizes`.
+- `src/vcard.css` is a verbatim copy of the vCard template's stylesheet; do not edit it. Additions and the AI assistant styles live in `src/index.css`.
+- The UI is the vCard layout: `Sidebar` plus five tabs (About, Resume, Portfolio, Blog, Contact) registered in `src/App.jsx`.
 
 ### Contact form
-Uses EmailJS (`@emailjs/browser`) — credentials are referenced via environment variable or hardcoded IDs in the Contact section.
+Uses EmailJS (`@emailjs/browser`) with IDs hardcoded in `src/sections/Contact.jsx`; validation in `src/lib/validateContact.js`.
+
+### Tests
+`npm test` runs `node:test` unit tests for the API helpers (`api/_lib/*.test.js`) and pure UI helpers (`src/lib/*.test.js`).
