@@ -26,9 +26,9 @@ const MarkdownText = ({ text }) => {
     if (!listItems.length) return;
     const Tag = listType === 'ol' ? 'ol' : 'ul';
     elements.push(
-      <Tag key={`list-${key}`} className={listType === 'ol' ? 'list-decimal ml-5 space-y-0.5 my-1' : 'list-disc ml-5 space-y-0.5 my-1'}>
+      <Tag key={`list-${key}`} className={listType === 'ol' ? 'ai-md-list ai-md-list--ol' : 'ai-md-list'}>
         {listItems.map((item, i) => (
-          <li key={i} className="text-white-600 text-sm" dangerouslySetInnerHTML={{ __html: parseInline(item) }} />
+          <li key={i} className="ai-md-item" dangerouslySetInnerHTML={{ __html: parseInline(item) }} />
         ))}
       </Tag>
     );
@@ -38,27 +38,27 @@ const MarkdownText = ({ text }) => {
 
   lines.forEach((line, i) => {
     const trimmed = line.trim();
-    if (!trimmed) { flushList(i); elements.push(<div key={i} className="h-1.5" />); return; }
+    if (!trimmed) { flushList(i); elements.push(<div key={i} className="ai-md-gap" />); return; }
 
     if (/^#{1,3}\s/.test(trimmed)) {
       flushList(i);
-      elements.push(<p key={i} className="font-semibold text-white text-sm mt-2 mb-0.5" dangerouslySetInnerHTML={{ __html: parseInline(trimmed.replace(/^#{1,3}\s/, '')) }} />);
+      elements.push(<p key={i} className="ai-md-heading" dangerouslySetInnerHTML={{ __html: parseInline(trimmed.replace(/^#{1,3}\s/, '')) }} />);
       return;
     }
     if (/^[-*]\s/.test(trimmed)) { listType = 'ul'; listItems.push(trimmed.replace(/^[-*]\s/, '')); return; }
     if (/^\d+\.\s/.test(trimmed)) { listType = 'ol'; listItems.push(trimmed.replace(/^\d+\.\s/, '')); return; }
 
     flushList(i);
-    elements.push(<p key={i} className="text-white-600 text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: parseInline(trimmed) }} />);
+    elements.push(<p key={i} className="ai-md-p" dangerouslySetInnerHTML={{ __html: parseInline(trimmed) }} />);
   });
   flushList('end');
-  return <div className="space-y-1">{elements}</div>;
+  return <div className="ai-md">{elements}</div>;
 };
 
 const TypingDots = () => (
-  <div className="flex items-center gap-1 px-3 py-2.5">
+  <div className="ai-dots">
     {[0, 1, 2].map(i => (
-      <span key={i} className="w-1.5 h-1.5 rounded-full bg-white-500 animate-bounce" style={{ animationDelay: `${i * 0.15}s` }} />
+      <span key={i} className="ai-dot" style={{ animationDelay: `${i * 0.15}s` }} />
     ))}
   </div>
 );
@@ -168,7 +168,7 @@ const AIAssistant = () => {
             <div className="ai-accent-bar" />
 
             <div className="ai-modal_header">
-              <div className="flex items-center gap-3">
+              <div className="ai-row">
                 <DivAvatar className="ai-avatar" />
                 <div>
                   <p className="ai-modal_title">Chat with Div</p>
@@ -198,14 +198,14 @@ const AIAssistant = () => {
                       <div className={`ai-message_bubble ${msg.role === 'user' ? 'ai-bubble--user' : 'ai-bubble--assistant'}`}>
                         {msg.role === 'assistant'
                           ? <MarkdownText text={msg.content} />
-                          : <p className="text-sm text-white">{msg.content}</p>}
+                          : <p className="ai-user-text">{msg.content}</p>}
                       </div>
                     </div>
                   ))}
                   {loading && (
                     <div className="ai-message ai-message--assistant">
                       <DivAvatar className="ai-message_avatar" />
-                      <div className="ai-bubble--assistant rounded-2xl rounded-tl-sm"><TypingDots /></div>
+                      <div className="ai-bubble--assistant ai-bubble--typing"><TypingDots /></div>
                     </div>
                   )}
                   <div ref={messagesEndRef} />
@@ -241,11 +241,11 @@ const AIAssistant = () => {
                 )}
 
                 {(loading && !output) && (
-                  <div className="mt-4 ai-output_box flex items-start gap-2"><TypingDots /></div>
+                  <div className="ai-output_box ai-output_box--typing"><TypingDots /></div>
                 )}
                 {output && (
                   <div className="ai-output">
-                    <p className="ai-label mb-2">Output</p>
+                    <p className="ai-label ai-label--spaced">Output</p>
                     <div className="ai-output_box"><MarkdownText text={output} /></div>
                   </div>
                 )}
