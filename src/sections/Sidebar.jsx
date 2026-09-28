@@ -25,9 +25,9 @@ const Sidebar = () => {
           <p className="title">{targetRoles[0]}</p>
         </div>
 
-        <button className="info_more-btn" onClick={() => setOpen((o) => !o)} aria-expanded={open}>
+        <button className="info_more-btn" onClick={() => setOpen((o) => !o)} aria-expanded={open} aria-label="Show contacts">
           <span>Show Contacts</span>
-          <ion-icon name="chevron-down"></ion-icon>
+          <ion-icon name="chevron-down" aria-hidden="true"></ion-icon>
         </button>
       </div>
 

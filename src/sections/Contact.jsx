@@ -69,9 +69,9 @@ const Contact = () => {
             <span>{loading ? 'Sending…' : 'Send Message'}</span>
           </button>
 
-          {status === 'success' && <p className="status-ok">Message sent. I&apos;ll be in touch soon.</p>}
+          {status === 'success' && <p className="status-ok" role="status">Message sent. I&apos;ll be in touch soon.</p>}
           {status === 'error' && (
-            <p className="status-err">Something went wrong. Please try again or email me directly.</p>
+            <p className="status-err" role="status">Something went wrong. Please try again or email me directly.</p>
           )}
         </form>
       </section>

@@ -36,6 +36,7 @@ const App = () => {
                   <button
                     className={`navbar-link${active === id ? ' active' : ''}`}
                     onClick={() => select(id)}
+                    aria-current={active === id ? 'page' : undefined}
                   >
                     {label}
                   </button>
