@@ -255,10 +255,10 @@
   width: 100%; background: var(--eerie-black-1); border: 1px solid var(--jet);
   border-radius: 0.625rem; padding: 0.5rem 0.875rem;
   color: white; font-size: 0.875rem; outline: none;
-  transition: border-color 0.2s; font-family: 'General Sans', sans-serif;
+  transition: border-color 0.2s; font-family: var(--ff-poppins);
 }
 .ai-input:focus { border-color: hsl(35, 100%, 68%); }
-.ai-input::placeholder { color: var(--onyx); }
+.ai-input::placeholder { color: var(--light-gray-70); }
 select.ai-input option { background: var(--eerie-black-1); }
 
 .ai-btn {
