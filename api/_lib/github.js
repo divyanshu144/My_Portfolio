@@ -18,6 +18,7 @@ export async function fetchRepoMeta(url, { token, fetchImpl } = {}) {
         'User-Agent': 'portfolio-projects-fetch',
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
       },
+      signal: AbortSignal.timeout(5000),
     });
     if (!res.ok) return null;
     const d = await res.json();
@@ -41,6 +42,9 @@ export function createProjectsFetcher({ getProjectList, token, fetchImpl, ttlMs 
   return withCache(ttlMs, async () => {
     const projects = getProjectList();
     const metas = await Promise.all(projects.map((p) => fetchRepoMeta(p.repo, { token, fetchImpl })));
+    if (projects.length > 0 && metas.every((m) => m === null)) {
+      throw new Error('GitHub returned no data for any project');
+    }
     return mergeProjects(projects, metas);
   }, now);
 }

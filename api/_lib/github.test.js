@@ -86,3 +86,31 @@ test('createProjectsFetcher fetches each repo once and then serves from cache', 
   await get();
   assert.equal(calls, 2);
 });
+
+test('createProjectsFetcher throws when every repo returns no data and nothing is cached', async () => {
+  const projects = [{ repo: 'https://github.com/o/a' }, { repo: 'https://github.com/o/b' }];
+  const fetchImpl = async () => ({ ok: false, status: 403 });
+  const get = createProjectsFetcher({ getProjectList: () => projects, fetchImpl });
+  await assert.rejects(get(), /GitHub returned no data for any project/);
+});
+
+test('createProjectsFetcher serves the last good result when every repo later fails', async () => {
+  const projects = [{ name: 'A', repo: 'https://github.com/o/a' }, { name: 'B', repo: 'https://github.com/o/b' }];
+  let failing = false;
+  const fetchImpl = async () => (failing ? { ok: false, status: 403 } : { ok: true, json: async () => repoJson() });
+  let t = 0;
+  const get = createProjectsFetcher({ getProjectList: () => projects, fetchImpl, ttlMs: 1000, now: () => t });
+  const first = await get();
+  assert.equal(first[0].github.stars, 7);
+  failing = true;
+  t = 5000;
+  const second = await get();
+  assert.deepEqual(second, first);
+});
+
+test('fetchRepoMeta passes an AbortSignal to fetch', async () => {
+  let opts;
+  const spy = async (url, o) => { opts = o; return { ok: true, json: async () => repoJson() }; };
+  await fetchRepoMeta('https://github.com/o/r', { fetchImpl: spy });
+  assert.ok(opts.signal instanceof AbortSignal);
+});

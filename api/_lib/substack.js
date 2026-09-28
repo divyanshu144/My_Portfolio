@@ -57,7 +57,7 @@ export function createPostsFetcher({ baseUrl, fetchImpl, ttlMs = 30 * 60 * 1000,
   const feedUrl = `${String(baseUrl).replace(/\/+$/, '')}/feed`;
   return withCache(ttlMs, async () => {
     const doFetch = fetchImpl || globalThis.fetch;
-    const res = await doFetch(feedUrl, { headers: { 'User-Agent': 'portfolio-blog-fetch' } });
+    const res = await doFetch(feedUrl, { headers: { 'User-Agent': 'portfolio-blog-fetch' }, signal: AbortSignal.timeout(5000) });
     if (!res.ok) throw new Error(`Substack feed responded ${res.status}`);
     return parseFeed(await res.text());
   }, now);
