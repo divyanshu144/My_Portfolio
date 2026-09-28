@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import portfolioData from '../../data/portfolioData.json'
-import { projectMeta } from '../lib/projectMeta'
+import { projectMeta, liveDemoUrl, extraTopics } from '../lib/projectMeta'
 
 // Static data renders immediately; live GitHub data replaces it when /api/projects answers.
 const initial = portfolioData.projects.map((p) => ({ ...p, github: null }))
@@ -24,6 +24,8 @@ const Portfolio = () => {
       <ul className="project-list">
         {projects.map((p) => {
           const meta = projectMeta(p)
+          const demo = liveDemoUrl(p)
+          const chips = [...(p.tech ?? []), ...extraTopics(p)]
           return (
             <li className="project-item active" key={p.repo}>
               <a href={p.repo} target="_blank" rel="noreferrer">
@@ -39,12 +41,17 @@ const Portfolio = () => {
                 <h3 className="project-title">{p.name}</h3>
                 {meta && <p className="project-category">{meta}</p>}
                 <p className="project-summary">{p.summary}</p>
-                {p.tech?.length > 0 && (
+                {chips.length > 0 && (
                   <ul className="chip-list project-chips">
-                    {p.tech.map((t) => <li className="chip" key={t}>{t}</li>)}
+                    {chips.map((t) => <li className="chip" key={t}>{t}</li>)}
                   </ul>
                 )}
               </a>
+              {demo && (
+                <div className="project-links">
+                  <a className="project-live" href={demo} target="_blank" rel="noreferrer">Live demo →</a>
+                </div>
+              )}
             </li>
           )
         })}

@@ -38,7 +38,7 @@ Source of truth stays `data/portfolioData.json` (backend AI context) and `src/co
 - **Sidebar:** `name`, `location`, `contact` (email, phone, linkedin, github); title derived from `targetRoles`. No birthday row.
 - **About:** `summary` as bio. "What I'm doing" cards, one per group in `skills` (languages, ai_ml, backend_apis, data_etl, devops, ...).
 - **Resume:** `education` and `experience` timelines. Skills as chips grouped by `skills` category.
-- **Portfolio:** a plain card grid (no filter). Each card merges the hand-written `name`, `summary`, `highlights` and `tech` from `portfolioData.json` with live GitHub data from `/api/projects`: description fallback, stars, primary language, topics, homepage link and last-pushed date. `myProjects` in `constants/index.js` is retired for this tab; `portfolioData.json` becomes the single list. Project images are optional; cards without one show a gold-tinted placeholder with the repo's language.
+- **Portfolio:** a plain card grid (no filter). Each card merges the hand-written `name`, `summary` and `tech` from `portfolioData.json` with live GitHub data from `/api/projects`. Cards show the summary, tech plus up to 3 extra GitHub topics as chips, language/stars/last-pushed meta, and a "Live demo" link when a homepage is set; `highlights` are not shown on cards. `myProjects` in `constants/index.js` is retired for this tab; `portfolioData.json` becomes the single list. Project images are optional; cards without one show a gold-tinted placeholder with the repo's language.
 - **Blog:** posts from `/api/blog`.
 - **Contact:** existing EmailJS form and credentials in vCard's form styling, keeping vCard's validity-based submit-button enabling. Map replaced with location text.
 

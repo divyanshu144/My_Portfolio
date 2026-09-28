@@ -62,6 +62,15 @@
 }
 .project-chips { margin: 10px 10px 4px; }
 
+.project-links { margin: 6px 10px 4px; }
+.project-live {
+  display: inline-block;
+  color: var(--orange-yellow-crayola);
+  font-size: var(--fs-7);
+  font-weight: var(--fw-500);
+}
+.project-live:hover, .project-live:focus { color: var(--vegas-gold); }
+
 /* blog + generic states */
 .state-note {
   color: var(--light-gray-70);
