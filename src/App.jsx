@@ -1,27 +1,54 @@
-import Navbar from './sections/Navbar'
-import Hero from './sections/Hero'
+import { useState } from 'react'
+import Sidebar from './sections/Sidebar'
 import About from './sections/About'
-import Projects from './sections/Projects'
-import Contact from './sections/Contact'
-import Footer from './sections/Footer'
-import Experience from './sections/Experience'
 import AIAssistant from './components/AIAssistant'
 
-const App = () => {
-  return (
-   <main className="max-w-7xl mx-auto relative">
-      <Navbar/>
-      <Hero/>
-      <About/>
-      <Projects/>
-      <Experience />
+const pages = [
+  { id: 'about', label: 'About', title: 'About me', Page: About },
+]
 
-      <Contact/>
-      <br/>
-      <br/>
-      <Footer/>
+const App = () => {
+  const [active, setActive] = useState('about')
+
+  const select = (id) => {
+    setActive(id)
+    window.scrollTo(0, 0)
+  }
+
+  return (
+    <>
+      <main>
+        <Sidebar />
+
+        <div className="main-content">
+          <nav className="navbar">
+            <ul className="navbar-list">
+              {pages.map(({ id, label }) => (
+                <li className="navbar-item" key={id}>
+                  <button
+                    className={`navbar-link${active === id ? ' active' : ''}`}
+                    onClick={() => select(id)}
+                  >
+                    {label}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          {pages.map(({ id, title, Page }) => (
+            <article key={id} className={`${id}${active === id ? ' active' : ''}`}>
+              <header>
+                <h2 className="h2 article-title">{title}</h2>
+              </header>
+              <Page />
+            </article>
+          ))}
+        </div>
+      </main>
+
       <AIAssistant />
-   </main>
+    </>
   )
 }
 
