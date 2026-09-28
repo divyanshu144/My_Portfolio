@@ -8,6 +8,7 @@
     "server": "node server/index.js",
     "build": "vite build",
     "lint": "eslint .",
+    "test": "node --test \"api/_lib/*.test.js\" \"src/lib/*.test.js\"",
     "preview": "vite preview",
     "start": "node server/index.js"
   },
@@ -19,6 +20,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "fast-xml-parser": "^5.11.1",
     "gsap": "^3.12.5",
     "leva": "^0.9.35",
     "maath": "^0.10.8",
