@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import Sidebar from './sections/Sidebar'
 import About from './sections/About'
+import Resume from './sections/Resume'
 import AIAssistant from './components/AIAssistant'
 
 const pages = [
   { id: 'about', label: 'About', title: 'About me', Page: About },
+  { id: 'resume', label: 'Resume', title: 'Resume', Page: Resume },
 ]
 
 const App = () => {
