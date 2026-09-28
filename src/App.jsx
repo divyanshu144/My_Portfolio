@@ -4,6 +4,7 @@ import About from './sections/About'
 import Resume from './sections/Resume'
 import Portfolio from './sections/Portfolio'
 import Blog from './sections/Blog'
+import Contact from './sections/Contact'
 import AIAssistant from './components/AIAssistant'
 
 const pages = [
@@ -11,6 +12,7 @@ const pages = [
   { id: 'resume', label: 'Resume', title: 'Resume', Page: Resume },
   { id: 'portfolio', label: 'Portfolio', title: 'Portfolio', Page: Portfolio },
   { id: 'blog', label: 'Blog', title: 'Blog', Page: Blog },
+  { id: 'contact', label: 'Contact', title: 'Contact', Page: Contact },
 ]
 
 const App = () => {
