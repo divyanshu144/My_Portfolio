@@ -302,6 +302,11 @@ select.ai-input option { background: var(--eerie-black-1); }
 /* vCard sets span/img/button to display:block; keep the widget's inline content inline */
 .ai-fab span, .ai-modal span { display: inline; }
 
+/* below 1024px the vCard navbar is fixed to the bottom (~57-62px tall); keep the AI button clear of it */
+@media (max-width: 1023px) {
+  .ai-fab { bottom: calc(64px + 0.75rem); }
+}
+
 /* gold backgrounds need dark text */
 .ai-fab, .ai-avatar, .ai-message_avatar, .ai-tab_active, .ai-send, .ai-btn { color: var(--smoky-black); }
 .ai-modal_title { color: var(--white-2); }
