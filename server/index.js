@@ -29,7 +29,7 @@ const BASE_URLS = {
 };
 const DEFAULT_MODELS = {
   xai:    'grok-3-mini',
-  groq:   'llama-3.3-70b-versatile',
+  groq:   'openai/gpt-oss-120b',
   ollama: 'llama3.1',
   openai: 'gpt-4.1-mini',
 };
@@ -250,7 +250,7 @@ Repo URL: ${repoUrl}
 Repo Meta:
 ${toText(meta)}
 README:
-${readme || 'No README available.'}
+${readme ? readme.slice(0, 4000) : 'No README available.'}
 User question: ${question || 'Provide a concise project explanation, key features, and tech stack.'}
     `.trim();
 

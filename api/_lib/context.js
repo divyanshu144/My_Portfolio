@@ -14,7 +14,7 @@ const BASE_URLS = {
 };
 const DEFAULT_MODELS = {
   xai:    'grok-3-mini',
-  groq:   'llama-3.3-70b-versatile',
+  groq:   'openai/gpt-oss-120b',
   openai: 'gpt-4o-mini',
 };
 
