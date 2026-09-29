@@ -38,12 +38,12 @@ This is a single-page portfolio site with a separate Express backend for AI feat
 
 ### Backend
 - `server/index.js`: Express dev server (AI routes below plus the two read-only routes mounted from `api/`).
-- `api/*.js`: Vercel serverless functions used in production: `chat`, `resume`, `explain`, `coach`, `health`, plus:
+- `api/*.js`: Vercel serverless functions used in production: `chat`, `explain`, `health`, plus:
   - `GET /api/blog`: Substack posts (RSS parsed in `api/_lib/substack.js`, `SUBSTACK_URL`, default `https://div1761180.substack.com`).
   - `GET /api/projects`: `portfolioData.projects` enriched with live GitHub metadata (`api/_lib/github.js`, optional `GITHUB_TOKEN`).
 - Both read-only routes cache in memory for ~30 min and serve stale data if upstream fails.
 
-The AI routes are backed by the OpenAI Responses API (`POST /api/chat`, `/api/resume`, `/api/explain`, `/api/coach`); the UI currently only uses `/api/chat` and `/api/explain`, the other two routes still exist but are unused by the UI. The server loads `data/portfolioData.json` at startup and injects it as system context. Vite proxies all `/api/*` requests to `http://localhost:8787` during dev.
+The AI routes are `POST /api/chat` and `POST /api/explain` (both used by the assistant modal), served through an OpenAI-compatible client. The provider is picked by whichever key is set (`XAI_API_KEY`, `GROQ_API_KEY`, `OPENAI_API_KEY`); `MODEL` overrides the model (Groq default: `openai/gpt-oss-120b`). The server loads `data/portfolioData.json` at startup and injects it as system context. Vite proxies all `/api/*` requests to `http://localhost:8787` during dev.
 
 ### Key data files
 - `data/portfolioData.json`: single source of truth for bio, skills, education, experience and the project list (each project's `repo` URL drives the GitHub enrichment). Also injected into the AI context.

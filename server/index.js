@@ -209,35 +209,6 @@ app.post('/api/chat', async (req, res) => {
   }
 });
 
-app.post('/api/resume', async (req, res) => {
-  try {
-    const { jobDescription = '', focus = '', tone = 'professional' } = req.body || {};
-    const prompt = `
-Create a tailored resume summary and a short cover letter for Divyanshu Charak.
-Tone: ${tone}.
-Focus: ${focus || 'Best alignment with the job description'}.
-Job Description:
-${jobDescription || 'Not provided.'}
-Return:
-1) 5-7 bullet points for resume highlights.
-2) A cover letter of ~150-200 words.
-    `.trim();
-
-    const response = await openai.chat.completions.create({
-      model,
-      messages: [
-        { role: 'system', content: `${baseSystem}\n\n${buildPortfolioContext()}` },
-        { role: 'user', content: prompt },
-      ],
-    });
-
-    res.json({ text: response.choices[0].message.content });
-  } catch (error) {
-    console.error('Resume error:', error?.message || error);
-    res.status(500).json({ error: 'Failed to generate resume content.' });
-  }
-});
-
 app.post('/api/explain', async (req, res) => {
   try {
     const { repoUrl, question = '' } = req.body || {};
@@ -266,34 +237,6 @@ User question: ${question || 'Provide a concise project explanation, key feature
   } catch (error) {
     console.error('Explain error:', error?.message || error);
     res.status(500).json({ error: 'Failed to explain project.' });
-  }
-});
-
-app.post('/api/coach', async (req, res) => {
-  try {
-    const { role = '', company = '', focus = '' } = req.body || {};
-    const prompt = `
-You are an interview coach for ${portfolioData.name}.
-Role: ${role || 'Not provided'}.
-Company: ${company || 'Not provided'}.
-Focus: ${focus || 'Core competencies and relevant projects'}.
-Generate:
-1) 6-8 interview questions tailored to the role.
-2) Strong answer outlines grounded in the portfolio data.
-    `.trim();
-
-    const response = await openai.chat.completions.create({
-      model,
-      messages: [
-        { role: 'system', content: `${baseSystem}\n\n${buildPortfolioContext()}` },
-        { role: 'user', content: prompt },
-      ],
-    });
-
-    res.json({ text: response.choices[0].message.content });
-  } catch (error) {
-    console.error('Coach error:', error?.message || error);
-    res.status(500).json({ error: 'Failed to generate interview coaching.' });
   }
 });
 
