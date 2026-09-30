@@ -1570,8 +1570,9 @@ python3 - <<'EOF'
 p = 'src/index.css'
 css = open(p).read()
 marker = '/* ─── AI Assistant'
-start = css.index(marker)
-head, block = css[:start], css[start:]
+end_marker = '/* ─── Walking avatar: art'   # the avatar rules from Tasks 4 and 5 come after the old block: leave them untouched
+start, end = css.index(marker), css.index(end_marker)
+head, block, tail = css[:start], css[start:end], css[end:]
 
 chunks, i, n = [], 0, len(block)
 while i < n:
@@ -1603,14 +1604,14 @@ for c in chunks:
     else:
         dropped.append(text.split('{')[0].strip())
 
-open(p, 'w').write(head + ''.join(kept).rstrip() + '\n')
+open(p, 'w').write(head + ''.join(kept).rstrip() + '\n\n' + tail)
 print('dropped %d rules:' % len(dropped))
 for d in dropped:
     print('  ', d)
 EOF
 ```
 
-Expected: the dropped list contains the `.ai-fab*`, `.ai-modal`, `.ai-modal_overlay`, `.ai-modal_panel`, `.ai-tab*`, `.ai-body*`, `.ai-form`, `.ai-label*`, `.ai-btn*`, `.ai-output*`, `select.ai-input option`, `@keyframes ai-pulse`, the `.ai-fab span, .ai-modal span` rule, the `@media (max-width: 1023px)` block that moved the fab, and the old combined dark-text rule. Nothing from the Task 4 or Task 5 `wa-*` blocks may appear in it (they come before nothing else in the file; if any `.wa-` rule was dropped, restore it from git and stop).
+Expected: the dropped list contains the `.ai-fab*`, `.ai-modal`, `.ai-modal_overlay`, `.ai-modal_panel`, `.ai-tab*`, `.ai-body*`, `.ai-form`, `.ai-label*`, `.ai-btn*`, `.ai-output*`, `select.ai-input option`, `@keyframes ai-pulse`, the `.ai-fab span, .ai-modal span` rule, the `@media (max-width: 1023px)` block that moved the fab, and the old combined dark-text rule. No `.wa-` rule, `:root`, `body` or `@keyframes wa-` may appear in the dropped list (the script copies everything from the `/* ─── Walking avatar: art` comment onward through unchanged). If any does, restore `src/index.css` with `git checkout -- src/index.css` and stop.
 
 Then append the popup rules and the dark-text rule the script removed:
 
