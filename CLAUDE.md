@@ -30,8 +30,8 @@ OPENAI_MODEL=gpt-4.1-mini   # optional, this is the default
 This is a single-page portfolio site with a separate Express backend for AI features.
 
 ### Frontend (`src/`)
-- **`App.jsx`**: root; renders `Sidebar` plus five tabs (About, Resume, Portfolio, Blog, Contact), with a floating `AIAssistant` overlay
-- **`sections/`**: the sidebar and tab pages (Sidebar, About, Resume, Portfolio, Blog, Contact)
+- **`App.jsx`**: root; renders `Sidebar` plus five tabs (About, Experience, Portfolio, Blog, Contact), with a floating `AIAssistant` overlay
+- **`sections/`**: the sidebar and tab pages (Sidebar, About, Experience, Portfolio, Blog, Contact)
 - **`components/`**: `AIAssistant.jsx` (chat/explainer modal)
 - **`constants/index.js`**: `SUBSTACK_URL` and `skillGroups`
 - **`vcard.css`** and **`index.css`**: styling (see Styling below)
@@ -49,7 +49,7 @@ The AI routes are `POST /api/chat` and `POST /api/explain` (both used by the ass
 
 ### Styling
 - `src/vcard.css` is a verbatim copy of the vCard template's stylesheet; do not edit it. Additions and the AI assistant styles live in `src/index.css`.
-- The UI is the vCard layout: `Sidebar` plus five tabs (About, Resume, Portfolio, Blog, Contact) registered in `src/App.jsx`.
+- The UI is the vCard layout: `Sidebar` plus five tabs (About, Experience, Portfolio, Blog, Contact) registered in `src/App.jsx`.
 
 ### Contact form
 Uses EmailJS (`@emailjs/browser`) with IDs hardcoded in `src/sections/Contact.jsx`; validation in `src/lib/validateContact.js`.

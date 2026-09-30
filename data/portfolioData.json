@@ -19,6 +19,23 @@
     "Backend Software Engineer"
   ],
   "summary": "AI engineer with three years of production delivery in banking and government visa systems, promoted to Senior Software Engineer. I build agent systems, retrieval pipelines and evaluation tooling, and I measure them before I trust them. MSc Statistical Data Science, University of Exeter (Merit). Based in Exeter, open to London and remote roles.",
+  "aboutCards": [
+    {
+      "title": "By the numbers",
+      "icon": "icon-dev",
+      "text": "3 years of production delivery. 60+ government contracts on one platform. 73% lower inference cost on JobFit. 40% lower API response time on a banking platform."
+    },
+    {
+      "title": "Always learning",
+      "icon": "icon-design",
+      "text": "Learning new things every day."
+    },
+    {
+      "title": "Away from the keyboard",
+      "icon": "icon-app",
+      "text": "Reading books, playing guitar, going to the gym, and working as a barista at Starbucks. Badminton and table tennis sometimes."
+    }
+  ],
   "skills": {
     "languages": ["Python", "JavaScript", "TypeScript", "SQL"],
     "ai_ml": ["LLMs", "RAG", "OpenAI API", "scikit-learn", "XGBoost", "SHAP", "Prompt Engineering", "LangGraph", "MCP", "Claude Agent SDK", "LLM-as-judge evaluation"],
@@ -129,5 +146,5 @@
       "tech": ["React.js", "Redux", "Tailwind CSS", "TypeScript", "Firebase"]
     }
   ],
-  "interests": ["Part-time barista at Starbucks", "Table tennis", "Badminton", "Reading", "Running", "Gym", "Cycling"]
+  "interests": ["Reading books", "Playing guitar", "Gym", "Part-time barista at Starbucks", "Badminton (sometimes)", "Table tennis (sometimes)"]
 }

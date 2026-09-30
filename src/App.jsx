@@ -9,7 +9,7 @@ import AIAssistant from './components/AIAssistant'
 
 const pages = [
   { id: 'about', label: 'About', title: 'About me', Page: About },
-  { id: 'resume', label: 'Resume', title: 'Resume', Page: Resume },
+  { id: 'resume', label: 'Experience', title: 'Experience', Page: Resume },
   { id: 'portfolio', label: 'Portfolio', title: 'Portfolio', Page: Portfolio },
   { id: 'blog', label: 'Blog', title: 'Blog', Page: Blog },
   { id: 'contact', label: 'Contact', title: 'Contact', Page: Contact },
