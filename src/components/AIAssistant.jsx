@@ -96,7 +96,7 @@ const AIAssistant = () => {
   const [repoUrl, setRepoUrl] = useState(defaultRepo);
   const [repoQuestion, setRepoQuestion] = useState('');
 
-  const projectOptions = useMemo(() => portfolioData.projects || [], []);
+  const projectOptions = useMemo(() => (portfolioData.projects || []).filter((p) => p.repo), []);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
