@@ -4,6 +4,7 @@ export const COAST_SPEED = 160;
 export const MAN_W = 60;
 export const BIKE_W = 100;
 export const MARGIN = 16;
+export const FLAG_W = 52;          // how far the flag trails behind the bike
 export const SEAT_DX = 10;         // man left edge = bike left edge + this, bike facing right
 export const SEAT_DX_FLIPPED = 32; // same, bike facing left (the pair mirrors about the bike centre)
 export const INTRO_GAP = 190;      // how far behind the seat he starts
@@ -18,8 +19,8 @@ export const stepToward = (x, target, speed, dt) => {
 };
 
 export const riderBounds = (viewportWidth) => ({
-  min: MARGIN,
-  max: Math.max(MARGIN, viewportWidth - BIKE_W - MARGIN),
+  min: MARGIN + FLAG_W,
+  max: Math.max(MARGIN + FLAG_W, viewportWidth - BIKE_W - MARGIN - FLAG_W),
 });
 
 export const seatX = (bikeX, facing) => bikeX + (facing === -1 ? SEAT_DX_FLIPPED : SEAT_DX);

@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  BIKE_W, INTRO_GAP, MARGIN,
+  BIKE_W, FLAG_W, INTRO_GAP, MARGIN,
   bubbleShift, clamp, coastBikeX, introPositions, pickRideTarget, riderBounds, seatX, stepToward,
 } from './motion.js';
 
@@ -18,9 +18,9 @@ test('stepToward moves by speed*dt and never overshoots', () => {
   assert.equal(stepToward(100, 100, 50, 0.5), 100);
 });
 
-test('riderBounds leaves room for the bike and never inverts', () => {
-  assert.deepEqual(riderBounds(1560), { min: MARGIN, max: 1560 - BIKE_W - MARGIN });
-  assert.deepEqual(riderBounds(100), { min: MARGIN, max: MARGIN });
+test('riderBounds keeps room for the bike and the trailing flag, and never inverts', () => {
+  assert.deepEqual(riderBounds(1560), { min: MARGIN + FLAG_W, max: 1560 - BIKE_W - MARGIN - FLAG_W });
+  assert.deepEqual(riderBounds(100), { min: MARGIN + FLAG_W, max: MARGIN + FLAG_W });
 });
 
 test('seatX depends on which way the bike faces', () => {

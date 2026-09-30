@@ -420,3 +420,27 @@ body { padding-bottom: 120px; }
 @keyframes wa-bubble-out { to { opacity: 0; } }
 
 @media (prefers-reduced-motion: reduce) { .wa-bubble { animation: none; } }
+
+/* ─── Walking avatar: flag ────────────────────────────────────── */
+.wa-flag {
+  position: absolute; bottom: 14px; width: 52px; height: 90px; padding: 0;
+  background: none; border: 0; cursor: pointer;
+  opacity: 0; pointer-events: none; transition: opacity 0.25s;
+}
+.wa-flag[data-visible="1"] { opacity: 1; pointer-events: auto; }
+.wa-flag-pole { position: absolute; bottom: 0; width: 2px; height: 76px; background: #d5d5dc; }
+.wa-flag-cloth {
+  position: absolute; top: 0; width: 50px; padding: 3px 4px;
+  background: var(--orange-yellow-crayola); color: var(--smoky-black);
+  font-size: 9px; font-weight: var(--fw-600); line-height: 1.15; text-align: center;
+  animation: wa-flag-wave 0.6s ease-in-out infinite alternate;
+}
+/* pole at the bike's rear hub (x = 14 when facing right, x = 86 when facing left); cloth trails behind */
+.wa-bike[data-facing="1"] .wa-flag { left: -38px; }
+.wa-bike[data-facing="1"] .wa-flag-pole { right: 0; }
+.wa-bike[data-facing="1"] .wa-flag-cloth { right: 2px; border-radius: 6px 2px 2px 6px; transform-origin: 100% 50%; }
+.wa-bike[data-facing="-1"] .wa-flag { left: 86px; }
+.wa-bike[data-facing="-1"] .wa-flag-pole { left: 0; }
+.wa-bike[data-facing="-1"] .wa-flag-cloth { left: 2px; border-radius: 2px 6px 6px 2px; transform-origin: 0 50%; }
+@keyframes wa-flag-wave { from { transform: skewY(-5deg); } to { transform: skewY(5deg); } }
+@media (prefers-reduced-motion: reduce) { .wa-flag-cloth { animation: none; } .wa-flag { transition: none; } }
