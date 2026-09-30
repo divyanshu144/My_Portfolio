@@ -16,6 +16,7 @@ const WalkingAvatar = ({ roam }) => {
           tabIndex={-1}
           aria-hidden="true"
           data-visible={FLAG_PHASES.has(roam.phase) ? '1' : '0'}
+          onMouseDown={(e) => e.preventDefault()}
           onClick={roam.handlers.onClick}
         >
           <span className="wa-flag-pole" />
