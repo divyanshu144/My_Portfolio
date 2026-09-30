@@ -71,6 +71,14 @@ Rotation: while `riding`, show one bubble for about 4 s roughly every 8 s, shuff
 - If Web Audio is unavailable or scheduling fails, nothing plays and nothing throws.
 - Testing: unit tests with a faked audio context (silent before user activation, two dings when active, stop silences every oscillator, a new bell replaces the old one, missing Web Audio and throwing oscillators do not throw). Manual: the bell is invoked on mounting and stopped when riding starts.
 
+## Flag on the bike
+
+- A small pennant on a pole at the back of the bike, reading "Ask me" on one line and "anything" on the next, so visitors know the character is clickable. It is an HTML element (not part of the mirrored SVG), so the text is never mirrored.
+- Visible only while he is riding (the `riding` phase), and in `parked` (reduced motion, where he sits on the bike). It fades in when riding starts and is hidden when he brakes, gets off, mounts, or is chatting.
+- It always trails behind the bike: to the left when he faces right, to the right when he faces left, so it swaps sides when he turns round. It waves gently (disabled with reduced motion).
+- Clicking or tapping the flag does exactly what clicking him does (he brakes, gets off, and the chat opens). The flag is a mouse/touch shortcut only: it is not a tab stop and is hidden from screen readers (the avatar button already has the accessible name).
+- Because the flag sticks out about 52 px behind the bike, the bike's riding range keeps 52 px more clear of each screen edge (`FLAG_W = 52` added to the rider bounds), so the flag is never cut off.
+
 ## Chat popup
 
 - Small panel (about 340 x 460 px) positioned above and beside the avatar, flipped horizontally and clamped so it stays inside the viewport. On screens under 580 px it becomes full width, pinned above the tab bar.

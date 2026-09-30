@@ -1375,6 +1375,203 @@ git commit -m "feat(avatar): add roaming hook and walking avatar component" -m "
 
 ---
 
+### Task 5b: Flag on the bike
+
+**Files:**
+- Modify: `src/components/avatar/motion.js`, `src/components/avatar/motion.test.js`, `src/components/avatar/WalkingAvatar.jsx`, `src/index.css` (append at the very end of the file)
+
+**Interfaces:**
+- Consumes: `WalkingAvatar({ roam })` from Task 5 (`roam.phase`, `roam.bikeRef`, `roam.handlers.onClick`); `riderBounds` and `introPositions` from Task 1.
+- Produces: `FLAG_W = 52` exported from `motion.js`; `riderBounds(vw)` now returns `{ min: MARGIN + FLAG_W, max: Math.max(MARGIN + FLAG_W, vw - BIKE_W - MARGIN - FLAG_W) }`. The bike gets a `.wa-flag` button child (see below).
+
+- [ ] **Step 1: Update the motion tests first (RED)**
+
+In `src/components/avatar/motion.test.js`: add `FLAG_W` to the import list, and replace the `riderBounds` test with:
+
+```js
+test('riderBounds keeps room for the bike and the trailing flag, and never inverts', () => {
+  assert.deepEqual(riderBounds(1560), { min: MARGIN + FLAG_W, max: 1560 - BIKE_W - MARGIN - FLAG_W });
+  assert.deepEqual(riderBounds(100), { min: MARGIN + FLAG_W, max: MARGIN + FLAG_W });
+});
+```
+
+Also add to the `introPositions` test loop (inside the `for (const vw of [1560, 390])` body) nothing else: its existing assertions (`bike` inside bounds, `seatX(bike, 1) - man === INTRO_GAP`, `man >= MARGIN`) must still hold at both widths with the new bounds (at 390px: bike 222, man 42).
+
+Run: `npm test`. Expected: FAIL (FLAG_W is not exported yet).
+
+- [ ] **Step 2: Implement the constant and the bounds**
+
+In `src/components/avatar/motion.js`, add after the `MARGIN` line:
+
+```js
+export const FLAG_W = 52;          // how far the flag trails behind the bike
+```
+
+and replace `riderBounds` with:
+
+```js
+export const riderBounds = (viewportWidth) => ({
+  min: MARGIN + FLAG_W,
+  max: Math.max(MARGIN + FLAG_W, viewportWidth - BIKE_W - MARGIN - FLAG_W),
+});
+```
+
+Run: `npm test`. Expected: all pass.
+
+- [ ] **Step 3: Add the flag to the component**
+
+In `src/components/avatar/WalkingAvatar.jsx`, add above `const WalkingAvatar`:
+
+```jsx
+const FLAG_PHASES = new Set([PHASE.RIDING, PHASE.PARKED]);
+```
+
+and change the bike element to:
+
+```jsx
+      <div className="wa-bike" ref={roam.bikeRef}>
+        <BikeArt />
+        <button
+          className="wa-flag"
+          type="button"
+          tabIndex={-1}
+          aria-hidden="true"
+          data-visible={FLAG_PHASES.has(roam.phase) ? '1' : '0'}
+          onClick={roam.handlers.onClick}
+        >
+          <span className="wa-flag-pole" />
+          <span className="wa-flag-cloth">Ask me<br />anything</span>
+        </button>
+      </div>
+```
+
+- [ ] **Step 4: Append the flag CSS at the very end of `src/index.css`**
+
+```css
+/* ─── Walking avatar: flag ────────────────────────────────────── */
+.wa-flag {
+  position: absolute; bottom: 14px; width: 52px; height: 90px; padding: 0;
+  background: none; border: 0; cursor: pointer;
+  opacity: 0; pointer-events: none; transition: opacity 0.25s;
+}
+.wa-flag[data-visible="1"] { opacity: 1; pointer-events: auto; }
+.wa-flag-pole { position: absolute; bottom: 0; width: 2px; height: 76px; background: #d5d5dc; }
+.wa-flag-cloth {
+  position: absolute; top: 0; width: 50px; padding: 3px 4px;
+  background: var(--orange-yellow-crayola); color: var(--smoky-black);
+  font-size: 9px; font-weight: var(--fw-600); line-height: 1.15; text-align: center;
+  animation: wa-flag-wave 0.6s ease-in-out infinite alternate;
+}
+/* pole at the bike's rear hub (x = 14 when facing right, x = 86 when facing left); cloth trails behind */
+.wa-bike[data-facing="1"] .wa-flag { left: -38px; }
+.wa-bike[data-facing="1"] .wa-flag-pole { right: 0; }
+.wa-bike[data-facing="1"] .wa-flag-cloth { right: 2px; border-radius: 6px 2px 2px 6px; transform-origin: 100% 50%; }
+.wa-bike[data-facing="-1"] .wa-flag { left: 86px; }
+.wa-bike[data-facing="-1"] .wa-flag-pole { left: 0; }
+.wa-bike[data-facing="-1"] .wa-flag-cloth { left: 2px; border-radius: 2px 6px 6px 2px; transform-origin: 0 50%; }
+@keyframes wa-flag-wave { from { transform: skewY(-5deg); } to { transform: skewY(5deg); } }
+@media (prefers-reduced-motion: reduce) { .wa-flag-cloth { animation: none; } .wa-flag { transition: none; } }
+```
+
+- [ ] **Step 5: Verify in the browser** (`npm run dev`, open `http://localhost:5173/avatar-preview.html`, clear `sessionStorage` first; report each honestly)
+
+1. During the intro (arriving, walking to the bike, mounting) there is **no flag**. When the phase read-out becomes `riding` the flag fades in at the back of the bike: a thin pole with a gold pennant reading "Ask me / anything", not mirrored, not cut off.
+2. When he turns around the flag swaps to the other side and still trails behind; the text stays readable (not mirrored).
+3. Hover him: the phase goes `braking`, the flag fades out and stays hidden through `dismounting`, `waiting`, `chatting` and the walk back to the bike, and fades in again when `riding` resumes.
+4. Click the flag while riding: the phase goes `braking` then `dismounting` then `chatting` (no `waiting` in between). Close the fake chat: he returns to the bike and rides again.
+5. At desktop width and at 390 px wide (iframe of the page, as in earlier tasks), the flag and the bike are never cut off at either screen edge at any point in a minute of riding; sample positions with `getBoundingClientRect()` on `.wa-flag-cloth` and on the bike and confirm `left >= 0` and `right <= innerWidth`.
+6. The flag is not reachable with the Tab key (only the avatar button is).
+Stop the dev server and close any tab you opened.
+
+- [ ] **Step 6: Lint, test, build, commit**
+
+```bash
+npm run lint && npm test && npm run build
+git add src/components/avatar/motion.js src/components/avatar/motion.test.js src/components/avatar/WalkingAvatar.jsx src/index.css
+git commit -m "feat(avatar): add a clickable Ask me flag that shows only while riding" -m "Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>"
+```
+
+---
+
+### Task 5c: Hook hardening
+
+Three small robustness fixes to `useAvatarRoam.js` found by the Task 5 review. No behaviour change when everything goes right; they remove a visible glitch (a frame queued before a phase change could set `data-moving="1"` again after the layout effect cleared it, so he might keep "walking on the spot" for a moment after a hover) and two minor artefacts.
+
+**Files:**
+- Modify: `src/components/avatar/useAvatarRoam.js`
+
+- [ ] **Step 1: Track the current moving flags**
+
+After the line `const hoveringRef = useRef(false);` add:
+
+```js
+  const movingRef = useRef({ man: false, bike: false }); // last flags written by the loop, reused by the resize handler
+```
+
+- [ ] **Step 2: Reset them with the layout effect**
+
+Replace
+
+```js
+    apply(false, false);
+  }, [phase, apply]);
+```
+
+with
+
+```js
+    movingRef.current = { man: false, bike: false };
+    apply(false, false);
+  }, [phase, apply]);
+```
+
+- [ ] **Step 3: Ignore a frame queued before the phase changed, and never step backwards**
+
+In the movement effect, replace
+
+```js
+    const tick = (now) => {
+      const dt = Math.min(0.05, (now - last) / 1000);
+```
+
+with
+
+```js
+    const tick = (now) => {
+      if (phaseRef.current !== phase) return; // a frame queued before this phase ended: the next effect owns the loop
+      const dt = Math.max(0, Math.min(0.05, (now - last) / 1000));
+```
+
+and replace
+
+```js
+      apply(manMoving, bikeMoving);
+      raf = requestAnimationFrame(tick);
+```
+
+with
+
+```js
+      movingRef.current = { man: manMoving, bike: bikeMoving };
+      apply(manMoving, bikeMoving);
+      raf = requestAnimationFrame(tick);
+```
+
+- [ ] **Step 4: Do not restart the wheel and leg animations on every resize event**
+
+In the resize handler replace `apply(false, false);` (the one inside `onResize`) with `apply(movingRef.current.man, movingRef.current.bike);`.
+
+- [ ] **Step 5: Verify and commit**
+
+Run `npm run lint && npm test && npm run build` (only the known react-refresh warning in the throwaway preview is acceptable). Confirm by reading the file that the `apply(false, false)` inside `onResize` no longer exists and that the guard is the first line of `tick`. If a foreground browser is available (a tab that reports `document.visibilityState === "visible"`, so `requestAnimationFrame` runs), open `http://localhost:5173/avatar-preview.html`, hover the avatar about 30 times while he walks to the bike and while he rides, and confirm he never keeps swinging his legs or spinning the wheels after the phase read-out says `waiting`; otherwise say clearly that this could not be checked visually.
+
+```bash
+git add src/components/avatar/useAvatarRoam.js
+git commit -m "fix(avatar): ignore stale animation frames after a phase change and keep flags on resize" -m "Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>"
+```
+
+---
+
 ### Task 6: Chat popup, composer, CSS cleanup
 
 **Files:**
@@ -1447,7 +1644,12 @@ export default function ChatPopup({ chat, anchorX, onClose }) {
   const inputRef = useRef(null);
 
   useEffect(() => { endRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [messages, loading]);
-  useEffect(() => { inputRef.current?.focus(); }, []);
+  useEffect(() => {
+    // Move focus into the chat, and give it back to whatever had it (usually the avatar button) on close.
+    const previous = document.activeElement;
+    inputRef.current?.focus();
+    return () => { if (previous && previous !== document.body) previous.focus?.({ preventScroll: true }); };
+  }, []);
   useEffect(() => {
     const onKey = (e) => { if (e.key === 'Escape') onClose(); };
     document.addEventListener('keydown', onKey);
