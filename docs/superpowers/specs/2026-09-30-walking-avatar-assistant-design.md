@@ -19,7 +19,7 @@ Replace the floating "Ask Div" pill and the full-screen chat modal with a small 
 | Click / tap | Opens a small chat popup anchored next to him. On touch devices one tap gets him off the bike and opens the popup |
 | Close popup | X button, Esc, or click outside. He gets back on the bike and rides away |
 | Explainer tab | Dropped from the popup (confirmed); the popup is chat only. `/api/explain` stays on the server unchanged |
-| Intro sound | A short clip recorded by the owner, opt-in via a speaker button (see Sound). No copyrighted recordings |
+| Sound | Off by default. One sound switch (speaker button). When on: a bicycle bell every time he sits on the bike, and the owner's recorded intro clip when the intro is replayed (see Sound). No copyrighted recordings |
 | Look | Simple original cartoon: dark hair, gold hoodie (site accent), small bike. Drawn as inline SVG, no image assets or new libraries. *default* |
 | Intro frequency | The walk-to-bike intro plays once per browser session; reloads within the session skip it and start him already riding. *default* |
 | Reduced motion | With `prefers-reduced-motion`, he sits on the bike in the bottom-right corner, does not move; hover/click still opens the popup without the dismount animation |
@@ -66,12 +66,14 @@ Rotation: while `riding`, show one bubble for about 4 s roughly every 8 s, shuff
 
 ## Sound
 
-- The owner records a short intro clip (about 6 to 10 seconds, small file) and places it at `public/audio/intro.mp3`. It must be an original recording or something the owner has the rights to; it must not copy the melody of a commercial song.
-- Browsers block audio that starts without a user gesture, and the intro runs at page load. So: the first-load intro is silent, and calls `audio.play()` only inside a click handler. If the file is missing, nothing about sound appears.
-- A small speaker button (bottom corner, labelled "Play intro with sound") is shown only when `intro.mp3` exists (checked with a `HEAD` request, so a missing file just hides it). Clicking it resets the avatar to the intro start (standing a few steps from the bike), plays the clip from 0, and runs the walk, mount and ride sequence. Clicking it again while playing stops the clip and the intro continues silently.
-- The clip is lazy: it is not fetched until the button is clicked (`preload="none"`). Volume starts moderate; there is no autoplay and no looping.
-- With `prefers-reduced-motion` the speaker button plays only the clip (no replayed animation).
-- Testing: a unit test for the sound controller (play, stop, missing-file hides the button); manual check that a click plays sound in Chrome and that first load is silent.
+Two sounds, both opt-in. Browsers block audio that starts without a user gesture, and the first-load intro runs before any click, so the first-load intro is always silent.
+
+- **Sound switch.** A small speaker button in the bottom corner (accessible name "Turn sound on" / "Turn sound off", `aria-pressed`). Off by default. The choice is remembered in `localStorage`, but sound still only plays after the visitor has interacted with the page this load (`navigator.userActivation.hasBeenActive`).
+- **Bicycle bell.** Played each time the avatar finishes mounting the bike (during the intro replay and after every chat close or hover-away remount) when the switch is on. It is generated in code with the Web Audio API (two short sine tones with a fast decay, about 0.5 s, "ding-ding"), so there is no audio file to host. Volume is low. If Web Audio is unavailable, no sound plays and nothing errors.
+- **Intro clip.** The owner records a short clip (about 6 to 10 seconds, small file) at `public/audio/intro.mp3`. It must be an original recording or something the owner has the rights to, and must not copy the melody of a commercial song. Turning the switch on (a click, so the browser allows sound) replays the intro from the start (he stands a few steps from the bike, walks, mounts, rides) with the clip playing from 0. Turning the switch off stops the clip. The clip is fetched only on that click (`preload="none"`), never autoplays, never loops.
+- **No clip yet.** The switch still works for the bell. A `HEAD` request checks whether `intro.mp3` exists; if it does not, turning the switch on plays just the bell as feedback and does not replay the intro.
+- **Reduced motion.** No replayed animation; the switch only enables the bell and plays the clip if present.
+- **Testing.** Unit tests for the sound controller with the audio APIs faked: bell plays only when sound is on and the page has had user activation; switching off stops the clip; missing clip does not replay the intro; missing Web Audio does not throw. Manual: a click plays sound in Chrome, first load is silent, and the bell plays after closing the chat.
 
 ## Chat popup
 
@@ -84,7 +86,7 @@ Rotation: while `riding`, show one bubble for about 4 s roughly every 8 s, shuff
 - `src/components/avatar/avatarMachine.js` (+ `avatarMachine.test.js`): pure reducer, event names, constants.
 - `src/components/avatar/facts.js` (+ test): shuffled-without-repeat fact picker.
 - `src/components/avatar/useAvatarRoam.js`: timers, target picking, dispatches events. Respects reduced motion and page visibility.
-- `src/components/avatar/introSound.js` (+ test): loads/plays/stops `public/audio/intro.mp3`, reports whether the file exists.
+- `src/components/avatar/sound.js` (+ test): sound switch state (persisted), synthesized bicycle bell, and play/stop of `public/audio/intro.mp3` with an existence check.
 - `src/components/avatar/AvatarFigure.jsx`: SVG character and bike, poses via CSS classes on `data-state` (stand/walk, mount, seated/ride with wheel spin, dismount).
 - `src/components/avatar/ChatPopup.jsx`: the extracted chat panel.
 - `src/components/AIAssistant.jsx`: becomes a thin composer of the above (keeps its default export so `App.jsx` does not change).
