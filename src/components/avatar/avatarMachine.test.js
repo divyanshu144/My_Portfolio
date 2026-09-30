@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { avatarReducer, EVENT, PHASE } from './avatarMachine.js';
+import { avatarReducer, poseFor, EVENT, PHASE } from './avatarMachine.js';
 
 const at = (phase, extra = {}) => ({ phase, pendingChat: false, reducedMotion: false, ...extra });
 const run = (state, ...events) =>
@@ -86,4 +86,23 @@ test('reduced motion: stays parked, chat still opens and closes back to parked',
   assert.equal(s.phase, PHASE.CHATTING);
   s = avatarReducer(s, { type: EVENT.CLOSE_CHAT });
   assert.equal(s.phase, PHASE.PARKED);
+});
+
+test('poseFor: seated phases and parked are seated', () => {
+  [PHASE.MOUNTING, PHASE.RIDING, PHASE.BRAKING, PHASE.PARKED].forEach((p) => {
+    assert.equal(poseFor(p, false), 'seated', p);
+    assert.equal(poseFor(p, true), 'seated', p);
+  });
+});
+
+test('poseFor: ground phases stand, with or without reduced motion', () => {
+  [PHASE.ARRIVING, PHASE.WALKING_TO_BIKE, PHASE.DISMOUNTING, PHASE.WAITING].forEach((p) => {
+    assert.equal(poseFor(p, false), 'ground', p);
+    assert.equal(poseFor(p, true), 'ground', p);
+  });
+});
+
+test('poseFor: chatting stands normally but stays seated in reduced motion', () => {
+  assert.equal(poseFor(PHASE.CHATTING, false), 'ground');
+  assert.equal(poseFor(PHASE.CHATTING, true), 'seated');
 });

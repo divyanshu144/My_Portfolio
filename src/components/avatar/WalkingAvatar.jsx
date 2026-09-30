@@ -1,7 +1,5 @@
 import { BikeArt, ManArt } from './AvatarFigure';
-import { PHASE } from './avatarMachine';
-
-const SEATED = new Set([PHASE.MOUNTING, PHASE.RIDING, PHASE.BRAKING, PHASE.PARKED]);
+import { PHASE, poseFor } from './avatarMachine';
 
 const FLAG_PHASES = new Set([PHASE.RIDING, PHASE.PARKED]);
 
@@ -28,7 +26,7 @@ const WalkingAvatar = ({ roam }) => {
       <div
         className="wa-actor"
         ref={roam.actorRef}
-        data-pose={SEATED.has(roam.phase) ? 'seated' : 'ground'}
+        data-pose={poseFor(roam.phase, roam.reducedMotion)}
         data-hop={hop ? '1' : '0'}
       >
         {roam.bubble && (

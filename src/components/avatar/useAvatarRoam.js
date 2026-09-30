@@ -216,5 +216,5 @@ export function useAvatarRoam({ facts, sound }) {
   if (phase === PHASE.WAITING) bubble = { text: 'Want to chat?', kind: 'prompt' };
   else if (phase === PHASE.RIDING && factBubble) bubble = { text: factBubble, kind: 'fact' };
 
-  return { phase, bubble, actorRef, bikeRef, handlers, closeChat };
+  return { phase, reducedMotion: state.reducedMotion, bubble, actorRef, bikeRef, handlers, closeChat };
 }

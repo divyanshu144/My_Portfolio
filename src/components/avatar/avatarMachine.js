@@ -10,6 +10,14 @@ export const PHASE = {
   PARKED: 'parked',                // reduced motion: seated, not moving
 };
 
+const SEATED_PHASES = new Set([PHASE.MOUNTING, PHASE.RIDING, PHASE.BRAKING, PHASE.PARKED]);
+
+// In reduced motion he never gets off the bike, so he also stays seated while chatting.
+export function poseFor(phase, reducedMotion) {
+  if (SEATED_PHASES.has(phase)) return 'seated';
+  return reducedMotion && phase === PHASE.CHATTING ? 'seated' : 'ground';
+}
+
 export const EVENT = {
   START: 'START',
   INTRO_BEGIN: 'INTRO_BEGIN',
