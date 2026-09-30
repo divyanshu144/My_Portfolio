@@ -321,3 +321,67 @@ select.ai-input option { background: var(--eerie-black-1); }
 .ai-modal_title { color: var(--white-2); }
 .ai-bubble--typing { border-radius: 1rem; border-top-left-radius: 0.125rem; }
 .ai-label--spaced { margin-bottom: 0.5rem; }
+
+/* ─── Walking avatar: art ─────────────────────────────────────── */
+:root {
+  --wa-bottom: 0px;
+  --wa-hoodie: hsl(45, 100%, 72%);
+  --wa-hoodie-dark: hsl(40, 78%, 52%);
+  --wa-skin: #f1c8a5;
+  --wa-hair: #2a1f18;
+  --wa-pants: #34344a;
+  --wa-shoe: #f1f1f1;
+  --wa-frame: hsl(35, 100%, 62%);
+}
+@media (max-width: 1023px) { :root { --wa-bottom: 64px; } }
+
+.wa-hoodie { fill: var(--wa-hoodie); }
+.wa-hoodie-dark { fill: var(--wa-hoodie-dark); }
+.wa-skin { fill: var(--wa-skin); }
+.wa-hair { fill: var(--wa-hair); }
+.wa-pants { fill: var(--wa-pants); }
+.wa-shoe { fill: var(--wa-shoe); }
+.wa-eye { fill: #1b1b1f; }
+.wa-line { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.wa-line--pants { stroke: var(--wa-pants); stroke-width: 8; }
+.wa-line--arm { stroke: var(--wa-hoodie-dark); stroke-width: 7; }
+.wa-tyre { fill: none; stroke: #d5d5dc; stroke-width: 3; }
+.wa-spoke { fill: none; stroke: #8d8d99; stroke-width: 1; }
+.wa-frame { fill: none; stroke: var(--wa-frame); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.wa-saddle, .wa-pedal { fill: #2b2b33; }
+
+.wa-man-svg, .wa-bike-svg { display: block; overflow: visible; }
+.wa-actor[data-facing="-1"] .wa-man-svg,
+.wa-bike[data-facing="-1"] .wa-bike-svg { transform: scaleX(-1); }
+
+.wa-pose { display: none; }
+.wa-actor[data-pose="ground"] .wa-pose--ground,
+.wa-actor[data-pose="seated"] .wa-pose--seated { display: inline; }
+
+.wa-leg--back { transform-origin: 27px 57px; }
+.wa-leg--front { transform-origin: 33px 57px; }
+.wa-arm--back { transform-origin: 18px 33px; }
+.wa-arm--front { transform-origin: 42px 33px; }
+.wa-wheel--rear { transform-origin: 20px 44px; }
+.wa-wheel--front { transform-origin: 80px 44px; }
+.wa-crank { transform-origin: 45px 44px; }
+
+@keyframes wa-swing-leg { from { transform: rotate(-26deg); } to { transform: rotate(26deg); } }
+@keyframes wa-swing-arm { from { transform: rotate(-18deg); } to { transform: rotate(18deg); } }
+@keyframes wa-spin { to { transform: rotate(360deg); } }
+@keyframes wa-pedal { from { transform: translate(0, -3px); } to { transform: translate(0, 3px); } }
+@keyframes wa-hop { 0% { transform: translateY(0); } 40% { transform: translateY(-16px); } 100% { transform: translateY(0); } }
+
+.wa-actor[data-moving="1"][data-pose="ground"] .wa-leg--back { animation: wa-swing-leg 0.5s ease-in-out infinite alternate; }
+.wa-actor[data-moving="1"][data-pose="ground"] .wa-leg--front { animation: wa-swing-leg 0.5s ease-in-out infinite alternate-reverse; }
+.wa-actor[data-moving="1"][data-pose="ground"] .wa-arm--back { animation: wa-swing-arm 0.5s ease-in-out infinite alternate-reverse; }
+.wa-actor[data-moving="1"][data-pose="ground"] .wa-arm--front { animation: wa-swing-arm 0.5s ease-in-out infinite alternate; }
+.wa-actor[data-moving="1"][data-pose="seated"] .wa-seated-leg--a { animation: wa-pedal 0.55s ease-in-out infinite alternate; }
+.wa-actor[data-moving="1"][data-pose="seated"] .wa-seated-leg--b { animation: wa-pedal 0.55s ease-in-out infinite alternate-reverse; }
+.wa-bike[data-moving="1"] .wa-wheel { animation: wa-spin 0.55s linear infinite; }
+.wa-bike[data-moving="1"] .wa-crank { animation: wa-spin 1.1s linear infinite; }
+.wa-actor[data-hop="1"] .wa-man { animation: wa-hop 0.5s ease-out; }
+
+@media (prefers-reduced-motion: reduce) {
+  .wa-actor *, .wa-bike * { animation: none !important; }
+}
