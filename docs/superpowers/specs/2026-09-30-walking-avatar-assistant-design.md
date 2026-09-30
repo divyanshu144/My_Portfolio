@@ -26,7 +26,7 @@ Replace the floating "Ask Div" pill and the full-screen chat modal with a small 
 
 ## State machine
 
-States: `arriving`, `walkingToBike`, `mounting`, `riding`, `braking`, `dismounting`, `waiting`, `chatting`, `remounting`.
+States: `arriving`, `walkingToBike`, `mounting`, `riding`, `braking`, `dismounting`, `waiting`, `chatting`, and `parked` (reduced motion). Returning to the bike after a chat or a hover reuses `walkingToBike` then `mounting`; there is no separate remounting state.
 
 | From | Event | To |
 |---|---|---|
@@ -35,12 +35,11 @@ States: `arriving`, `walkingToBike`, `mounting`, `riding`, `braking`, `dismounti
 | `walkingToBike` | reached bike | `mounting` |
 | `mounting` | animation end | `riding` |
 | `riding` | hover / focus / tap | `braking` then `dismounting` then `waiting` |
-| `waiting` | hover ends for 2 s | `remounting` |
+| `waiting` | hover ends for 2 s | `walkingToBike` |
 | `waiting` | click / tap / Enter | `chatting` |
-| `chatting` | close (X / Esc / outside) | `remounting` |
-| `remounting` | animation end | `riding` |
+| `chatting` | close (X / Esc / outside) | `walkingToBike` |
 
-The reducer is a pure function in `avatarMachine.js` so every transition is unit-tested. Timers (walking, riding targets, fact rotation, the 2 s grace period) live in a hook and dispatch events; nothing in the reducer touches the DOM or time.
+On dismount he stays exactly where he is (so the pointer is still over him) and the bike coasts about 80 px ahead. The reducer is a pure function in `avatarMachine.js` so every transition is unit-tested. Timers (walking, riding targets, fact rotation, the 2 s grace period) live in a hook and dispatch events; nothing in the reducer touches the DOM or time.
 
 ## Movement and layout
 
