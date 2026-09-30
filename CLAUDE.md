@@ -37,17 +37,15 @@ This is a single-page portfolio site with a separate Express backend for AI feat
 - **`vcard.css`** and **`index.css`**: styling (see Styling below)
 
 ### Backend
-- `server/index.js`: Express dev server (AI routes below plus the two read-only routes mounted from `api/`).
+- `server/index.js`: Express dev server (AI routes below plus the blog route mounted from `api/`).
 - `api/*.js`: Vercel serverless functions used in production: `chat`, `explain`, `health`, plus:
-  - `GET /api/blog`: Substack posts (RSS parsed in `api/_lib/substack.js`, `SUBSTACK_URL`, default `https://div1761180.substack.com`).
-  - `GET /api/projects`: `portfolioData.projects` enriched with live GitHub metadata (`api/_lib/github.js`, optional `GITHUB_TOKEN`).
-- Both read-only routes cache in memory for ~30 min and serve stale data if upstream fails.
+  - `GET /api/blog`: Substack posts (RSS parsed in `api/_lib/substack.js`, `SUBSTACK_URL`, default `https://div1761180.substack.com`). Cached in memory for ~30 min, and serves stale data if Substack is down.
 
 The AI routes are `POST /api/chat` and `POST /api/explain` (both used by the assistant modal), served through an OpenAI-compatible client. The provider is picked by whichever key is set (`XAI_API_KEY`, `GROQ_API_KEY`, `OPENAI_API_KEY`); `MODEL` overrides the model (Groq default: `openai/gpt-oss-120b`). The server loads `data/portfolioData.json` at startup and injects it as system context. Vite proxies all `/api/*` requests to `http://localhost:8787` during dev.
 
 ### Key data files
-- `data/portfolioData.json`: single source of truth for bio, skills, education, experience and the project list (each project's `repo` URL drives the GitHub enrichment). Also injected into the AI context.
-- `src/constants/index.js`: only `SUBSTACK_URL` and `skillGroups` (display names/icons for skill groups).
+- `data/portfolioData.json`: single source of truth for bio (`summary`), skills, education, experience and the project list. Also injected into the AI context. Project cards render only what is in this file, in this order. `repo` (card link) and `demo` (Live demo link) are optional per project; a project without `repo` is not clickable. `_todo` fields are notes for the owner and are never rendered or sent to the AI.
+- `src/constants/index.js`: only `SUBSTACK_URL` and `skillGroups` (display names for skill groups).
 
 ### Styling
 - `src/vcard.css` is a verbatim copy of the vCard template's stylesheet; do not edit it. Additions and the AI assistant styles live in `src/index.css`.
@@ -57,4 +55,4 @@ The AI routes are `POST /api/chat` and `POST /api/explain` (both used by the ass
 Uses EmailJS (`@emailjs/browser`) with IDs hardcoded in `src/sections/Contact.jsx`; validation in `src/lib/validateContact.js`.
 
 ### Tests
-`npm test` runs `node:test` unit tests for the API helpers (`api/_lib/*.test.js`) and pure UI helpers (`src/lib/*.test.js`).
+`npm test` runs `node:test` unit tests for the API helpers (`api/_lib/*.test.js`) and the contact-form validator (`src/lib/*.test.js`).

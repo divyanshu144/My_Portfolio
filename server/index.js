@@ -6,7 +6,6 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import blogHandler from '../api/blog.js';
-import projectsHandler from '../api/projects.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -172,7 +171,6 @@ app.get('/api/health', (_req, res) => {
 });
 
 app.get('/api/blog', blogHandler);
-app.get('/api/projects', projectsHandler);
 
 // Re-fetches all GitHub READMEs and reloads portfolioData.json from disk.
 // Call this after pushing new code to GitHub.

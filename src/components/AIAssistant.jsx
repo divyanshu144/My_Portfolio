@@ -6,7 +6,7 @@ const tabs = [
   { id: 'explainer', label: 'Explainer' },
 ];
 
-const defaultRepo = portfolioData.projects?.[0]?.repo || '';
+const defaultRepo = portfolioData.projects?.find((p) => p.repo)?.repo || '';
 
 const parseInline = (str) =>
   str

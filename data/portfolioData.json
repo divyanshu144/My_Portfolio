@@ -18,14 +18,14 @@
     "Full-Stack Engineer",
     "Backend Software Engineer"
   ],
-  "summary": "Software engineer and MSc Statistical Data Science graduate (Merit, University of Exeter) with 3+ years of professional experience at Mphasis. I build production-grade AI systems, data pipelines, and full-stack applications — combining engineering rigour with a data-first mindset. Currently seeking roles in AI/ML engineering, data engineering, or full-stack / backend development in the UK.",
+  "summary": "AI engineer with three years of production delivery in banking and government visa systems, promoted to Senior Software Engineer. I build agent systems, retrieval pipelines and evaluation tooling, and I measure them before I trust them. MSc Statistical Data Science, University of Exeter (Merit). Based in Exeter, open to London and remote roles.",
   "skills": {
-    "languages": ["Python", "JavaScript", "TypeScript", "SQL", "Java"],
-    "ai_ml": ["LLMs", "RAG", "OpenAI API", "scikit-learn", "XGBoost", "SHAP", "PyTorch", "Prompt Engineering"],
-    "backend_apis": ["FastAPI", "Express", "REST API design & integration", "PostgreSQL", "SQLite", "MongoDB"],
+    "languages": ["Python", "JavaScript", "TypeScript", "SQL"],
+    "ai_ml": ["LLMs", "RAG", "OpenAI API", "scikit-learn", "XGBoost", "SHAP", "Prompt Engineering", "LangGraph", "MCP", "Claude Agent SDK", "LLM-as-judge evaluation"],
+    "backend_apis": ["FastAPI", "Express", "REST API design & integration", "PostgreSQL", "SQLite"],
     "data_etl": ["Pandas", "NumPy", "Airflow", "MLflow", "data pipeline design", "structured & semi-structured data"],
-    "devops": ["Git", "Docker", "Jenkins (CI/CD)", "Redis", "Railway"],
-    "frontend": ["React", "Next.js", "Redux", "React Query", "Tailwind CSS"]
+    "devops": ["Git", "Docker", "Jenkins (CI/CD)", "Redis", "Railway", "AWS (ECS Fargate, S3, IAM)"],
+    "frontend": ["React", "Next.js", "Tailwind CSS"]
   },
   "education": [
     {
@@ -34,7 +34,7 @@
       "degree": "MSc Statistical Data Science",
       "dates": "Jan 2025 – Jan 2026",
       "grade": "Merit",
-      "dissertation": "Causal & Predictive Modelling of UK Energy Policy Impacts — analysed 1.8M EPC records using causal inference, XGBoost, SHAP explainability, Airflow DAG orchestration, and FastAPI service layer."
+      "dissertation": "Final project: causal and predictive modelling of UK energy policy impacts on 1.8M EPC records (XGBoost, SHAP, Airflow, FastAPI)."
     },
     {
       "institution": "PES University",
@@ -51,11 +51,9 @@
       "title": "Senior Software Engineer",
       "dates": "Oct 2023 – Dec 2024",
       "highlights": [
-        "Designed and delivered production-grade backend modules and REST API integrations within enterprise banking platforms, serving high-availability, client-facing systems.",
-        "Improved application performance by 20% through systematic profiling and optimisation of API interaction patterns, state management, and data-fetching workflows.",
-        "Led structured refactoring initiatives applying SOLID and DRY principles, reducing technical debt and improving maintainability across shared codebases.",
-        "Designed and implemented a Jenkins-based CI/CD pipeline automating build, test, and deployment stages.",
-        "Mentored junior engineers within a Scrum-based agile team."
+        "Rebuilt the refund review flow of a visa-processing platform off a legacy stack onto React and Node. Reviewers work claims across 60+ government contracts, each with its own fee rules.",
+        "Cut API response time 40% and database load 35% on the banking platform by collapsing redundant core calls into one aggregate response per screen.",
+        "Ran releases and production support across both accounts, and mentored junior engineers."
       ]
     },
     {
@@ -64,9 +62,9 @@
       "title": "Software Engineer",
       "dates": "Sep 2021 – Sep 2023",
       "highlights": [
-        "Worked directly with client teams to translate business requirements into technical specifications, delivering bespoke workflow systems and dashboards integrating SQL databases, finance platform APIs, and third-party services.",
-        "Engineered a performance-optimised document processing pipeline, resolving a critical bottleneck and contributing to €12k+ additional revenue.",
-        "Resolved production defects and maintained system stability through structured debugging, regression-safe refactoring, and automated testing."
+        "Built the React and TypeScript front end for a US private-client bank's digital channel platform during a core banking migration, on a system handling millions of transactions a day.",
+        "Wrote the Node.js layer between that front end and the bank's core. It shaped core responses per screen and kept tokens and session handling off the browser.",
+        "Engineered a performance-optimised document processing pipeline, resolving a critical bottleneck and contributing to €12k+ additional revenue."
       ]
     },
     {
@@ -82,41 +80,51 @@
   ],
   "projects": [
     {
+      "name": "JobFit",
+      "summary": "Six-agent pipeline that parses a CV and a job spec, scores the match and writes a tailored resume and cover letter. Typed contracts between agents, parallel stages, and per-agent model tiering that cut inference cost by 73%. Deployed on AWS ECS Fargate with CI/CD and monitoring.",
+      "tech": ["Python", "FastAPI", "AWS ECS Fargate", "Docker"],
+      "_todo": "TODO: add the GitHub repo link as \"repo\". The URL is not known yet, so do not guess it."
+    },
+    {
+      "name": "JARVIS",
+      "summary": "Voice-first macOS assistant with a three-tier model router (local Ollama, Groq, Claude) that escalates only when a cheaper model fails. About 20 tools behind one safety-gated dispatch layer, three-layer memory, per-request tracing and 69 tests.",
+      "tech": ["Python", "Whisper", "SQLite", "ChromaDB", "PyQt6"],
+      "_todo": "TODO: add the GitHub repo link as \"repo\". The URL is not known yet, so do not guess it."
+    },
+    {
       "name": "DocChat",
       "repo": "https://github.com/divyanshu144/DocChat",
-      "summary": "Production-grade AI assistant for natural language querying of documents (PDF, DOCX, TXT) — combining BM25 sparse search and dense embeddings fused via Reciprocal Rank Fusion for sub-second retrieval across 1,000+ chunks.",
-      "highlights": [
-        "Hybrid retrieval: BM25 sparse search + dense embeddings fused via RRF — sub-second retrieval across 1,000+ chunks.",
-        "Async ingestion pipeline (extract → chunk → embed → persist) with WAL-mode SQLite, Redis background queue, and token-level SSE streaming to the browser.",
-        "Fully documented REST API built with FastAPI, containerised with Docker."
-      ],
-      "tech": ["Python", "FastAPI", "SQLite", "Redis", "Docker"]
+      "summary": "Agentic RAG pipeline with planner, retriever, synthesizer and critic stages. The critic checks each answer against retrieved context before it surfaces. Cross-encoder reranking improved MRR by 28% and Hit@1 by 50%. Exposed as an MCP server.",
+      "tech": ["Python", "LangGraph", "ChromaDB", "MCP"]
     },
     {
       "name": "PromptOps",
       "repo": "https://github.com/divyanshu144/promptOps_framework",
-      "summary": "Full-stack system for prompt versioning, automated LLM regression detection, and multi-provider AI evaluation (OpenAI GPT-4o, Ollama) — enabling repeatable, auditable AI workflows with version-controlled prompt history.",
-      "highlights": [
-        "Prompt versioning and automated LLM regression detection across model updates.",
-        "Parallel evaluation loop using asyncio.gather for multi-provider evaluation (OpenAI GPT-4o, Ollama) — significantly faster than sequential.",
-        "Deployed to Railway with full documentation; TypeScript/Next.js frontend, FastAPI backend."
-      ],
-      "tech": ["Python", "FastAPI", "Next.js", "TypeScript", "SQLite", "Railway"]
+      "summary": "Prompt-as-code evaluation platform with MLflow tracking and LLM-as-judge scoring across OpenAI, Anthropic and Ollama. Took a golden test set from 40% to 100% pass rate by iterating on measured results, and cut completion tokens by 29%.",
+      "tech": ["Python", "FastAPI", "MLflow", "Next.js"]
+    },
+    {
+      "name": "SuperOps",
+      "summary": "Telegram agent for grocery store billing and GST, built in TypeScript on the Claude Agent SDK.",
+      "tech": ["TypeScript", "Claude Agent SDK", "Telegram"],
+      "_todo": "TODO: add one line on who uses SuperOps (do not invent it). Also add the GitHub repo link as \"repo\"; the URL is not known yet, so do not guess it."
     },
     {
       "name": "EPC South West",
       "repo": "https://github.com/divyanshu144/EPC",
-      "summary": "End-to-end ETL and ML pipeline processing 1.8M+ UK EPC records (2008–2025) — ingestion, cleaning, feature engineering, causal modelling, and gradient-boosted prediction with SHAP explainability.",
+      "summary": "End-to-end ETL and ML pipeline processing 1.8M+ UK EPC records (2008 to 2025). It covers ingestion, cleaning, feature engineering, causal modelling, and gradient-boosted prediction with SHAP explainability.",
       "highlights": [
         "ETL pipeline processing 1.8M+ EPC records with full cleaning and feature engineering.",
         "XGBoost gradient-boosted prediction + SHAP explainability for energy policy impact analysis.",
         "Reproducible CLI-driven workflow: Airflow DAG orchestration, MLflow experiment tracking, FastAPI service layer."
       ],
-      "tech": ["Python", "Pandas", "XGBoost", "MLflow", "Airflow", "FastAPI"]
+      "tech": ["Python", "Pandas", "XGBoost", "MLflow", "Airflow", "FastAPI"],
+      "_todo": "TODO: add what the model predicts and how well it performs (do not invent numbers)."
     },
     {
       "name": "Fooder",
       "repo": "https://github.com/divyanshu144/Fooder",
+      "demo": "https://fooder-two.vercel.app",
       "summary": "Restaurant discovery and online ordering web app with authentication, menus, and cart/checkout.",
       "tech": ["React.js", "Redux", "Tailwind CSS", "TypeScript", "Firebase"]
     }
