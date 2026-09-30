@@ -46,6 +46,7 @@ export function useAvatarRoam({ facts, sound }) {
   const hoveringRef = useRef(false);
   const movingRef = useRef({ man: false, bike: false }); // last flags written by the loop, reused by the resize handler
   const graceRef = useRef(0);
+  const focusIgnoreUntil = useRef(0); // the focus handed back to the avatar when the chat closes is not a hover
   const pos = useRef(null);
   if (pos.current === null) pos.current = initialPositions(phase);
   const picker = useMemo(() => createFactPicker(facts), [facts]);
@@ -204,12 +205,12 @@ export function useAvatarRoam({ facts, sound }) {
   const handlers = useMemo(() => ({
     onPointerEnter: (e) => { if (e.pointerType === 'mouse' || e.pointerType === 'pen') hoverStart(); },
     onPointerLeave: (e) => { if (e.pointerType === 'mouse' || e.pointerType === 'pen') hoverEnd(); },
-    onFocus: (e) => { if (e.currentTarget.matches(':focus-visible')) hoverStart(); },
+    onFocus: (e) => { if (performance.now() < focusIgnoreUntil.current) return; if (e.currentTarget.matches(':focus-visible')) hoverStart(); },
     onBlur: () => hoverEnd(),
     onClick: () => dispatch({ type: EVENT.OPEN_CHAT }),
   }), [hoverStart, hoverEnd]);
 
-  const closeChat = useCallback(() => dispatch({ type: EVENT.CLOSE_CHAT }), []);
+  const closeChat = useCallback(() => { focusIgnoreUntil.current = performance.now() + 400; dispatch({ type: EVENT.CLOSE_CHAT }); }, []);
 
   let bubble = null;
   if (phase === PHASE.WAITING) bubble = { text: 'Want to chat?', kind: 'prompt' };
