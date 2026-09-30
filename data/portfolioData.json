@@ -36,6 +36,15 @@
       "text": "Reading books, playing guitar, going to the gym, and working as a barista at Starbucks. Badminton and table tennis sometimes."
     }
   ],
+  "avatarFacts": [
+    "Cut inference cost 73% on JobFit.",
+    "MSc Statistical Data Science, University of Exeter (Merit).",
+    "Rebuilt a refund review flow used across 60+ government contracts.",
+    "Took a prompt test set from 40% to 100% pass rate.",
+    "Plays guitar and reads books.",
+    "Works part time as a barista at Starbucks.",
+    "Learns something new every day."
+  ],
   "skills": {
     "languages": ["Python", "JavaScript", "TypeScript", "SQL"],
     "ai_ml": ["LLMs", "RAG", "OpenAI API", "scikit-learn", "XGBoost", "SHAP", "Prompt Engineering", "LangGraph", "MCP", "Claude Agent SDK", "LLM-as-judge evaluation"],
