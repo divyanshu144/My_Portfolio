@@ -22,7 +22,7 @@ Replace the floating "Ask Div" pill and the full-screen chat modal with a small 
 | Sound | No switch, no audio files. A short synthesized bicycle bell rings while he sits down on the bike and is cut off the moment he starts riding (see Sound) |
 | Look | Simple original cartoon: dark hair, gold hoodie (site accent), small bike. Drawn as inline SVG, no image assets or new libraries. *default* |
 | Intro frequency | The walk-to-bike intro plays once per browser session; reloads within the session skip it and start him already riding. *default* |
-| Reduced motion | With `prefers-reduced-motion`, he sits on the bike in the bottom-right corner, does not move; hover/click still opens the popup without the dismount animation |
+| Reduced motion | With `prefers-reduced-motion`, he sits on the bike in the bottom-right corner, does not move; only a click or tap opens the popup (he does not get off the bike or animate) |
 
 ## State machine
 
