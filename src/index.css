@@ -423,7 +423,7 @@ body { padding-bottom: 120px; }
 
 /* ─── Walking avatar: flag ────────────────────────────────────── */
 .wa-flag {
-  position: absolute; bottom: 14px; width: 52px; height: 90px; padding: 0;
+  position: absolute; bottom: 14px; width: 52px; height: 76px; padding: 0;
   background: none; border: 0; cursor: pointer;
   opacity: 0; pointer-events: none; transition: opacity 0.25s;
 }
