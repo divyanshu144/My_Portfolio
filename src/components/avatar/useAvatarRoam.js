@@ -44,6 +44,7 @@ export function useAvatarRoam({ facts, sound }) {
   const phaseRef = useRef(phase);
   phaseRef.current = phase;
   const hoveringRef = useRef(false);
+  const movingRef = useRef({ man: false, bike: false }); // last flags written by the loop, reused by the resize handler
   const graceRef = useRef(0);
   const pos = useRef(null);
   if (pos.current === null) pos.current = initialPositions(phase);
@@ -78,6 +79,7 @@ export function useAvatarRoam({ facts, sound }) {
       p.facing = p.bikeFacing;
       p.man = seatX(p.bike, p.bikeFacing);
     }
+    movingRef.current = { man: false, bike: false };
     apply(false, false);
   }, [phase, apply]);
 
@@ -112,7 +114,8 @@ export function useAvatarRoam({ facts, sound }) {
     let done = false;
 
     const tick = (now) => {
-      const dt = Math.min(0.05, (now - last) / 1000);
+      if (phaseRef.current !== phase) return; // a frame queued before this phase ended: the next effect owns the loop
+      const dt = Math.max(0, Math.min(0.05, (now - last) / 1000));
       last = now;
       const p = pos.current;
       const { min, max } = riderBounds(window.innerWidth);
@@ -145,6 +148,7 @@ export function useAvatarRoam({ facts, sound }) {
         if (!bikeMoving && !done) { done = true; dispatch({ type: EVENT.DISMOUNT_DONE }); }
       }
 
+      movingRef.current = { man: manMoving, bike: bikeMoving };
       apply(manMoving, bikeMoving);
       raf = requestAnimationFrame(tick);
     };
@@ -161,7 +165,7 @@ export function useAvatarRoam({ facts, sound }) {
       const p = pos.current;
       p.bike = clamp(p.bike, min, max);
       p.man = SEATED.has(phaseRef.current) ? seatX(p.bike, p.bikeFacing) : clamp(p.man, min, vw - MAN_W - min);
-      apply(false, false);
+      apply(movingRef.current.man, movingRef.current.bike);
     };
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
