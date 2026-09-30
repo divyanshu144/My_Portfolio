@@ -19,7 +19,7 @@ Replace the floating "Ask Div" pill and the full-screen chat modal with a small 
 | Click / tap | Opens a small chat popup anchored next to him. On touch devices one tap gets him off the bike and opens the popup |
 | Close popup | X button, Esc, or click outside. He gets back on the bike and rides away |
 | Explainer tab | Dropped from the popup (confirmed); the popup is chat only. `/api/explain` stays on the server unchanged |
-| Sound | Off by default. One sound switch (speaker button). When on: a bicycle bell every time he sits on the bike, and the owner's recorded intro clip when the intro is replayed (see Sound). No copyrighted recordings |
+| Sound | No switch, no audio files. A short synthesized bicycle bell rings while he sits down on the bike and is cut off the moment he starts riding (see Sound) |
 | Look | Simple original cartoon: dark hair, gold hoodie (site accent), small bike. Drawn as inline SVG, no image assets or new libraries. *default* |
 | Intro frequency | The walk-to-bike intro plays once per browser session; reloads within the session skip it and start him already riding. *default* |
 | Reduced motion | With `prefers-reduced-motion`, he sits on the bike in the bottom-right corner, does not move; hover/click still opens the popup without the dismount animation |
@@ -66,14 +66,11 @@ Rotation: while `riding`, show one bubble for about 4 s roughly every 8 s, shuff
 
 ## Sound
 
-Two sounds, both opt-in. Browsers block audio that starts without a user gesture, and the first-load intro runs before any click, so the first-load intro is always silent.
-
-- **Sound switch.** A small speaker button in the bottom corner (accessible name "Turn sound on" / "Turn sound off", `aria-pressed`). Off by default. The choice is remembered in `localStorage`, but sound still only plays after the visitor has interacted with the page this load (`navigator.userActivation.hasBeenActive`).
-- **Bicycle bell.** Played each time the avatar finishes mounting the bike (during the intro replay and after every chat close or hover-away remount) when the switch is on. It is generated in code with the Web Audio API (two short sine tones with a fast decay, about 0.5 s, "ding-ding"), so there is no audio file to host. Volume is low. If Web Audio is unavailable, no sound plays and nothing errors.
-- **Intro clip.** The owner records a short clip (about 6 to 10 seconds, small file) at `public/audio/intro.mp3`. It must be an original recording or something the owner has the rights to, and must not copy the melody of a commercial song. Turning the switch on (a click, so the browser allows sound) replays the intro from the start (he stands a few steps from the bike, walks, mounts, rides) with the clip playing from 0. Turning the switch off stops the clip. The clip is fetched only on that click (`preload="none"`), never autoplays, never loops.
-- **No clip yet.** The switch still works for the bell. A `HEAD` request checks whether `intro.mp3` exists; if it does not, turning the switch on plays just the bell as feedback and does not replay the intro.
-- **Reduced motion.** No replayed animation; the switch only enables the bell and plays the clip if present.
-- **Testing.** Unit tests for the sound controller with the audio APIs faked: bell plays only when sound is on and the page has had user activation; switching off stops the clip; missing clip does not replay the intro; missing Web Audio does not throw. Manual: a click plays sound in Chrome, first load is silent, and the bell plays after closing the chat.
+- One sound only: a short bicycle bell (two dings, about half a second), synthesized with the Web Audio API. There is no sound switch, no audio file, and no recorded clip.
+- It plays when the avatar enters the `mounting` phase (sitting down on the bike) and is stopped and disconnected as soon as that phase ends, so it never carries into the ride. Leaving `mounting` for any reason (riding starts, or a hover interrupts the mount) stops it.
+- Browsers block audio until the visitor has interacted with the page, so the sound plays only when `navigator.userActivation.hasBeenActive` is true. The first-load intro (before any click or tap) is therefore silent; the bell is heard the next time he mounts after the visitor has interacted, for example after they close the chat and he sits back on the bike.
+- If Web Audio is unavailable or scheduling fails, nothing plays and nothing throws.
+- Testing: unit tests with a faked audio context (silent before user activation, two dings when active, stop silences every oscillator, a new bell replaces the old one, missing Web Audio and throwing oscillators do not throw). Manual: the bell is invoked on mounting and stopped when riding starts.
 
 ## Chat popup
 
@@ -86,7 +83,7 @@ Two sounds, both opt-in. Browsers block audio that starts without a user gesture
 - `src/components/avatar/avatarMachine.js` (+ `avatarMachine.test.js`): pure reducer, event names, constants.
 - `src/components/avatar/facts.js` (+ test): shuffled-without-repeat fact picker.
 - `src/components/avatar/useAvatarRoam.js`: timers, target picking, dispatches events. Respects reduced motion and page visibility.
-- `src/components/avatar/sound.js` (+ test): sound switch state (persisted), synthesized bicycle bell, and play/stop of `public/audio/intro.mp3` with an existence check.
+- `src/components/avatar/sound.js` (+ test): synthesized bicycle bell, `playBell()` and `stop()`.
 - `src/components/avatar/AvatarFigure.jsx`: SVG character and bike, poses via CSS classes on `data-state` (stand/walk, mount, seated/ride with wheel spin, dismount).
 - `src/components/avatar/ChatPopup.jsx`: the extracted chat panel.
 - `src/components/AIAssistant.jsx`: becomes a thin composer of the above (keeps its default export so `App.jsx` does not change).
@@ -113,7 +110,7 @@ No new dependencies.
 
 ## Out of scope
 
-Background music or sound effects beyond the single opt-in intro clip, drag-to-move, multiple characters, photo-real or hand-drawn art, removing `/api/explain`, changing the AI model or prompts, and any change to the other tabs.
+Any sound other than the bicycle bell when he sits on the bike, a sound switch, recorded audio, drag-to-move, multiple characters, photo-real or hand-drawn art, removing `/api/explain`, changing the AI model or prompts, and any change to the other tabs.
 
 ## Risks
 
