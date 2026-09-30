@@ -43,7 +43,7 @@ export function createSound(deps = {}) {
         ctx = ctx ?? getAudioContext();
         if (!ctx) return false;
         stop();
-        if (ctx.state === 'suspended') ctx.resume?.();
+        if (ctx.state === 'suspended') ctx.resume?.()?.catch?.(() => {});
         const t = ctx.currentTime;
         ding(ctx, t, 1568, live);
         ding(ctx, t + 0.16, 2093, live);

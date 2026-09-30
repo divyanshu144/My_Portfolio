@@ -89,3 +89,18 @@ test('a new bell replaces the one that is still sounding', () => {
   assert.equal(ctx.immediateStops, 6);
   assert.equal(ctx.started, 12);
 });
+
+test('a rejected audio context resume does not cause an unhandled rejection', async () => {
+  const ctx = fakeContext({ state: 'suspended' });
+  ctx.resume = () => Promise.reject(new Error('NotAllowed'));
+  assert.equal(make(ctx).playBell(), true);
+  await new Promise((r) => setTimeout(r, 0));
+  await new Promise((r) => setTimeout(r, 0));
+});
+
+test('a resume that returns nothing still works', () => {
+  const ctx = fakeContext({ state: 'suspended' });
+  ctx.resume = () => undefined;
+  assert.equal(make(ctx).playBell(), true);
+  assert.equal(ctx.started, 6);
+});
