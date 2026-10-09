@@ -18,22 +18,77 @@
     "Full-Stack Engineer",
     "Backend Software Engineer"
   ],
-  "summary": "AI engineer with three years of production delivery in banking and government visa systems, promoted to Senior Software Engineer. I build agent systems, retrieval pipelines and evaluation tooling, and I measure them before I trust them. MSc Statistical Data Science, University of Exeter (Merit). Based in Exeter, open to London and remote roles.",
+  "summary": "I'm Divyanshu, an applied AI engineer based in Exeter. I build software that helps people work through messy information and everyday tasks: finding an answer across documents, preparing a job application, or running a shop from a chat.\n\nThat takes different forms in my projects. DocChat brings PDFs, YouTube transcripts and web pages into one conversation, with citations and checks against the source material. JobFit connects job discovery, fit analysis and tailored application documents. SuperOps turns Telegram messages into inventory updates, bills and customer credit records for a kirana store. JARVIS brings voice, memory and permission-controlled tools to the Mac.\n\nMy foundation is three years of software engineering at Mphasis, working on banking and visa-processing systems, followed by an MSc in Statistical Data Science at Exeter. For my dissertation, I built EPC: a pipeline analysing 1.8 million housing energy records in South West England, combining policy analysis with predictive modelling. That mix of application development and statistical thinking shapes how I build AI today.",
+  "about": {
+    "eyebrow": "Applied AI · Full-stack engineering · Data science",
+    "headline": "AI for the work",
+    "highlight": "people actually do.",
+    "intro": "I'm Divyanshu, an applied AI engineer in Exeter. I build software that helps people work through messy information and everyday tasks — from finding an answer across documents to running a shop from a chat.",
+    "journey": [
+      {
+        "value": "3 years",
+        "label": "Building at Mphasis",
+        "detail": "Banking & visa-processing systems"
+      },
+      {
+        "value": "MSc",
+        "label": "Statistical Data Science",
+        "detail": "University of Exeter"
+      },
+      {
+        "value": "1.8M",
+        "label": "Housing energy records",
+        "detail": "Analysed in my EPC dissertation"
+      }
+    ],
+    "projects": [
+      {
+        "name": "DocChat",
+        "icon": "document-text-outline",
+        "label": "Find answers in your sources",
+        "text": "PDFs, YouTube and web pages, with citations and grounding checks."
+      },
+      {
+        "name": "JobFit",
+        "icon": "briefcase-outline",
+        "label": "Navigate the job search",
+        "text": "Job discovery, fit analysis and tailored application documents."
+      },
+      {
+        "name": "SuperOps",
+        "icon": "storefront-outline",
+        "label": "Run a shop through chat",
+        "text": "Inventory, billing and customer credit, directly in Telegram."
+      },
+      {
+        "name": "JARVIS",
+        "icon": "mic-outline",
+        "label": "Give the Mac a voice",
+        "text": "Voice, memory and tools with permissions for sensitive actions."
+      },
+      {
+        "name": "EPC South West",
+        "icon": "analytics-outline",
+        "label": "Understand housing energy",
+        "text": "A reproducible pipeline for policy analysis and predictive modelling."
+      }
+    ]
+  },
   "aboutCards": [
     {
-      "title": "By the numbers",
+      "title": "The details behind the demo",
       "icon": "icon-dev",
-      "text": "3 years of production delivery. 60+ government contracts on one platform. 73% lower inference cost on JobFit. 40% lower API response time on a banking platform."
+      "text": "I spend time on what happens after a model responds: checking its output, saving progress, recovering from failures and deciding which actions need permission. In SuperOps, the model chooses tools; code handles the money and stock calculations."
     },
     {
-      "title": "Always learning",
+      "title": "Making changes measurable",
       "icon": "icon-design",
-      "text": "Learning new things every day."
+      "text": "I built PromptOps to compare prompt versions, inspect failures and catch regressions. In DocChat, I also work on retrieval evaluation and inference benchmarks, looking at answer quality, latency and cost together."
     },
     {
       "title": "Away from the keyboard",
       "icon": "icon-app",
-      "text": "Reading books, playing guitar, going to the gym, and working as a barista at Starbucks. Badminton and table tennis sometimes."
+      "text": "Outside engineering, I read, play guitar and go to the gym. I also work part time as a barista at Starbucks, with badminton and table tennis now and then."
     }
   ],
   "avatarFacts": [
@@ -107,15 +162,15 @@
   "projects": [
     {
       "name": "JobFit",
+      "repo": "https://github.com/divyanshu144/Job_Agent",
       "summary": "Six-agent pipeline that parses a CV and a job spec, scores the match and writes a tailored resume and cover letter. Typed contracts between agents, parallel stages, and per-agent model tiering that cut inference cost by 73%. Deployed on AWS ECS Fargate with CI/CD and monitoring.",
-      "tech": ["Python", "FastAPI", "AWS ECS Fargate", "Docker"],
-      "_todo": "TODO: add the GitHub repo link as \"repo\". The URL is not known yet, so do not guess it."
+      "tech": ["Python", "FastAPI", "AWS ECS Fargate", "Docker"]
     },
     {
       "name": "JARVIS",
+      "repo": "https://github.com/divyanshu144/Jarvis",
       "summary": "Voice-first macOS assistant with a three-tier model router (local Ollama, Groq, Claude) that escalates only when a cheaper model fails. About 20 tools behind one safety-gated dispatch layer, three-layer memory, per-request tracing and 69 tests.",
-      "tech": ["Python", "Whisper", "SQLite", "ChromaDB", "PyQt6"],
-      "_todo": "TODO: add the GitHub repo link as \"repo\". The URL is not known yet, so do not guess it."
+      "tech": ["Python", "Whisper", "SQLite", "ChromaDB", "PyQt6"]
     },
     {
       "name": "DocChat",
@@ -131,9 +186,10 @@
     },
     {
       "name": "SuperOps",
+      "repo": "https://github.com/divyanshu144/supermarket-ops-agent",
       "summary": "Telegram agent for grocery store billing and GST, built in TypeScript on the Claude Agent SDK.",
       "tech": ["TypeScript", "Claude Agent SDK", "Telegram"],
-      "_todo": "TODO: add one line on who uses SuperOps (do not invent it). Also add the GitHub repo link as \"repo\"; the URL is not known yet, so do not guess it."
+      "_todo": "TODO: add one line on who uses SuperOps (do not invent it)."
     },
     {
       "name": "EPC South West",

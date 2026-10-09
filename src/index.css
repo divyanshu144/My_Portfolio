@@ -377,3 +377,63 @@ body { padding-bottom: 120px; }
 @media (max-width: 579px) {
   .wa-popup { left: 8px; right: 8px; width: auto; max-height: calc(100vh - var(--wa-bottom) - 130px); }
 }
+
+/* About: editorial introduction, project links and personal details. */
+.about-layout { --about-muted: #b4b3b9; display: grid; gap: 34px; padding-bottom: 12px; }
+.about-hero { position: relative; overflow: hidden; padding: 30px; border: 1px solid #4c4431; border-radius: 18px; background: radial-gradient(ellipse at 100% 0%, #66532838, transparent 65%), #242425; }
+.about-eyebrow { color: var(--orange-yellow-crayola); font-size: 10px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; line-height: 1.8; }
+.about-hero h3 { color: #f5f4f0; font-size: clamp(30px, 4vw, 46px); font-weight: 600; line-height: 1.18; letter-spacing: -1.7px; margin: 16px 0 20px; }
+.about-hero h3 span { color: var(--orange-yellow-crayola); }
+.about-intro { max-width: 650px; color: #cccbd0; font-size: 14px; font-weight: 300; line-height: 1.85; }
+.about-location { display: flex; align-items: center; gap: 6px; margin-top: 20px; color: var(--about-muted); font-size: 11px; }
+.about-location ion-icon { color: var(--orange-yellow-crayola); font-size: 15px; }
+.about-journey { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); padding: 2px 0 24px; border-bottom: 1px solid var(--jet); }
+.about-milestone { padding: 0 20px; border-left: 1px solid var(--jet); }
+.about-milestone:first-child { padding-left: 4px; border: 0; }
+.about-milestone strong { color: var(--orange-yellow-crayola); font-size: 29px; font-weight: 500; letter-spacing: -1px; }
+.about-milestone h3 { color: #e9e8eb; font-size: 12px; font-weight: 500; margin: 4px 0; }
+.about-milestone p { color: var(--about-muted); font-size: 10px; line-height: 1.6; }
+.about-section-heading { display: flex; justify-content: space-between; align-items: end; gap: 16px; margin-bottom: 18px; }
+.about-section-heading h3 { color: #f5f4f0; font-size: 21px; font-weight: 500; letter-spacing: -.5px; margin-top: 4px; }
+.about-section-note { color: var(--about-muted); font-size: 10px; white-space: nowrap; padding-bottom: 3px; }
+.about-section-note span { display: inline; color: var(--orange-yellow-crayola); margin-left: 4px; }
+.about-project-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.about-project-grid li:last-child { grid-column: 1 / -1; }
+.about-project { height: 100%; display: grid; grid-template-columns: 34px minmax(0, 1fr) 12px; align-items: start; gap: 12px; border: 1px solid #3a3a3d; border-radius: 12px; background: #252526; padding: 19px 16px; transition: border-color .18s, background .18s, transform .18s; }
+.about-project:hover { border-color: #887440; background: #2b2924; transform: translateY(-2px); }
+.about-project:focus-visible { outline: 2px solid var(--orange-yellow-crayola); outline-offset: 4px; }
+.about-project-icon { display: grid; place-items: center; width: 34px; height: 36px; border: 1px solid #675b343d; border-radius: 9px; color: var(--orange-yellow-crayola); background: #e6bf5410; font-size: 19px; }
+.about-project-name { color: var(--orange-yellow-crayola); font-size: 10px; letter-spacing: .4px; margin-bottom: 5px; }
+.about-project h4 { color: #f0eef1; font-size: 13px; font-weight: 500; line-height: 1.5; margin-bottom: 5px; }
+.about-project p { color: var(--about-muted); font-size: 11px; line-height: 1.7; }
+.about-project-arrow { color: #aaa8a0; font-size: 16px; }
+.about-approach-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.about-approach-card { padding: 22px; background: linear-gradient(135deg, #2c2c2e, #242425); border: 1px solid #3a3a3d; border-radius: 14px; }
+.about-approach-card img { margin-bottom: 16px; }
+.about-approach-card h4 { color: #f0eef1; font-size: 14px; font-weight: 500; margin-bottom: 10px; }
+.about-approach-card p { color: #bbb9c0; font-size: 12px; line-height: 1.85; font-weight: 300; }
+.about-personal-card { grid-column: 1 / -1; display: flex; align-items: center; gap: 20px; background: transparent; border-style: dashed; }
+.about-personal-card img { margin: 0; flex-shrink: 0; }
+.about-personal-card h4 { margin-bottom: 5px; }
+@media (max-width: 580px) {
+  .about-layout { gap: 27px; }
+  .about-hero { padding: 24px 20px; }
+  .about-hero h3 { font-size: clamp(28px, 7.5vw, 40px); letter-spacing: -1px; }
+  .about-eyebrow { font-size: 9px; letter-spacing: 1px; }
+  .about-intro { font-size: 13px; }
+  .about-milestone { padding: 0 10px; }
+  .about-milestone strong { font-size: 25px; }
+  .about-milestone h3 { font-size: 10px; }
+  .about-milestone p { font-size: 9px; }
+  .about-project-grid, .about-approach-grid { grid-template-columns: minmax(0, 1fr); }
+  .about-section-heading h3 { font-size: 19px; }
+  .about-section-note { display: none; }
+  .about-project { padding: 17px; }
+  .about-project h4 { font-size: 14px; }
+  .about-project p { font-size: 12px; }
+  .about-personal-card { align-items: flex-start; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .about-project { transition: none; }
+  .about-project:hover { transform: none; }
+}
