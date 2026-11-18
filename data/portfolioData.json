@@ -170,6 +170,7 @@
   ],
   "experience": [
     {
+      "id": "mphasis-senior",
       "company": "Mphasis",
       "location": "Bengaluru, India",
       "title": "Senior Software Engineer",
@@ -181,6 +182,7 @@
       ]
     },
     {
+      "id": "mphasis-engineer",
       "company": "Mphasis",
       "location": "Bengaluru, India",
       "title": "Software Engineer",
@@ -192,6 +194,7 @@
       ]
     },
     {
+      "id": "hermitcrabs-intern",
       "company": "Hermitcrabs",
       "location": "Remote",
       "title": "Web Developer Intern",
@@ -204,6 +207,7 @@
   ],
   "projects": [
     {
+      "id": "jobfit",
       "name": "JobFit",
       "repo": "https://github.com/divyanshu144/Job_Agent",
       "summary": "Job discovery, fit analysis and tailored application documents in one persistent workflow. Six specialist agents exchange validated outputs, stream progress and retry failed steps without starting over.",
@@ -250,6 +254,7 @@
       }
     },
     {
+      "id": "jarvis",
       "name": "JARVIS",
       "repo": "https://github.com/divyanshu144/Jarvis",
       "summary": "Voice-first macOS assistant with a three-tier model router (local Ollama, Groq, Claude) that escalates only when a cheaper model fails. About 20 tools behind one safety-gated dispatch layer, three-layer memory, per-request tracing and 69 tests.",
@@ -262,6 +267,7 @@
       ]
     },
     {
+      "id": "docchat",
       "name": "DocChat",
       "repo": "https://github.com/divyanshu144/DocChat",
       "summary": "A source-grounded assistant for PDFs, YouTube transcripts and web pages. Retrieval experiments compare candidate approaches against the current default, with explicit quality gates before changing it.",
@@ -308,6 +314,7 @@
       }
     },
     {
+      "id": "promptops",
       "name": "PromptOps",
       "repo": "https://github.com/divyanshu144/promptOps_framework",
       "summary": "Prompt evaluation with experiment tracking, failure inspection and CI quality gates. In a local four-case support benchmark repeated three times per variant, explicit citation instructions improved citation compliance from 0/12 to 12/12 answers. This is a small development-set result, not a general accuracy claim.",
@@ -322,6 +329,7 @@
       "evidenceUrl": "https://github.com/divyanshu144/promptOps_framework/blob/main/docs/case-study.md"
     },
     {
+      "id": "superops",
       "name": "SuperOps",
       "repo": "https://github.com/divyanshu144/supermarket-ops-agent",
       "summary": "A Telegram assistant for a kirana store: stock, billing and customer credit. The model selects tools; deterministic code handles money, stock checks and transactional updates.",
@@ -367,6 +375,7 @@
       }
     },
     {
+      "id": "epc-south-west",
       "name": "EPC South West",
       "repo": "https://github.com/divyanshu144/EPC",
       "summary": "End-to-end ETL and ML pipeline processing 1.8M+ UK EPC records (2008 to 2025). It covers ingestion, cleaning, feature engineering, causal modelling, and gradient-boosted prediction with SHAP explainability.",
@@ -386,6 +395,7 @@
       "_todo": "TODO: add what the model predicts and how well it performs (do not invent numbers)."
     },
     {
+      "id": "fooder",
       "name": "Fooder",
       "repo": "https://github.com/divyanshu144/Fooder",
       "demo": "https://fooder-two.vercel.app",
