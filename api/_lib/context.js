@@ -39,15 +39,24 @@ const buildContext = () => {
     .join('\n');
 
   const expBlock = d.experience
-    .map(e => `  ${e.title} @ ${e.company} (${e.dates})\n${e.highlights.map(h => `    • ${h}`).join('\n')}`)
+    .map(e => `  [id: ${e.id}] ${e.title} @ ${e.company} (${e.dates})\n${e.highlights.map(h => `    • ${h}`).join('\n')}`)
     .join('\n\n');
 
   const eduBlock = d.education
     .map(e => `  ${e.degree} — ${e.institution} (${e.dates})${e.grade ? ', ' + e.grade : ''}${e.dissertation ? '\n    Dissertation: ' + e.dissertation : ''}`)
     .join('\n');
 
+  const caseStudyBlock = (cs) => !cs ? '' : [
+    ['Problem', cs.problem],
+    ['Contribution', cs.contribution],
+    ['Decision', cs.decision],
+    ['Outcome', cs.outcome],
+    ['Limitation', cs.limitation],
+    ['Workflow', Array.isArray(cs.workflow) ? cs.workflow.join(' → ') : cs.workflow],
+  ].filter(([, v]) => v).map(([k, v]) => `\n    ${k}: ${v}`).join('');
+
   const projectBlock = d.projects
-    .map(p => `  ${p.name} (${p.tech.join(', ')})\n    ${p.summary}${p.highlights ? '\n' + p.highlights.map(h => `    • ${h}`).join('\n') : ''}`)
+    .map(p => `  [id: ${p.id}] ${p.name} (${p.tech.join(', ')})\n    ${p.summary}${p.highlights ? '\n' + p.highlights.map(h => `    • ${h}`).join('\n') : ''}${caseStudyBlock(p.caseStudy)}`)
     .join('\n\n');
 
   return `

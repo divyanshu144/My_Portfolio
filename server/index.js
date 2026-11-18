@@ -6,6 +6,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import blogHandler from '../api/blog.js';
+import chatHandler from '../api/chat.js';
+import assistantHandler from '../api/assistant.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -187,26 +189,8 @@ app.post('/api/refresh', async (_req, res) => {
   }
 });
 
-app.post('/api/chat', async (req, res) => {
-  try {
-    const { message, history = [] } = req.body || {};
-    if (!message) return res.status(400).json({ error: 'Message is required.' });
-
-    const response = await openai.chat.completions.create({
-      model,
-      messages: [
-        { role: 'system', content: `${baseSystem}\n\n${buildPortfolioContext()}` },
-        ...history,
-        { role: 'user', content: message },
-      ],
-    });
-
-    res.json({ text: response.choices[0].message.content });
-  } catch (error) {
-    console.error('Chat error:', error?.message || error);
-    res.status(500).json({ error: 'Failed to generate response.' });
-  }
-});
+app.post('/api/chat', chatHandler);
+app.post('/api/assistant', assistantHandler);
 
 app.post('/api/explain', async (req, res) => {
   try {
