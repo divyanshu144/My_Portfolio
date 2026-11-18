@@ -82,8 +82,8 @@ Both are built from `portfolioData.json` at startup, so they stay in step with t
 
 ## Facts confirmed by the owner (update the data and prompts to match)
 
-- **Right to work:** on the UK Graduate visa, with full right to work in the UK until 2028; no sponsorship needed. The current `visa` block in `portfolioData.json` and the visa line in `baseSystem` (in both `api/_lib/context.js` and `server/index.js`) still say the visa is only "applied" for; replace them. In the fit check, a UK right-to-work requirement is **Strong**. A requirement for sponsorship beyond 2028 or for permanent residency is not evidenced and should be "Partial" with the 2028 date stated.
-- **Availability:** available immediately. Add an `availability` field to `portfolioData.json` and use it (not prompt text) as the source for availability answers, under the Profile source.
+- **Right to work:** on the UK Graduate visa, with full right to work in the UK until 2028; no sponsorship needed. Already updated in `portfolioData.json` and both `baseSystem` prompts (commit `1be2236` on `main`). In the fit check, a UK right-to-work requirement is **Strong**. A requirement for sponsorship beyond 2028 or for permanent residency is not evidenced and should be "Partial" with the 2028 date stated.
+- **Availability:** available immediately. Already added as `availability` in `portfolioData.json` and given to the AI context; use it as the source for availability answers, under the Profile source.
 
 ## Data the owner must supply (the builder adds placeholders and flags them)
 
