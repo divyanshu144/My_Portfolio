@@ -6,6 +6,7 @@ import { ASK_EVENT, onEvent } from '../lib/assistantEvents'
 export default function AIAssistant({ active, goTo }) {
   const [open, setOpen] = useState(false)
   const [tab, setTab] = useState('ask')
+  const [focusToken, setFocusToken] = useState(0)
   const assistant = useAssistant()
   const caseStudyId = useCaseStudyInView(active)
   const opener = useRef(null)
@@ -45,6 +46,7 @@ export default function AIAssistant({ active, goTo }) {
       const { show: open, ask, page } = latest.current
       open()
       setTab('ask')
+      setFocusToken((n) => n + 1) // re-focus the input even when the console is already open on Ask
       ask(question, page)
     })
     return () => { window.removeEventListener('keydown', onKey); offAsk() }
@@ -65,6 +67,7 @@ export default function AIAssistant({ active, goTo }) {
         goTo={goTo}
         assistant={assistant}
         caseStudyId={caseStudyId}
+        focusToken={focusToken}
       />
     </div>
   )

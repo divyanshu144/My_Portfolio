@@ -185,7 +185,7 @@ function FitPanel({ assistant, goTo, text, setText }) {
   )
 }
 
-export default function AssistantConsole({ open, onClose, tab, onTab, active, goTo, assistant, caseStudyId }) {
+export default function AssistantConsole({ open, onClose, tab, onTab, active, goTo, assistant, caseStudyId, focusToken }) {
   const askInput = useRef(null)
   const tabRefs = useRef({})
   const consoleRef = useRef(null)
@@ -252,7 +252,7 @@ export default function AssistantConsole({ open, onClose, tab, onTab, active, go
 
   useEffect(() => {
     if (open && tab === 'ask') askInput.current?.focus({ preventScroll: true })
-  }, [open, tab])
+  }, [open, tab, focusToken])
 
   const onKeyDown = (e) => {
     if (e.key === 'Escape') { e.stopPropagation(); onClose() }
