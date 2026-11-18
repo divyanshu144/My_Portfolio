@@ -417,5 +417,60 @@
     "Badminton (sometimes)",
     "Table tennis (sometimes)"
   ],
-  "cv": "/assets/Divyanshu-Charak-CV.pdf"
+  "cv": "/assets/Divyanshu-Charak-CV.pdf",
+  "assistant": {
+    "_todo": "Draft questions; owner to review",
+    "suggestions": {
+      "about": [
+        "Does he need visa sponsorship?",
+        "When is he available to start?",
+        "What kind of roles is he looking for?"
+      ],
+      "portfolio": [
+        "Which project best shows his AI engineering?",
+        "What did he build with LangGraph and the Claude Agent SDK?",
+        "Which projects have a live demo or public repo?"
+      ],
+      "resume": [
+        "What did he do at Mphasis?",
+        "What is his education?",
+        "Which languages and frameworks does he use?"
+      ],
+      "blog": [
+        "What is he working on with AI at the moment?",
+        "Which of his projects should I read about first?",
+        "What does he care about when building AI systems?"
+      ],
+      "contact": [
+        "How can I contact him?",
+        "Where is he based?",
+        "Is he available immediately?"
+      ],
+      "caseStudies": {
+        "jobfit": [
+          "How do the six agents in JobFit work together?",
+          "How does JobFit recover when a step fails?",
+          "What are the known limitations of JobFit?"
+        ],
+        "docchat": [
+          "How did he evaluate retrieval in DocChat?",
+          "Why did he keep the existing default retriever?",
+          "What are the limits of the DocChat results?"
+        ],
+        "superops": [
+          "How does SuperOps keep billing and stock consistent?",
+          "What does the model do and what does code do in SuperOps?",
+          "What are the known limitations of SuperOps?"
+        ]
+      }
+    },
+    "askAbout": {
+      "jobfit": "Tell me about JobFit and how its agents work.",
+      "docchat": "Tell me about DocChat and how he evaluated its retrieval.",
+      "superops": "Tell me about SuperOps and how it keeps money and stock correct.",
+      "mphasis-senior": "What did he do as Senior Software Engineer at Mphasis?",
+      "mphasis-engineer": "What did he do as Software Engineer at Mphasis?",
+      "hermitcrabs-intern": "What did he do as a Web Developer Intern at Hermitcrabs?"
+    }
+  }
 }
