@@ -32,7 +32,9 @@ This is a single-page portfolio site with a separate Express backend for AI feat
 ### Frontend (`src/`)
 - **`App.jsx`**: root; the "workspace" shell: a top header (brand, numbered tab nav, GitHub link), a path bar, five tabs (Overview, Projects, Experience, Notes, Contact; internal ids `about`, `portfolio`, `resume`, `blog`, `contact`) and a footer with LinkedIn, email and CV links. Switching tabs moves focus to the page's `h1`. Each page receives `onNavigate(id)` to switch tabs.
 - **`sections/`**: the tab pages (About, Portfolio, Resume, Blog, Contact). `Sidebar.jsx` is no longer rendered (kept for reference).
-- **`components/SystemMap.jsx`**: the interactive "System explorer" on the Overview: pick a project that has a `caseStudy`, then a workflow stage, to show that stage's `workflowDetails` text.
+- **`components/explorer/`**: the self-playing project demos. `DemoPlayer.jsx` renders one: what a user of the project sees (left), the four `caseStudy.workflow` stages (right), a progress bar and the stage's `workflowDetails`; the `deep` variant adds a trace panel. A run is a list of beats (each tied to a stage, and may revisit one, e.g. a retry); `playback.js` holds the pure logic (advance, jumps, `stageView`). Clicking a project or stage jumps there; hover, keyboard focus or the pause button stop it; with reduced motion it still plays, using fades only. All demo values are made-up and labelled "EXAMPLE DATA", but stage, agent, tool and field names must match the real repos (DocChat, Job_Agent, supermarket-ops-agent).
+  - `demoScripts.js`: short runs for the Overview's `SystemMap.jsx` ("System explorer"), which cycles DocChat, JobFit, SuperOps.
+  - `deepScripts.js`: longer runs shown in each Projects case study (they replace the old static workflow list), each including one real failure and its recovery. These wait for the visitor to press "Play example run", stop at the end with a "Replay" button, and pause if scrolled off screen.
 - **`components/AIAssistant.jsx`**: a fixed "Ask AI" launcher button that opens `ChatPopup` (chat state comes from `useChat`, so it survives closing and reopening). The popup is a modal dialog that traps Tab focus and closes on Escape.
 - **`components/avatar/`**: the earlier walking-avatar assistant. Only `ChatPopup.jsx` (`useChat` + popup) is used now; the rest (`avatarMachine.js`, `motion.js`, `facts.js`, `sound.js`, `useAvatarRoam.js`, `AvatarFigure.jsx`, `WalkingAvatar.jsx`) is kept intact and still unit-tested, but not rendered.
 - **`constants/index.js`**: `SUBSTACK_URL` and `skillGroups`
@@ -61,4 +63,4 @@ The AI routes are `POST /api/chat` (used by the chat popup) and `POST /api/expla
 Uses EmailJS (`@emailjs/browser`) with IDs hardcoded in `src/sections/Contact.jsx`; validation in `src/lib/validateContact.js`.
 
 ### Tests
-`npm test` runs `node:test` unit tests for the API helpers (`api/_lib/*.test.js`) the contact-form validator (`src/lib/*.test.js`) and the avatar logic (`src/components/avatar/*.test.js`).
+`npm test` runs `node:test` unit tests for the API helpers (`api/_lib/*.test.js`) the contact-form validator (`src/lib/*.test.js`) the avatar logic (`src/components/avatar/*.test.js`) and the explorer playback (`src/components/explorer/*.test.js`, which also checks each demo script matches its case study's step count).

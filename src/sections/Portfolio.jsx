@@ -1,4 +1,10 @@
 import portfolioData from '../../data/portfolioData.json'
+import DemoPlayer from '../components/explorer/DemoPlayer'
+import { deepScripts } from '../components/explorer/deepScripts'
+import { DEEP_STEP_MS } from '../components/explorer/playback'
+
+const studies = Object.fromEntries(portfolioData.projects.filter((p) => p.caseStudy).map((p) => [p.name, p.caseStudy]))
+const deepOrders = Object.fromEntries(Object.keys(studies).map((name) => [name, [name]]))
 
 const TechList = ({ items }) => (
   <ul className="chip-list">{items?.map((item) => <li className="chip" key={item}>{item}</li>)}</ul>
@@ -19,12 +25,16 @@ const CaseStudy = ({ project, index }) => {
           <h4>The problem</h4><p>{study.problem}</p>
           <h4>What I built</h4><p>{study.contribution}</p>
         </div>
-        <figure className="project-workflow">
-          <figcaption>How it works <span>Workflow diagram</span></figcaption>
-          <ol>{study.workflow.map((step, i) => <li key={step}><span aria-hidden="true">{i + 1}</span>{step}</li>)}</ol>
+        <figure className="project-workflow project-proof-card">
+          <figcaption>At a glance</figcaption>
           <div className="project-proof"><strong>{study.proofValue}</strong><span>{study.proofLabel}</span></div>
         </figure>
       </div>
+      {deepScripts[project.name] && (
+        <div className="case-study-demo">
+          <DemoPlayer variant="deep" title="How it works · example run" order={deepOrders[project.name]} scripts={deepScripts} studies={studies} stepMs={DEEP_STEP_MS} playWhenVisible autoplay={false} loop={false} />
+        </div>
+      )}
       <details className="case-study-details">
         <summary>Engineering decisions &amp; evidence</summary>
         <div className="case-study-detail-grid">
