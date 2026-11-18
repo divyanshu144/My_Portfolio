@@ -1,6 +1,6 @@
 import { createRequire } from 'module';
 import { buildCatalog, pickAllowed, catalogForPrompt } from '../../src/lib/assistantCatalog.js';
-import { baseSystem, portfolioContext } from './context.js';
+import { baseSystem, portfolioContext } from './portfolioContext.js';
 
 const require = createRequire(import.meta.url);
 const catalog = buildCatalog(require('../../data/portfolioData.json'));
