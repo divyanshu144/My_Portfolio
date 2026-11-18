@@ -1,5 +1,6 @@
 import portfolioData from '../../data/portfolioData.json'
 import { skillGroups } from '../constants'
+import { askAssistant } from '../lib/assistantEvents'
 
 const Timeline = ({ icon, heading, id, children }) => (
   <section className="timeline" id={id}>
@@ -14,15 +15,19 @@ const Timeline = ({ icon, heading, id, children }) => (
 const Resume = () => (
   <>
     <Timeline icon="briefcase-outline" heading="Experience">
-      {portfolioData.experience.map((x) => (
+      {portfolioData.experience.map((x) => {
+        const question = portfolioData.assistant?.askAbout?.[x.id]
+        return (
         <li className="timeline-item" id={x.id} key={x.title + x.company + x.dates}>
           <h4 className="h4 timeline-item-title">{x.title} · {x.company}</h4>
           <span>{[x.dates, x.location].filter(Boolean).join(' · ')}</span>
           <ul className="timeline-text timeline-bullets">
             {x.highlights.map((h) => <li key={h}>{h}</li>)}
           </ul>
+          {question && <button type="button" className="ask-about" aria-label={`Ask the assistant about ${x.title} · ${x.company}`} onClick={() => askAssistant(question)}>Ask about this <span aria-hidden="true">↗</span></button>}
         </li>
-      ))}
+        )
+      })}
     </Timeline>
 
     <Timeline icon="book-outline" heading="Education" id="education">

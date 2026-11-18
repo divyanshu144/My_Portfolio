@@ -2,6 +2,7 @@ import portfolioData from '../../data/portfolioData.json'
 import DemoPlayer from '../components/explorer/DemoPlayer'
 import { deepScripts } from '../components/explorer/deepScripts'
 import { DEEP_STEP_MS } from '../components/explorer/playback'
+import { askAssistant } from '../lib/assistantEvents'
 
 const studies = Object.fromEntries(portfolioData.projects.filter((p) => p.caseStudy).map((p) => [p.name, p.caseStudy]))
 const deepOrders = Object.fromEntries(Object.keys(studies).map((name) => [name, [name]]))
@@ -12,11 +13,15 @@ const TechList = ({ items }) => (
 
 const CaseStudy = ({ project, index }) => {
   const study = project.caseStudy
+  const question = portfolioData.assistant?.askAbout?.[study.id]
   return (
     <li className="case-study" id={study.id}>
       <div className="case-study-heading">
         <p className="about-eyebrow">{String(index + 1).padStart(2, '0')} / {study.category}</p>
-        <span className="case-study-name">{project.name}</span>
+        <div className="case-study-heading-side">
+          <span className="case-study-name">{project.name}</span>
+          {question && <button type="button" className="ask-about" aria-label={`Ask the assistant about ${project.name}`} onClick={() => askAssistant(question)}>Ask about this <span aria-hidden="true">↗</span></button>}
+        </div>
       </div>
       <h3>{study.headline}</h3>
       <p className="case-study-intro">{project.summary}</p>
