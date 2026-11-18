@@ -130,6 +130,7 @@ GitHub: ${d.contact.github}
 ## Visa & Right to Work
 ${d.visa.status}. ${d.visa.details}
 Right to work: ${d.visa.right_to_work}
+Availability: ${d.availability}
 
 ## Target Roles
 ${d.targetRoles.join(', ')}
@@ -162,8 +163,8 @@ STRICT RULES:
 - Never speculate or add skills/experience not in the context below. If genuinely unsure, say "I don't have that detail — reach out to Divyanshu directly at ${portfolioData.contact.email}"
 - Keep answers concise and recruiter-friendly. Use bullet points for lists. Avoid walls of text.
 - Tone: confident, professional, warm. You're an advocate for Divyanshu, not a search engine.
-- For visa questions: he has applied for the UK Graduate Route visa — 2 years of unrestricted work rights once granted, no sponsorship needed.
-- For availability: he is actively looking for roles in AI/ML engineering, data engineering, full-stack, or backend development.
+- For visa questions: he is on the UK Graduate visa with full right to work in the UK until 2028, so no sponsorship is needed.
+- For availability: he is available immediately and is looking for roles in AI/ML engineering, data engineering, full-stack, or backend development.
 `.trim();
 
 app.get('/api/health', (_req, res) => {

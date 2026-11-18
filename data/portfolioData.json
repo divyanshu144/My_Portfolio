@@ -8,10 +8,12 @@
     "github": "https://github.com/divyanshu144"
   },
   "visa": {
-    "status": "UK Graduate Route visa — applied",
-    "details": "Applied for the UK Graduate Route visa (post-study open work permit) after completing the MSc at University of Exeter. The Graduate Route grants 2 years of unrestricted work rights in the UK with no employer sponsorship required.",
-    "right_to_work": "Once granted: unrestricted — no sponsorship required, eligible for any role, any employer in the UK for 2 years."
+    "status": "UK Graduate visa: full right to work in the UK until 2028",
+    "details": "On the UK Graduate visa (granted after completing the MSc at the University of Exeter), with full right to work in the UK until 2028. No employer sponsorship is required.",
+    "right_to_work": "Full right to work in the UK until 2028: no sponsorship required, eligible for any role with any employer."
   },
+  "availability": "Available immediately.",
+
   "targetRoles": [
     "AI / ML Engineer",
     "Data Engineer",
