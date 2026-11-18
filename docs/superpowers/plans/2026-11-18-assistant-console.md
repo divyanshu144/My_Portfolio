@@ -110,7 +110,7 @@ test('emailHref encodes subject and body', () => {
 })
 test('catalogForPrompt lists every id once', () => {
   const c = buildCatalog(data); const text = catalogForPrompt(c)
-  for (const x of [...c.targets, ...c.actions]) assert.equal(text.split(`\n${x.id} — `).length - 1 + (text.startsWith(`${x.id} — `) ? 1 : 0) >= 1, true)
+  for (const x of [...c.targets, ...c.actions]) assert.ok(text.includes(`${x.id} — ${x.label}`), x.id)
 })
 ```
 
@@ -142,7 +142,12 @@ test('falls back to the tab, then to overview', () => {
   assert.deepEqual(suggestionsFor(a, { tab: 'blog' }), ['a1','a2','a3'])
 })
 test('never more than three', () => assert.equal(suggestionsFor(a, { tab: 'about' }).length, 3))
-test('real data: every tab and case study has 1–3 questions and askAbout covers its ids', () => { /* load data; assert lengths 1..3 for 5 tabs and 3 case studies; askAbout has the 6 ids above */ })
+test('real data: every tab and case study has 1–3 questions and askAbout covers its ids', () => {
+  const { suggestions, askAbout } = data.assistant
+  for (const list of [...['about','portfolio','resume','blog','contact'].map((k) => suggestions[k]), ...['jobfit','docchat','superops'].map((k) => suggestions.caseStudies[k])])
+    assert.ok(list.length >= 1 && list.length <= 3)
+  for (const id of ['jobfit','docchat','superops','mphasis-senior','mphasis-engineer','hermitcrabs-intern']) assert.equal(typeof askAbout[id], 'string')
+})
 ```
 
 - [ ] **Step 3: Run** `node --test src/lib/assistantSuggestions.test.js`. Expected: FAIL.
@@ -286,7 +291,7 @@ test('handler: provider 401 gives the key message', async () => { /* complete th
 - Consumes: `runFit`, `fit` (Task 5), catalog (Task 1).
 - Produces: `clampHeight(px: number, viewportHeight: number) → number` (minimum `220`, maximum `0.8 × viewport`); `fitHeight(viewportHeight) → number` (`0.55 × viewport`, clamped).
 
-- [ ] **Step 1: Write failing tests:** `clampHeight(100, 1000) === 220`, `clampHeight(900, 1000) === 800`, `clampHeight(500, 1000) === 500`, `fitHeight(1000) === 550`, and `fitHeight(300) === 240`.
+- [ ] **Step 1: Write failing tests:** `clampHeight(100, 1000) === 220`, `clampHeight(900, 1000) === 800`, `clampHeight(500, 1000) === 500`, `fitHeight(1000) === 550`, and `fitHeight(300) === 220` (the minimum wins).
 - [ ] **Step 2: Run** `node --test src/lib/consoleSize.test.js`. Expected: FAIL.
 - [ ] **Step 3: Implement** `consoleSize.js` and the Fit tab:
   - A textarea (`maxLength` 8000) with a live count, the exact note text and a "Check fit" button.
