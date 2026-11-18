@@ -308,3 +308,13 @@ main.workspace-main { display: block; width: auto; max-width: 1344px; margin: 0 
   .demo-trace { margin-inline: 12px; font-size: 9px; }
   .demo-trace-line { grid-template-columns: minmax(0, 1fr); gap: 0; }
 }
+
+/* Briefly outlines an element the assistant has scrolled to. */
+.workspace .is-targeted { animation: target-fade 1.6s ease-out; scroll-margin-top: 96px; }
+@keyframes target-fade {
+  0%, 35% { outline: 2px solid #83e3db; outline-offset: 6px; }
+  100% { outline: 2px solid transparent; outline-offset: 6px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .workspace .is-targeted { animation: none !important; outline: 2px solid #83e3db; outline-offset: 6px; }
+}

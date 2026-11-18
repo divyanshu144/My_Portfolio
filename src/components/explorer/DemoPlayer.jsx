@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { onEvent, PLAY_EVENT } from '../../lib/assistantEvents'
 import { advance, firstBeatOf, initialState, jumpToProject, jumpToStep, stageView } from './playback'
 
 // Self-playing walkthrough of a project: what the user sees (left), the workflow stages (right) and,
@@ -61,6 +62,20 @@ export default function DemoPlayer({ variant = 'overview', order, scripts, studi
     }, stepMs)
     return () => clearTimeout(timer)
   }, [playing, state, order, scripts, stepMs, loop])
+
+  // The assistant can ask a case study's demo to play from the top. It sends the case study id ('docchat');
+  // `project` here is the name ('DocChat'), so match on either, ignoring case.
+  const studyId = study.id
+  useEffect(() => {
+    if (!deep) return undefined
+    return onEvent(PLAY_EVENT, (detail) => {
+      const wanted = String(detail).toLowerCase()
+      if (wanted !== String(studyId).toLowerCase() && wanted !== String(order[0]).toLowerCase()) return
+      setState(initialState(order))
+      setFinished(false)
+      setStopped(false)
+    })
+  }, [deep, studyId, order])
 
   const toggle = () => {
     if (finished) { setFinished(false); setState(initialState(order)); setStopped(false); return }

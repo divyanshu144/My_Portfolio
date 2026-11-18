@@ -69,7 +69,7 @@ const Portfolio = () => {
         <p className="about-eyebrow">Further exploration</p>
         <h3 className="portfolio-heading" id="more-work-title">More projects</h3>
         <ul className="more-projects">{other.map((project) => (
-          <li className={`more-project${project.image ? ' more-project-visual' : ''}`} key={project.name}>
+          <li className={`more-project${project.image ? ' more-project-visual' : ''}`} id={project.id} key={project.name}>
             {project.image && <figure className="project-capture"><a href={project.image} target="_blank" rel="noreferrer" aria-label={`Open full-size ${project.name} screenshot`}><img src={project.image} alt={`${project.name} evaluation dashboard comparing baseline and optimized offline replay runs`} loading="lazy" /></a><figcaption>{project.imageCaption}</figcaption></figure>}
             <h4>{project.name}</h4><p>{project.summary}</p>
             <TechList items={project.tech} />

@@ -1,8 +1,8 @@
 import portfolioData from '../../data/portfolioData.json'
 import { skillGroups } from '../constants'
 
-const Timeline = ({ icon, heading, children }) => (
-  <section className="timeline">
+const Timeline = ({ icon, heading, id, children }) => (
+  <section className="timeline" id={id}>
     <div className="title-wrapper">
       <div className="icon-box"><ion-icon name={icon}></ion-icon></div>
       <h3 className="h3">{heading}</h3>
@@ -15,7 +15,7 @@ const Resume = () => (
   <>
     <Timeline icon="briefcase-outline" heading="Experience">
       {portfolioData.experience.map((x) => (
-        <li className="timeline-item" key={x.title + x.company + x.dates}>
+        <li className="timeline-item" id={x.id} key={x.title + x.company + x.dates}>
           <h4 className="h4 timeline-item-title">{x.title} · {x.company}</h4>
           <span>{[x.dates, x.location].filter(Boolean).join(' · ')}</span>
           <ul className="timeline-text timeline-bullets">
@@ -25,7 +25,7 @@ const Resume = () => (
       ))}
     </Timeline>
 
-    <Timeline icon="book-outline" heading="Education">
+    <Timeline icon="book-outline" heading="Education" id="education">
       {portfolioData.education.map((e) => (
         <li className="timeline-item" key={e.degree + e.institution}>
           <h4 className="h4 timeline-item-title">{e.degree}</h4>
