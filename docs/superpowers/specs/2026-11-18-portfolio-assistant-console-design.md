@@ -34,8 +34,8 @@ The redesign turns it into a **guide that feels like part of the workspace**: sh
 
 ## Constraints
 
-- React 19 + Vite frontend; Express dev server (`server/index.js`) and Vercel serverless functions (`api/*.js`) in production. Vite proxies `/api/*` to `:8787` in dev.
-- Today the chat logic is **duplicated**: `api/chat.js` (production, context from `api/_lib/context.js`) and `server/index.js` (dev, its own context plus fetched GitHub READMEs). The blog route already shows the pattern to follow: the dev server mounts the `api/` handler. Both new endpoints must behave the same in dev and production.
+- **Production is Vercel only** (owner's decision). `railway.toml` is a leftover and should be removed; `server/index.js` is a local development server only. React 18.3 + Vite frontend; Vercel serverless functions (`api/*.js`) serve the API in production. Vite proxies `/api/*` to `:8787` in dev.
+- Today the chat logic is **duplicated**: `api/chat.js` (production, context from `api/_lib/context.js`) and `server/index.js` (dev, its own context plus fetched GitHub READMEs). The blog route already shows the pattern to follow: the dev server mounts the `api/` handler. Both new endpoints must behave the same in dev and production, so the dev server should mount the `api/` handlers for chat and fit check (the README-enriched context in `server/index.js` is dev-only and need not be kept).
 - `api/_lib/context.js` currently builds context from summary, skills, experience, education and project summaries/highlights, but **not** the `caseStudy` fields. The new answers need them (sources and evidence come from case studies).
 - `src/vcard.css` must not be edited. New styles go in `src/workspace.css` (the chat's old styles live in `src/index.css`; remove or override what is no longer used).
 - Tests use `node:test` (`npm test`); keep logic that can be tested pure and test it there. Existing: 69 tests.
@@ -76,8 +76,14 @@ The redesign turns it into a **guide that feels like part of the workspace**: sh
 Both are built from `portfolioData.json` at startup, so they stay in step with the site:
 
 - **Sources / navigation targets:** Profile (summary, location, visa and availability facts), each Experience entry, Education, each featured case study (JobFit, DocChat, SuperOps), each other project, Notes. Each has a stable id and knows how to navigate there (tab, plus the element to scroll to).
-- **Actions:** `open:<target id>`, `play:<case study id>` (only featured projects), `cv` (only if `cv` is set), `repo:<project>` (only if that project has `repo`), `email`.
+- **Actions:** `open:<target id>`, `play:<case study id>` (only featured projects), `cv` (only if `cv` is set), `repo:<project id>` (only if that project has `repo`), `email`.
+- **Ids do not all exist yet.** Featured projects can use `caseStudy.id`, but other projects and Experience entries have no ids, and two Experience entries share the company "Mphasis". The builder adds a stable `id` to every project and every Experience entry in `portfolioData.json`, and renders matching DOM ids in `Portfolio.jsx` and `Resume.jsx` so navigation can scroll to them. (`Resume.jsx` currently renders no element ids.)
 - The AI receives the list of ids with short labels and returns ids only; the frontend maps ids to labels, URLs and behaviour. Unknown ids are discarded. If nothing valid remains, the answer shows with no buttons rather than failing.
+
+## Facts confirmed by the owner (update the data and prompts to match)
+
+- **Right to work:** on the UK Graduate visa, with full right to work in the UK until 2028; no sponsorship needed. The current `visa` block in `portfolioData.json` and the visa line in `baseSystem` (in both `api/_lib/context.js` and `server/index.js`) still say the visa is only "applied" for; replace them. In the fit check, a UK right-to-work requirement is **Strong**. A requirement for sponsorship beyond 2028 or for permanent residency is not evidenced and should be "Partial" with the 2028 date stated.
+- **Availability:** available immediately. Add an `availability` field to `portfolioData.json` and use it (not prompt text) as the source for availability answers, under the Profile source.
 
 ## Data the owner must supply (the builder adds placeholders and flags them)
 
@@ -97,10 +103,10 @@ Both are built from `portfolioData.json` at startup, so they stay in step with t
 
 ## Calls made while writing this (not discussed with the owner; flagged for review)
 
-- **Profile source** navigates to the Overview tab. Visa and availability facts come from `visa` in `portfolioData.json` (status, details, right to work) and the availability line in `baseSystem`.
-- **"Play the example run"** switches to Projects, scrolls to that case study and starts its demo (which otherwise waits for the visitor's Play click).
+- **Profile source** navigates to the Overview tab. Visa and availability facts come from the `visa` and new `availability` fields in `portfolioData.json`.
+- **"Play the example run"** switches to Projects, scrolls to that case study and starts its demo (which otherwise waits for the visitor's Play click). `DemoPlayer`'s play state is internal today, so this needs a small change to the explorer component (for example a prop or event the console can trigger), not just wiring.
 - **Fit check note:** a one-line note under the text area says the description is sent to the AI to compare against the portfolio and is not stored. Nothing is stored server-side.
-- **Abuse and cost:** size limits only (no per-visitor rate limiting), as serverless instances do not share memory. Revisit if usage grows.
+- **Abuse and cost:** size limits only (no per-visitor rate limiting), as Vercel serverless instances do not share memory. Revisit if usage grows.
 - **Replaces the old popup:** the new console replaces `ChatPopup`'s rendering in `AIAssistant.jsx`. Conversation state handling can be reused or rewritten; the old popup styles in `src/index.css` that become unused are removed.
 - **Opening message:** instead of a greeting bubble, the empty Ask tab shows one line ("Ask about my projects, experience or fit for a role") and the page-aware suggestions.
 - **"Ask about this"** covers featured case studies and Experience entries only (not Education or other projects).
