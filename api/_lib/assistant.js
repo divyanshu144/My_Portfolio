@@ -46,7 +46,13 @@ const plainText = (s, max) => {
     .replace(/```/g, ' ')
     .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
     .replace(/^\s*(?:[-*•]|#{1,6})\s+/gm, '')
-    .replace(/[*_`#]/g, '')
+    // Unwrap markdown emphasis and code, but keep # and _ inside words (C#, Job_Agent, snake_case).
+    .replace(/`([^`\n]*)`/g, '$1')
+    .replace(/\*\*(?=\S)([^\n]*?\S)\*\*/g, '$1')
+    .replace(/(?<!\w)__(?=\S)([^\n]*?\S)__(?!\w)/g, '$1')
+    .replace(/(?<![\w*])\*(?=[^\s*])([^*\n]*?[^\s*])\*(?![\w*])/g, '$1')
+    .replace(/(?<!\w)_(?=[^\s_])([^_\n]*?[^\s_])_(?!\w)/g, '$1')
+    .replace(/[`]|\*\*/g, '')
     .replace(/\s+/g, ' ')
     .trim();
   if (t.length <= max) return t;
@@ -71,15 +77,19 @@ export function parseAsk(raw, cat = catalog) {
 export function parseFit(raw, cat = catalog) {
   const obj = extractJson(raw);
   if (!obj || !Array.isArray(obj.items)) return null;
+  // The model may write "Strong", "not shown" or "Not-Shown"; accept those spellings.
+  const levelOf = (v) => (typeof v === 'string' ? v.trim().toLowerCase().replace(/[\s-]+/g, '_') : null);
   const items = obj.items
-    .filter((i) => i && typeof i.requirement === 'string' && i.requirement.trim() && FIT_LEVELS.includes(i.level))
+    .filter((i) => i && typeof i.requirement === 'string' && i.requirement.trim() && FIT_LEVELS.includes(levelOf(i.level)))
     .slice(0, LIMITS.fitItems)
     .map((i) => ({
       requirement: plainText(i.requirement, 200),
-      level: i.level,
+      level: levelOf(i.level),
       reason: typeof i.reason === 'string' ? plainText(i.reason, 300) : '',
       sources: pickAllowed(i.sources, cat, 'targets', 3),
     }));
+  // Items were returned but none were usable: treat it as an unreadable reply, not an empty job description.
+  if (obj.items.length > 0 && items.length === 0) return null;
   const modelAction = (Array.isArray(obj.actions) ? obj.actions : [])
     .find((a) => typeof a === 'string' && /^(open|play):/.test(a) && cat.byId.has(a));
   return {

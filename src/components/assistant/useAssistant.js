@@ -15,7 +15,12 @@ export function useAssistant() {
 
   const ask = async (question, page) => {
     const text = typeof question === 'string' ? question.trim() : ''
-    if (!text || busy.current.ask) return { ok: false }
+    if (!text) return { ok: false }
+    if (busy.current.ask) {
+      // An answer is still loading: park the question in the input so one keypress sends it.
+      setDraft(text)
+      return { ok: false }
+    }
     busy.current.ask = true
     const history = messagesRef.current
       .filter((m) => !m.error)

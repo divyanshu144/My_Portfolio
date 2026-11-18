@@ -20,7 +20,7 @@ const CaseStudy = ({ project, index }) => {
         <p className="about-eyebrow">{String(index + 1).padStart(2, '0')} / {study.category}</p>
         <div className="case-study-heading-side">
           <span className="case-study-name">{project.name}</span>
-          {question && <button type="button" className="ask-about" aria-label={`Ask the assistant about ${project.name}`} onClick={() => askAssistant(question)}>Ask about this <span aria-hidden="true">↗</span></button>}
+          {question && <button type="button" className="ask-about" aria-label={`Ask about this: ${project.name}`} onClick={() => askAssistant(question)}>Ask about this <span aria-hidden="true">↗</span></button>}
         </div>
       </div>
       <h3>{study.headline}</h3>

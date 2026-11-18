@@ -69,6 +69,34 @@ test('parseFit validates levels, caps items at 10 and always offers cv and email
   assert.equal(parseFit('not json', buildCatalog(data)), null);
 });
 
+test('parseAsk and parseFit keep # and _ inside words but unwrap markdown', () => {
+  const c = buildCatalog(data);
+  const ask = parseAsk(JSON.stringify({ text: 'Does he know C#? Yes, F# too, via Job_Agent and promptOps_framework and snake_case.', sources: [], actions: [] }), c);
+  assert.equal(ask.text, 'Does he know C#? Yes, F# too, via Job_Agent and promptOps_framework and snake_case.');
+  const md = parseAsk(JSON.stringify({ text: '## Hi\n**bold** and __strong__ and *em* and _it_ and `code` in C#.' }), c);
+  assert.equal(md.text, 'Hi bold and strong and em and it and code in C#.');
+  const fit = parseFit(JSON.stringify({ role: 'C# dev', items: [
+    { requirement: 'Knows C# and F#', level: 'strong', reason: 'Built **Job_Agent** with `promptOps_framework`', sources: [] }] }), c);
+  assert.equal(fit.role, 'C# dev');
+  assert.equal(fit.items[0].requirement, 'Knows C# and F#');
+  assert.equal(fit.items[0].reason, 'Built Job_Agent with promptOps_framework');
+});
+
+test('parseFit normalises level spelling and rejects replies where no item is valid', () => {
+  const c = buildCatalog(data);
+  const item = (level) => ({ requirement: 'RAG', level, reason: '', sources: [] });
+  const out = parseFit(JSON.stringify({ items: [item('Strong'), item(' not shown '), item('Not-Shown'), item('PARTIAL')] }), c);
+  assert.deepEqual(out.items.map((i) => i.level), ['strong', 'not_shown', 'not_shown', 'partial']);
+  assert.equal(parseFit(JSON.stringify({ items: [item('expert'), item(3)] }), c), null);
+  assert.deepEqual(parseFit('{"items":[]}', c).items, []);
+});
+
+test('handler: fit reply with only invalid items gives 502', async () => {
+  const bad = JSON.stringify({ items: [{ requirement: 'x', level: 'great', reason: '', sources: [] }] });
+  const res = await run(async () => bad, post({ mode: 'fit', jobDescription: 'A job' }));
+  assert.equal(res.statusCode, 502);
+});
+
 test('parseFit drops cv when the data has no CV (R4)', () => {
   const noCv = { ...data, cv: undefined };
   const out = parseFit('{"role":null,"items":[],"actions":[]}', buildCatalog(noCv));

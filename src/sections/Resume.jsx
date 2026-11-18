@@ -24,7 +24,7 @@ const Resume = () => (
           <ul className="timeline-text timeline-bullets">
             {x.highlights.map((h) => <li key={h}>{h}</li>)}
           </ul>
-          {question && <button type="button" className="ask-about" aria-label={`Ask the assistant about ${x.title} · ${x.company}`} onClick={() => askAssistant(question)}>Ask about this <span aria-hidden="true">↗</span></button>}
+          {question && <button type="button" className="ask-about" aria-label={`Ask about this: ${x.title} · ${x.company}`} onClick={() => askAssistant(question)}>Ask about this <span aria-hidden="true">↗</span></button>}
         </li>
         )
       })}
