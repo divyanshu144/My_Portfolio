@@ -170,6 +170,7 @@
   ],
   "experience": [
     {
+      "id": "mphasis-senior",
       "company": "Mphasis",
       "location": "Bengaluru, India",
       "title": "Senior Software Engineer",
@@ -181,6 +182,7 @@
       ]
     },
     {
+      "id": "mphasis-engineer",
       "company": "Mphasis",
       "location": "Bengaluru, India",
       "title": "Software Engineer",
@@ -192,6 +194,7 @@
       ]
     },
     {
+      "id": "hermitcrabs-intern",
       "company": "Hermitcrabs",
       "location": "Remote",
       "title": "Web Developer Intern",
@@ -204,6 +207,7 @@
   ],
   "projects": [
     {
+      "id": "jobfit",
       "name": "JobFit",
       "repo": "https://github.com/divyanshu144/Job_Agent",
       "summary": "Job discovery, fit analysis and tailored application documents in one persistent workflow. Six specialist agents exchange validated outputs, stream progress and retry failed steps without starting over.",
@@ -250,6 +254,7 @@
       }
     },
     {
+      "id": "jarvis",
       "name": "JARVIS",
       "repo": "https://github.com/divyanshu144/Jarvis",
       "summary": "Voice-first macOS assistant with a three-tier model router (local Ollama, Groq, Claude) that escalates only when a cheaper model fails. About 20 tools behind one safety-gated dispatch layer, three-layer memory, per-request tracing and 69 tests.",
@@ -262,6 +267,7 @@
       ]
     },
     {
+      "id": "docchat",
       "name": "DocChat",
       "repo": "https://github.com/divyanshu144/DocChat",
       "summary": "A source-grounded assistant for PDFs, YouTube transcripts and web pages. Retrieval experiments compare candidate approaches against the current default, with explicit quality gates before changing it.",
@@ -308,6 +314,7 @@
       }
     },
     {
+      "id": "promptops",
       "name": "PromptOps",
       "repo": "https://github.com/divyanshu144/promptOps_framework",
       "summary": "Prompt evaluation with experiment tracking, failure inspection and CI quality gates. In a local four-case support benchmark repeated three times per variant, explicit citation instructions improved citation compliance from 0/12 to 12/12 answers. This is a small development-set result, not a general accuracy claim.",
@@ -322,6 +329,7 @@
       "evidenceUrl": "https://github.com/divyanshu144/promptOps_framework/blob/main/docs/case-study.md"
     },
     {
+      "id": "superops",
       "name": "SuperOps",
       "repo": "https://github.com/divyanshu144/supermarket-ops-agent",
       "summary": "A Telegram assistant for a kirana store: stock, billing and customer credit. The model selects tools; deterministic code handles money, stock checks and transactional updates.",
@@ -367,6 +375,7 @@
       }
     },
     {
+      "id": "epc-south-west",
       "name": "EPC South West",
       "repo": "https://github.com/divyanshu144/EPC",
       "summary": "End-to-end ETL and ML pipeline processing 1.8M+ UK EPC records (2008 to 2025). It covers ingestion, cleaning, feature engineering, causal modelling, and gradient-boosted prediction with SHAP explainability.",
@@ -386,6 +395,7 @@
       "_todo": "TODO: add what the model predicts and how well it performs (do not invent numbers)."
     },
     {
+      "id": "fooder",
       "name": "Fooder",
       "repo": "https://github.com/divyanshu144/Fooder",
       "demo": "https://fooder-two.vercel.app",
@@ -407,5 +417,60 @@
     "Badminton (sometimes)",
     "Table tennis (sometimes)"
   ],
-  "cv": "/assets/Divyanshu-Charak-CV.pdf"
+  "cv": "/assets/Divyanshu-Charak-CV.pdf",
+  "assistant": {
+    "_todo": "Draft questions; owner to review",
+    "suggestions": {
+      "about": [
+        "Does he need visa sponsorship?",
+        "When is he available to start?",
+        "What kind of roles is he looking for?"
+      ],
+      "portfolio": [
+        "Which project best shows his AI engineering?",
+        "What did he build with LangGraph and the Claude Agent SDK?",
+        "Which projects have a live demo or public repo?"
+      ],
+      "resume": [
+        "What did he do at Mphasis?",
+        "What is his education?",
+        "Which languages and frameworks does he use?"
+      ],
+      "blog": [
+        "What is he working on with AI at the moment?",
+        "Which of his projects should I read about first?",
+        "What does he care about when building AI systems?"
+      ],
+      "contact": [
+        "How can I contact him?",
+        "Where is he based?",
+        "Is he available immediately?"
+      ],
+      "caseStudies": {
+        "jobfit": [
+          "How do the six agents in JobFit work together?",
+          "How does JobFit recover when a step fails?",
+          "What are the known limitations of JobFit?"
+        ],
+        "docchat": [
+          "How did he evaluate retrieval in DocChat?",
+          "Why did he keep the existing default retriever?",
+          "What are the limits of the DocChat results?"
+        ],
+        "superops": [
+          "How does SuperOps keep billing and stock consistent?",
+          "What does the model do and what does code do in SuperOps?",
+          "What are the known limitations of SuperOps?"
+        ]
+      }
+    },
+    "askAbout": {
+      "jobfit": "Tell me about JobFit and how its agents work.",
+      "docchat": "Tell me about DocChat and how he evaluated its retrieval.",
+      "superops": "Tell me about SuperOps and how it keeps money and stock correct.",
+      "mphasis-senior": "What did he do as Senior Software Engineer at Mphasis?",
+      "mphasis-engineer": "What did he do as Software Engineer at Mphasis?",
+      "hermitcrabs-intern": "What did he do as a Web Developer Intern at Hermitcrabs?"
+    }
+  }
 }

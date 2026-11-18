@@ -29,6 +29,29 @@ const App = () => {
     setActive(id)
     window.scrollTo(0, 0)
   }
+  const targetTimer = useRef(null)
+  const targetEl = useRef(null)
+  const clearTarget = () => {
+    clearTimeout(targetTimer.current)
+    targetEl.current?.classList.remove('is-targeted')
+    targetEl.current = null
+  }
+  useEffect(() => clearTarget, [])
+  // Select a tab and, once it has rendered, bring one element on it into view and highlight it briefly.
+  const goTo = (tab, anchorId) => {
+    select(tab)
+    if (!anchorId) return
+    requestAnimationFrame(() => {
+      const el = document.getElementById(anchorId)
+      if (!el) return
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      clearTarget()
+      el.classList.add('is-targeted')
+      targetEl.current = el
+      el.scrollIntoView({ block: 'start', behavior: reduced ? 'auto' : 'smooth' })
+      targetTimer.current = setTimeout(clearTarget, 1600)
+    })
+  }
   return (
     <div className="workspace">
       <a className="skip-link" href="#workspace-main">Skip to content</a>
@@ -49,7 +72,7 @@ const App = () => {
         </div>
         <footer className="workspace-footer"><span>Divyanshu Charak <span aria-hidden="true">/</span> Built with intent.</span><div><a href={portfolioData.contact.linkedin} target="_blank" rel="noreferrer">LinkedIn ↗</a><a href={`mailto:${portfolioData.contact.email}`}>Email ↗</a>{portfolioData.cv && <a href={portfolioData.cv} download>CV ↓</a>}</div></footer>
       </main>
-      <AIAssistant />
+      <AIAssistant active={active} goTo={goTo} />
     </div>
   )
 }
