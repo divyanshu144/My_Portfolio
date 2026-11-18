@@ -76,7 +76,7 @@ export const DivAvatar = ({ className }) => {
 
 const GREETING = {
   role: 'assistant',
-  content: "Hey! I'm an AI trained on Divyanshu's portfolio. Ask about his projects, tech stack, or whether he needs UK sponsorship 🤙",
+  content: "Hi! I can help you explore Divyanshu's projects, engineering experience and technical decisions. What would you like to know?",
 };
 
 // Chat state lives in AIAssistant (not in the popup) so the conversation survives closing and reopening.
@@ -121,8 +121,12 @@ export default function ChatPopup({ chat, anchorX, onClose }) {
   const { messages, chatInput, setChatInput, loading, send } = chat;
   const endRef = useRef(null);
   const inputRef = useRef(null);
+  const dialogRef = useRef(null);
 
-  useEffect(() => { endRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [messages, loading]);
+  useEffect(() => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    endRef.current?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
+  }, [messages, loading]);
   useEffect(() => {
     // Move focus into the chat, and give it back to whatever had it (usually the avatar button) on close.
     const previous = document.activeElement;
@@ -130,7 +134,22 @@ export default function ChatPopup({ chat, anchorX, onClose }) {
     return () => { if (previous && previous !== document.body) previous.focus?.({ preventScroll: true }); };
   }, []);
   useEffect(() => {
-    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+    const onKey = (e) => {
+      if (e.key === 'Escape') onClose();
+      if (e.key === 'Tab') {
+        const controls = dialogRef.current?.querySelectorAll('button:not(:disabled), textarea:not(:disabled), a[href], [tabindex="0"]');
+        if (!controls?.length) return;
+        const first = controls[0];
+        const last = controls[controls.length - 1];
+        if (!Array.from(controls).includes(document.activeElement)) {
+          e.preventDefault();
+          (e.shiftKey ? last : first).focus();
+          return;
+        }
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    };
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
   }, [onClose]);
@@ -144,15 +163,15 @@ export default function ChatPopup({ chat, anchorX, onClose }) {
   return (
     <>
       <div className="wa-backdrop" onClick={onClose} />
-      <div className="wa-popup" role="dialog" aria-label="Chat with Div" style={{ '--wa-left': `${left}px` }}>
+      <div ref={dialogRef} className="wa-popup" role="dialog" aria-modal="true" aria-label="Portfolio AI assistant" style={{ '--wa-left': `${left}px` }}>
         <div className="ai-accent-bar" />
 
         <div className="ai-modal_header">
           <div className="ai-row">
             <DivAvatar className="ai-avatar" />
             <div>
-              <p className="ai-modal_title">Chat with Div</p>
-              <p className="ai-modal_subtitle">Divyanshu&apos;s personal AI · ask me anything</p>
+              <p className="ai-modal_title">Portfolio assistant</p>
+              <p className="ai-modal_subtitle">Projects, experience &amp; engineering decisions</p>
             </div>
           </div>
           <button className="ai-close" onClick={onClose} aria-label="Close chat">✕</button>
@@ -188,7 +207,8 @@ export default function ChatPopup({ chat, anchorX, onClose }) {
               onChange={(e) => setChatInput(e.target.value)}
               onKeyDown={onKeyDown}
               placeholder="Ask about skills, projects, visa, availability... (Enter to send)"
-              disabled={loading}
+              aria-label="Your question about Divyanshu's work"
+              readOnly={loading}
             />
             <button className="ai-send" type="submit" disabled={loading || !chatInput.trim()} aria-label="Send">↑</button>
           </form>

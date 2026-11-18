@@ -49,19 +49,24 @@ const Contact = () => {
         <div className="icon-box"><ion-icon name="location-outline"></ion-icon></div>
         <span>{portfolioData.location}</span>
       </address>
+      <div className="contact-direct">
+        <a href={`mailto:${portfolioData.contact.email}`}>{portfolioData.contact.email} ↗</a>
+        <a href={portfolioData.contact.linkedin} target="_blank" rel="noreferrer">LinkedIn ↗</a>
+        <a href={`tel:${portfolioData.contact.phone.replace(/[^\d+]/g, '')}`}>{portfolioData.contact.phone}</a>
+      </div>
 
       <section className="contact-form">
         <h3 className="h3 form-title">Contact Form</h3>
 
         <form className="form" onSubmit={handleSubmit}>
           <div className="input-wrapper">
-            <input type="text" name="name" className="form-input" placeholder="Full name"
+            <input type="text" name="name" className="form-input" placeholder="Full name" aria-label="Full name" autoComplete="name"
               value={form.name} onChange={handleChange} required />
-            <input type="email" name="email" className="form-input" placeholder="Email address"
+            <input type="email" name="email" className="form-input" placeholder="Email address" aria-label="Email address" autoComplete="email"
               value={form.email} onChange={handleChange} required />
           </div>
 
-          <textarea name="message" className="form-input" placeholder="Your message"
+          <textarea name="message" className="form-input" placeholder="Your message" aria-label="Your message"
             value={form.message} onChange={handleChange} required></textarea>
 
           <button className="form-btn" type="submit" disabled={!canSubmit}>

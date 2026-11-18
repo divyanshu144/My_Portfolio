@@ -13,16 +13,6 @@ const Timeline = ({ icon, heading, children }) => (
 
 const Resume = () => (
   <>
-    <Timeline icon="book-outline" heading="Education">
-      {portfolioData.education.map((e) => (
-        <li className="timeline-item" key={e.degree + e.institution}>
-          <h4 className="h4 timeline-item-title">{e.degree}</h4>
-          <span>{[e.institution, e.dates, e.grade].filter(Boolean).join(' · ')}</span>
-          {e.dissertation && <p className="timeline-text">{e.dissertation}</p>}
-        </li>
-      ))}
-    </Timeline>
-
     <Timeline icon="briefcase-outline" heading="Experience">
       {portfolioData.experience.map((x) => (
         <li className="timeline-item" key={x.title + x.company + x.dates}>
@@ -31,6 +21,16 @@ const Resume = () => (
           <ul className="timeline-text timeline-bullets">
             {x.highlights.map((h) => <li key={h}>{h}</li>)}
           </ul>
+        </li>
+      ))}
+    </Timeline>
+
+    <Timeline icon="book-outline" heading="Education">
+      {portfolioData.education.map((e) => (
+        <li className="timeline-item" key={e.degree + e.institution}>
+          <h4 className="h4 timeline-item-title">{e.degree}</h4>
+          <span>{[e.institution, e.dates, e.grade].filter(Boolean).join(' · ')}</span>
+          {e.dissertation && <p className="timeline-text">{e.dissertation}</p>}
         </li>
       ))}
     </Timeline>
