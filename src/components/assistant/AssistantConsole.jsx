@@ -221,6 +221,14 @@ export default function AssistantConsole({ open, onClose, tab, onTab, active, go
     return () => observer.disconnect()
   }, [])
 
+  // Tell the page how much room to keep clear at its end: the console's height, its 12px inset and some breathing room.
+  useEffect(() => {
+    const root = document.documentElement
+    if (open && measured > 0) root.style.setProperty('--console-reserve', `${measured + 12 + 24}px`)
+    else root.style.removeProperty('--console-reserve')
+    return () => root.style.removeProperty('--console-reserve')
+  }, [open, measured])
+
   const currentHeight = () => consoleRef.current?.getBoundingClientRect().height || measured
   const resizeTo = (px) => setUserHeight(clampHeight(px, window.innerHeight))
   const onHandlePointerDown = (e) => {

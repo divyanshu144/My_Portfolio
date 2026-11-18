@@ -295,7 +295,7 @@ main.workspace-main { display: block; width: auto; max-width: 1344px; margin: 0 
 .console-level[data-level="partial"] { color: #f4c97a; }
 .console-level[data-level="not_shown"] { color: #ff9d9d; }
 /* Keep the end of the page reachable above the open console. */
-.workspace:has(.assistant-console:not([hidden])) .workspace-footer { padding-bottom: 360px; }
+.workspace:has(.assistant-console:not([hidden])) .workspace-footer { padding-bottom: var(--console-reserve, 360px); }
 @keyframes workspace-enter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 @media (min-width: 1400px) { .workspace-intro { gap: 70px; } }
 @media (max-width: 1100px) {
