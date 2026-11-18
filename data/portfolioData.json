@@ -92,21 +92,62 @@
     }
   ],
   "avatarFacts": [
-    "Cut inference cost 73% on JobFit.",
+    "Built JobFit with six specialist agents and per-call cost tracking.",
     "MSc Statistical Data Science, University of Exeter (Merit).",
     "Rebuilt a refund review flow used across 60+ government contracts.",
-    "Took a prompt test set from 40% to 100% pass rate.",
+    "Built PromptOps to inspect failures and compare prompt versions.",
     "Plays guitar and reads books.",
     "Works part time as a barista at Starbucks.",
     "Learns something new every day."
   ],
   "skills": {
-    "languages": ["Python", "JavaScript", "TypeScript", "SQL"],
-    "ai_ml": ["LLMs", "RAG", "OpenAI API", "scikit-learn", "XGBoost", "SHAP", "Prompt Engineering", "LangGraph", "MCP", "Claude Agent SDK", "LLM-as-judge evaluation"],
-    "backend_apis": ["FastAPI", "Express", "REST API design & integration", "PostgreSQL", "SQLite"],
-    "data_etl": ["Pandas", "NumPy", "Airflow", "MLflow", "data pipeline design", "structured & semi-structured data"],
-    "devops": ["Git", "Docker", "Jenkins (CI/CD)", "Redis", "Railway", "AWS (ECS Fargate, S3, IAM)"],
-    "frontend": ["React", "Next.js", "Tailwind CSS"]
+    "languages": [
+      "Python",
+      "JavaScript",
+      "TypeScript",
+      "SQL"
+    ],
+    "ai_ml": [
+      "LLMs",
+      "RAG",
+      "OpenAI API",
+      "scikit-learn",
+      "XGBoost",
+      "SHAP",
+      "Prompt Engineering",
+      "LangGraph",
+      "MCP",
+      "Claude Agent SDK",
+      "LLM-as-judge evaluation"
+    ],
+    "backend_apis": [
+      "FastAPI",
+      "Express",
+      "REST API design & integration",
+      "PostgreSQL",
+      "SQLite"
+    ],
+    "data_etl": [
+      "Pandas",
+      "NumPy",
+      "Airflow",
+      "MLflow",
+      "data pipeline design",
+      "structured & semi-structured data"
+    ],
+    "devops": [
+      "Git",
+      "Docker",
+      "Jenkins (CI/CD)",
+      "Redis",
+      "Railway",
+      "AWS (ECS Fargate, S3, IAM)"
+    ],
+    "frontend": [
+      "React",
+      "Next.js",
+      "Tailwind CSS"
+    ]
   },
   "education": [
     {
@@ -163,33 +204,165 @@
     {
       "name": "JobFit",
       "repo": "https://github.com/divyanshu144/Job_Agent",
-      "summary": "Six-agent pipeline that parses a CV and a job spec, scores the match and writes a tailored resume and cover letter. Typed contracts between agents, parallel stages, and per-agent model tiering that cut inference cost by 73%. Deployed on AWS ECS Fargate with CI/CD and monitoring.",
-      "tech": ["Python", "FastAPI", "AWS ECS Fargate", "Docker"]
+      "summary": "Job discovery, fit analysis and tailored application documents in one persistent workflow. Six specialist agents exchange validated outputs, stream progress and retry failed steps without starting over.",
+      "tech": [
+        "Python",
+        "FastAPI",
+        "React",
+        "PostgreSQL",
+        "Celery"
+      ],
+      "caseStudy": {
+        "id": "jobfit",
+        "category": "Agent workflows",
+        "headline": "From a job description to an application you can review.",
+        "problem": "A job search means repeatedly comparing requirements, finding gaps and rewriting application materials. Keeping those steps connected matters as much as generating the text.",
+        "contribution": "I built a two-phase workflow: parse the role, score the match and identify gaps, then generate resources, a cover letter and a tailored resume. Results persist in PostgreSQL and progress streams to the browser.",
+        "decision": "Each agent returns a validated structure. Failed or missing steps can be retried under a database lock, so a failure in one stage does not require a complete rerun. Model tiers and per-call cost records make the cost of each stage inspectable.",
+        "outcome": "The application supports saved analyses, document exports and resumable workflows. A cost report compares recorded model usage against an all-Sonnet baseline; savings depend on the workload.",
+        "limitation": "The documented live evaluation has not yet been run. Deterministic fixtures check schemas and validators, not model quality. AWS deployment definitions remain in the repository, but that environment is shut down.",
+        "proofValue": "6 agents",
+        "proofLabel": "One persisted application workflow",
+        "workflow": [
+          "CV + job description",
+          "Parse, match, identify gaps",
+          "Generate application materials",
+          "Review + export"
+        ],
+        "evidence": [
+          {
+            "label": "Architecture & implementation",
+            "url": "https://github.com/divyanshu144/Job_Agent"
+          },
+          {
+            "label": "Evidence notes",
+            "url": "/evidence/project-notes.html#jobfit"
+          }
+        ],
+        "workflowDetails": [
+          "Start with a candidate profile and a job description. The saved profile supplies the facts used to evaluate the role and draft application materials.",
+          "A job parser structures the role, a match scorer compares it with the profile, and a gap analyst identifies missing requirements. Each stage returns validated output.",
+          "Specialist agents produce resource recommendations, a cover letter and tailored resume content. Saved workflow state allows failed stages to be retried.",
+          "Review the analysis and application materials, then export documents. Progress streams to the browser and results remain available in saved analyses."
+        ]
+      }
     },
     {
       "name": "JARVIS",
       "repo": "https://github.com/divyanshu144/Jarvis",
       "summary": "Voice-first macOS assistant with a three-tier model router (local Ollama, Groq, Claude) that escalates only when a cheaper model fails. About 20 tools behind one safety-gated dispatch layer, three-layer memory, per-request tracing and 69 tests.",
-      "tech": ["Python", "Whisper", "SQLite", "ChromaDB", "PyQt6"]
+      "tech": [
+        "Python",
+        "Whisper",
+        "SQLite",
+        "ChromaDB",
+        "PyQt6"
+      ]
     },
     {
       "name": "DocChat",
       "repo": "https://github.com/divyanshu144/DocChat",
-      "summary": "Agentic RAG pipeline with planner, retriever, synthesizer and critic stages. The critic checks each answer against retrieved context before it surfaces. Cross-encoder reranking improved MRR by 28% and Hit@1 by 50%. Exposed as an MCP server.",
-      "tech": ["Python", "LangGraph", "ChromaDB", "MCP"]
+      "summary": "A source-grounded assistant for PDFs, YouTube transcripts and web pages. Retrieval experiments compare candidate approaches against the current default, with explicit quality gates before changing it.",
+      "tech": [
+        "Python",
+        "LangGraph",
+        "Qdrant",
+        "FastAPI",
+        "MCP"
+      ],
+      "caseStudy": {
+        "id": "docchat",
+        "category": "Retrieval & evaluation",
+        "headline": "Answers you can trace back to your sources.",
+        "problem": "A fluent answer is not enough when the relevant evidence is buried across documents and web pages. The system needs to retrieve the right passages and make the answer traceable.",
+        "contribution": "I built a pipeline that plans the query, retrieves context, synthesizes an answer and checks it against the sources. I also built retrieval evaluation tooling to compare ranking strategies on the same questions.",
+        "decision": "I tested hybrid BM25 + reciprocal rank fusion against the existing dense + overlap reranker. The more complex option performed worse on the larger evaluation, so I kept the existing default.",
+        "outcome": "On 127 questions across 781 chunks from 14 sources, the production default achieved MRR 0.834 versus 0.761 for hybrid retrieval. The measured hybrid-minus-default difference was -0.073 (95% bootstrap CI: -0.114 to -0.035).",
+        "limitation": "This measures retrieval ranking, not answer correctness. The additional 103 questions were LLM-generated and labels were not independently audited; these results do not establish performance on unseen customer documents.",
+        "proofValue": "127 questions",
+        "proofLabel": "Retrieval comparison · 14 sources",
+        "workflow": [
+          "Documents + web sources",
+          "Retrieve relevant passages",
+          "Synthesize + check grounding",
+          "Answer with citations"
+        ],
+        "evidence": [
+          {
+            "label": "Evaluation methodology",
+            "url": "https://github.com/divyanshu144/DocChat/blob/main/docs/retrieval-quality-evaluation.md"
+          },
+          {
+            "label": "Evidence notes",
+            "url": "/evidence/project-notes.html#docchat"
+          }
+        ],
+        "workflowDetails": [
+          "Bring PDFs, YouTube transcripts and web pages into a shared source collection. The question starts a pipeline that plans how to find supporting evidence.",
+          "Retrieve relevant source passages using dense search and overlap reranking. Evaluation compares alternatives before changing the default retrieval strategy.",
+          "Synthesize an answer from the retrieved context, then run a critic stage that checks the answer against that evidence before it surfaces.",
+          "Return an answer with citations so the reader can trace it back to the sources. Retrieval ranking and generated-answer correctness are evaluated separately."
+        ]
+      }
     },
     {
       "name": "PromptOps",
       "repo": "https://github.com/divyanshu144/promptOps_framework",
-      "summary": "Prompt-as-code evaluation platform with MLflow tracking and LLM-as-judge scoring across OpenAI, Anthropic and Ollama. Took a golden test set from 40% to 100% pass rate by iterating on measured results, and cut completion tokens by 29%.",
-      "tech": ["Python", "FastAPI", "MLflow", "Next.js"]
+      "summary": "Prompt evaluation with experiment tracking, failure inspection and CI quality gates. In a local four-case support benchmark repeated three times per variant, explicit citation instructions improved citation compliance from 0/12 to 12/12 answers. This is a small development-set result, not a general accuracy claim.",
+      "tech": [
+        "Python",
+        "FastAPI",
+        "MLflow",
+        "React"
+      ],
+      "image": "/assets/projects/promptops-dashboard.png",
+      "imageCaption": "Actual PromptOps dashboard showing offline replay fixtures (25% vs 100%), separate from the live citation benchmark.",
+      "evidenceUrl": "https://github.com/divyanshu144/promptOps_framework/blob/main/docs/case-study.md"
     },
     {
       "name": "SuperOps",
       "repo": "https://github.com/divyanshu144/supermarket-ops-agent",
-      "summary": "Telegram agent for grocery store billing and GST, built in TypeScript on the Claude Agent SDK.",
-      "tech": ["TypeScript", "Claude Agent SDK", "Telegram"],
-      "_todo": "TODO: add one line on who uses SuperOps (do not invent it)."
+      "summary": "A Telegram assistant for a kirana store: stock, billing and customer credit. The model selects tools; deterministic code handles money, stock checks and transactional updates.",
+      "tech": [
+        "TypeScript",
+        "Claude Agent SDK",
+        "PostgreSQL",
+        "Telegram"
+      ],
+      "caseStudy": {
+        "id": "superops",
+        "category": "Transactional AI tools",
+        "headline": "Run shop operations from a conversation.",
+        "problem": "Stock, bills and customer credit are connected operations. A conversational interface must preserve those relationships even when messages repeat or two actions compete for the same stock.",
+        "contribution": "I built a Telegram workflow around scoped store tools, draft bills and PostgreSQL transactions. Prices and quantities come from tool results, while money is calculated in integer paise.",
+        "decision": "The model can choose an operation, but it cannot bypass database checks. Finalizing a bill locks the relevant rows and updates stock and credit together. Tool-level idempotency protects against repeated calls.",
+        "outcome": "The repository includes keyless replay checks and synthetic safety cases that invoke registered tools and assert database state. Access is invite-only, with each invite creating a separate store.",
+        "limitation": "Synthetic replays test tool behavior, not live model quality. A live agent baseline has not been accepted. Diverging tool-call replays and several retail edge cases remain documented limitations.",
+        "proofValue": "Atomic updates",
+        "proofLabel": "Billing, inventory and credit together",
+        "workflow": [
+          "Telegram message",
+          "Agent selects scoped tools",
+          "Validate + transact",
+          "Bill, stock or credit result"
+        ],
+        "evidence": [
+          {
+            "label": "Design decisions",
+            "url": "https://github.com/divyanshu144/supermarket-ops-agent/blob/main/docs/DESIGN.md"
+          },
+          {
+            "label": "Evidence notes",
+            "url": "/evidence/project-notes.html#superops"
+          }
+        ],
+        "workflowDetails": [
+          "Send a stock, billing or credit request through Telegram. Store identity comes from the verified chat, so requests remain scoped to the correct shop.",
+          "The agent selects from store-specific tools. Prices, quantities and customer records come from tool results rather than model-generated values.",
+          "Code calculates money in integer paise and checks available stock. Finalizing a bill updates inventory and customer credit together in a database transaction.",
+          "Return the bill, stock update or credit result to the conversation. Repeated calls are protected by idempotency checks, with diverging replays documented as a limitation."
+        ]
+      }
     },
     {
       "name": "EPC South West",
@@ -200,7 +373,14 @@
         "XGBoost gradient-boosted prediction + SHAP explainability for energy policy impact analysis.",
         "Reproducible CLI-driven workflow: Airflow DAG orchestration, MLflow experiment tracking, FastAPI service layer."
       ],
-      "tech": ["Python", "Pandas", "XGBoost", "MLflow", "Airflow", "FastAPI"],
+      "tech": [
+        "Python",
+        "Pandas",
+        "XGBoost",
+        "MLflow",
+        "Airflow",
+        "FastAPI"
+      ],
       "_todo": "TODO: add what the model predicts and how well it performs (do not invent numbers)."
     },
     {
@@ -208,8 +388,22 @@
       "repo": "https://github.com/divyanshu144/Fooder",
       "demo": "https://fooder-two.vercel.app",
       "summary": "Restaurant discovery and online ordering web app with authentication, menus, and cart/checkout.",
-      "tech": ["React.js", "Redux", "Tailwind CSS", "TypeScript", "Firebase"]
+      "tech": [
+        "React.js",
+        "Redux",
+        "Tailwind CSS",
+        "TypeScript",
+        "Firebase"
+      ]
     }
   ],
-  "interests": ["Reading books", "Playing guitar", "Gym", "Part-time barista at Starbucks", "Badminton (sometimes)", "Table tennis (sometimes)"]
+  "interests": [
+    "Reading books",
+    "Playing guitar",
+    "Gym",
+    "Part-time barista at Starbucks",
+    "Badminton (sometimes)",
+    "Table tennis (sometimes)"
+  ],
+  "cv": "/assets/Divyanshu-Charak-CV.pdf"
 }

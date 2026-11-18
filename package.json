@@ -11,7 +11,7 @@
     "server": "node server/index.js",
     "build": "vite build",
     "lint": "eslint .",
-    "test": "node --test \"api/_lib/*.test.js\" \"src/lib/*.test.js\" \"src/components/avatar/*.test.js\"",
+    "test": "node --test \"api/_lib/*.test.js\" \"src/lib/*.test.js\" \"src/components/avatar/*.test.js\" \"src/components/explorer/*.test.js\"",
     "preview": "vite preview",
     "start": "node server/index.js"
   },

@@ -1,15 +1,24 @@
+import SystemMap from '../components/SystemMap'
 import portfolioData from '../../data/portfolioData.json'
 
 const { about, aboutCards, projects } = portfolioData
 
-const About = () => (
+const About = ({ onNavigate }) => (
   <div className="about-layout">
+    <div className="workspace-intro">
     <section className="about-hero" aria-labelledby="about-headline">
-      <p className="about-eyebrow">{about.eyebrow}</p>
-      <h3 id="about-headline">{about.headline}<br /><span>{about.highlight}</span></h3>
+      <p className="about-eyebrow"><span className="hero-rule" aria-hidden="true" /> APPLIED AI / SOFTWARE ENGINEERING</p>
+      <h2 id="about-headline">{about.headline}<br /><span>{about.highlight}</span></h2>
       <p className="about-intro">{about.intro}</p>
+      <div className="hero-actions">
+        <button className="portfolio-action portfolio-action-primary" onClick={() => onNavigate('portfolio')}>View my work <span aria-hidden="true">↗</span></button>
+        {portfolioData.cv && <a className="portfolio-action" href={portfolioData.cv} download>Download CV <span aria-hidden="true">↓</span></a>}
+        <button className="portfolio-action portfolio-action-text" onClick={() => onNavigate('contact')}>Contact me <span aria-hidden="true">→</span></button>
+      </div>
       <div className="about-location"><ion-icon name="location-outline" aria-hidden="true" />Exeter, UK</div>
     </section>
+    <SystemMap onNavigate={onNavigate} />
+    </div>
 
     <section className="about-journey" aria-label="My background">
       {about.journey.map(({ value, label, detail }) => (
@@ -23,7 +32,7 @@ const About = () => (
 
     <section className="about-work" aria-labelledby="about-work-title">
       <div className="about-section-heading">
-        <div><p className="about-eyebrow">Ideas into applications</p><h3 id="about-work-title">What that looks like</h3></div>
+        <div><p className="about-eyebrow">01 / Selected systems</p><h3 id="about-work-title">Built for the real world.</h3></div>
         <span className="about-section-note">Explore the code <span aria-hidden="true">↗</span></span>
       </div>
       <ul className="about-project-grid">
@@ -40,7 +49,7 @@ const About = () => (
     </section>
 
     <section aria-labelledby="about-approach-title">
-      <div className="about-section-heading"><div><p className="about-eyebrow">The person behind the projects</p><h3 id="about-approach-title">How I work. How I unwind.</h3></div></div>
+      <div className="about-section-heading"><div><p className="about-eyebrow">02 / Engineering philosophy</p><h3 id="about-approach-title">How I work. How I unwind.</h3></div></div>
       <ul className="about-approach-grid">
         {aboutCards.map(({ title, text, icon }, index) => (
           <li className={`about-approach-card${index === 2 ? ' about-personal-card' : ''}`} key={title}>

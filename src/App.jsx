@@ -1,64 +1,56 @@
-import { useState } from 'react'
-import Sidebar from './sections/Sidebar'
+import { useEffect, useRef, useState } from 'react'
 import About from './sections/About'
 import Resume from './sections/Resume'
 import Portfolio from './sections/Portfolio'
 import Blog from './sections/Blog'
 import Contact from './sections/Contact'
 import AIAssistant from './components/AIAssistant'
+import portfolioData from '../data/portfolioData.json'
 
 const pages = [
-  { id: 'about', label: 'About', title: 'About me', Page: About },
+  { id: 'about', label: 'Overview', title: 'Overview', Page: About },
+  { id: 'portfolio', label: 'Projects', title: 'Selected projects', Page: Portfolio },
   { id: 'resume', label: 'Experience', title: 'Experience', Page: Resume },
-  { id: 'portfolio', label: 'Portfolio', title: 'Portfolio', Page: Portfolio },
-  { id: 'blog', label: 'Blog', title: 'Blog', Page: Blog },
-  { id: 'contact', label: 'Contact', title: 'Contact', Page: Contact },
+  { id: 'blog', label: 'Notes', title: 'Notes & ideas', Page: Blog },
+  { id: 'contact', label: 'Contact', title: 'Start a conversation', Page: Contact },
 ]
 
 const App = () => {
   const [active, setActive] = useState('about')
-
+  const focusPage = useRef(false)
+  useEffect(() => {
+    if (focusPage.current) {
+      document.getElementById(`${active}-title`)?.focus({ preventScroll: true })
+      focusPage.current = false
+    }
+  }, [active])
   const select = (id) => {
+    focusPage.current = true
     setActive(id)
     window.scrollTo(0, 0)
   }
-
   return (
-    <>
-      <main>
-        <Sidebar />
-
+    <div className="workspace">
+      <a className="skip-link" href="#workspace-main">Skip to content</a>
+      <header className="workspace-header">
+        <button className="workspace-brand" onClick={() => select('about')} aria-label="Divyanshu Charak, overview"><span className="brand-mark" aria-hidden="true">dc<span>.</span></span><span className="brand-copy">Divyanshu Charak<small>APPLIED AI ENGINEER</small></span></button>
+        <nav className="workspace-nav" aria-label="Main navigation">
+          {pages.map(({ id, label }, i) => <button key={id} onClick={() => select(id)} aria-current={active === id ? 'page' : undefined}><span aria-hidden="true">0{i + 1}</span>{label}</button>)}
+        </nav>
+        <a className="workspace-github" href={portfolioData.contact.github} target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+      </header>
+      <main id="workspace-main" className="workspace-main" tabIndex={-1}>
+        <div className="workspace-path"><span><span className="status-dot" aria-hidden="true" /> PORTFOLIO / {active === 'about' ? 'OVERVIEW' : pages.find((page) => page.id === active).label.toUpperCase()}</span><span>{portfolioData.location} <span aria-hidden="true">·</span> 50.72° N</span></div>
         <div className="main-content">
-          <nav className="navbar">
-            <ul className="navbar-list">
-              {pages.map(({ id, label }) => (
-                <li className="navbar-item" key={id}>
-                  <button
-                    className={`navbar-link${active === id ? ' active' : ''}`}
-                    onClick={() => select(id)}
-                    aria-current={active === id ? 'page' : undefined}
-                  >
-                    {label}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </nav>
-
-          {pages.map(({ id, title, Page }) => (
-            <article key={id} className={`${id}${active === id ? ' active' : ''}`}>
-              <header>
-                <h2 className="h2 article-title">{title}</h2>
-              </header>
-              <Page />
-            </article>
-          ))}
+          {pages.map(({ id, title, Page }) => <article key={id} className={`${id}${active === id ? ' active' : ''}`}>
+            <header className={id === 'about' ? 'overview-title' : 'workspace-page-heading'}><p className="about-eyebrow">Divyanshu Charak / {id === 'portfolio' ? 'Engineering in practice' : title}</p><h1 className="article-title" id={`${id}-title`} tabIndex={-1}>{title}</h1></header>
+            <Page onNavigate={select} />
+          </article>)}
         </div>
+        <footer className="workspace-footer"><span>Divyanshu Charak <span aria-hidden="true">/</span> Built with intent.</span><div><a href={portfolioData.contact.linkedin} target="_blank" rel="noreferrer">LinkedIn ↗</a><a href={`mailto:${portfolioData.contact.email}`}>Email ↗</a>{portfolioData.cv && <a href={portfolioData.cv} download>CV ↓</a>}</div></footer>
       </main>
-
       <AIAssistant />
-    </>
+    </div>
   )
 }
-
 export default App

@@ -23,3 +23,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local reference copy of the original vCard template (its own git repo)
+vcard-personal-portfolio/
+
+# Brainstorming mockups
+.superpowers/
