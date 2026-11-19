@@ -1,0 +1,47 @@
+<!doctype html><div id="root"></div><script type="module">
+import React, { act } from 'react'
+import { createRoot } from 'react-dom/client'
+import Resume from '../src/sections/Resume.jsx'
+import portfolioData from '../data/portfolioData.json'
+import { onEvent, ASK_EVENT } from '../src/lib/assistantEvents.js'
+const root=createRoot(document.querySelector('#root'))
+const asks=[]
+onEvent(ASK_EVENT, question => asks.push(question))
+await act(async()=>root.render(React.createElement(Resume)))
+const buttons=[...document.querySelectorAll('.experience-track[aria-label="Career timeline"] .experience-selector')]
+if(buttons.length!==3) throw Error(`expected 3 role selectors, got ${buttons.length}`)
+await act(async()=>buttons[1].click())
+if(document.querySelector('.experience-detail h4')?.textContent!==`${portfolioData.experience[1].title} · ${portfolioData.experience[1].company}`) throw Error('selected role details did not update')
+document.querySelector('.experience-detail .ask-about')?.click()
+if(asks[0]!==portfolioData.assistant.askAbout[portfolioData.experience[1].id]) throw Error('Ask about this sent wrong question')
+const educationButtons=[...document.querySelectorAll('.education-selector')]
+if(educationButtons.length!==2) throw Error(`expected 2 education selectors, got ${educationButtons.length}`)
+if(!document.querySelector('.education-project')?.textContent.includes(portfolioData.education[0].dissertation)) throw Error('selected first qualification is missing its dissertation')
+await act(async()=>educationButtons[1].click())
+if(document.querySelector('.education-detail h4')?.textContent!==portfolioData.education[1].degree) throw Error('selected education details did not update')
+const skillButtons=[...document.querySelectorAll('.skill-group-selector')]
+if(skillButtons.length!==Object.keys(portfolioData.skills).length) throw Error('skill groups are not selectable')
+await act(async()=>skillButtons[1].click())
+if(skillButtons[1].getAttribute('aria-pressed')!=='true') throw Error('selected skill group state was not exposed')
+if(!document.querySelector('.skills-context')?.textContent.includes(portfolioData.skills.ai_ml.length)) throw Error('selected skill context does not show its skill count')
+if(document.querySelectorAll('.skill-chip.is-emphasized').length!==portfolioData.skills.ai_ml.length) throw Error('selected skill group was not emphasized')
+const allSkills=Object.values(portfolioData.skills).flat()
+let skillNodes=[...document.querySelectorAll('.skill-node')]
+if(skillNodes.length!==allSkills.length) throw Error(`expected ${allSkills.length} skill nodes, got ${skillNodes.length}`)
+if(!allSkills.every(skill=>skillNodes.some(node=>node.textContent===skill))) throw Error('one or more skill labels are missing from the constellation')
+if(skillNodes.some(node=>node.style.opacity==='0')) throw Error('skill nodes must remain visible before entrance motion runs')
+const targetNode=skillNodes.find(node=>node.textContent===portfolioData.skills.ai_ml[1])
+await act(async()=>targetNode.focus())
+if(targetNode.getAttribute('aria-pressed')!=='true') throw Error('keyboard-focused skill node was not exposed as selected')
+if(skillButtons[1].getAttribute('aria-pressed')!=='true') throw Error('focused skill node did not activate its category')
+if(!document.querySelector('.skills-context h4')?.textContent.includes(portfolioData.skills.ai_ml[1])) throw Error('focused skill detail was not shown')
+await act(async()=>skillNodes[0].click())
+skillNodes=[...document.querySelectorAll('.skill-node')]
+if(!skillNodes[0].getAttribute('aria-pressed') || skillNodes[0].getAttribute('aria-pressed')!=='true') throw Error('clicked skill node was not exposed as selected')
+const hoverNode=skillNodes.find(node=>node.textContent===portfolioData.skills.ai_ml[2])
+await act(async()=>hoverNode.dispatchEvent(new document.defaultView.MouseEvent('pointerover',{bubbles:true})))
+if(!document.querySelector('.skills-context h4')?.textContent.includes(portfolioData.skills.ai_ml[2])) throw Error('hovered skill preview did not update the detail panel')
+if(!document.querySelector('.skill-group[data-skill-group="ai_ml"].is-active')) throw Error('hovered skill preview did not highlight its category')
+await act(async()=>hoverNode.dispatchEvent(new document.defaultView.MouseEvent('pointerout',{bubbles:true,relatedTarget:document.body})))
+if(!document.querySelector('.skills-context h4')?.textContent.includes(portfolioData.skills.languages[0])) throw Error('leaving a hover preview did not restore the selected skill')
+</script>

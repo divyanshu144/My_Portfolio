@@ -110,17 +110,28 @@
       "SQL"
     ],
     "ai_ml": [
-      "LLMs",
-      "RAG",
+      "LLM application development",
+      "Retrieval-augmented generation (RAG)",
+      "Agentic workflows",
+      "Multi-agent systems",
+      "Tool calling & MCP",
+      "Prompt engineering & optimization",
+      "Structured outputs & validation",
+      "Embeddings & semantic search",
+      "Vector databases (Qdrant, ChromaDB)",
+      "Dense & hybrid retrieval",
+      "Reranking",
+      "Source grounding & citations",
+      "Retrieval evaluation (MRR, bootstrap CIs)",
+      "LLM-as-judge evaluation",
+      "Quality, latency & cost benchmarking",
       "OpenAI API",
+      "LangGraph",
+      "Claude Agent SDK",
+      "Whisper (speech recognition)",
       "scikit-learn",
       "XGBoost",
-      "SHAP",
-      "Prompt Engineering",
-      "LangGraph",
-      "MCP",
-      "Claude Agent SDK",
-      "LLM-as-judge evaluation"
+      "SHAP"
     ],
     "backend_apis": [
       "FastAPI",
@@ -158,7 +169,7 @@
       "degree": "MSc Statistical Data Science",
       "dates": "Jan 2025 – Jan 2026",
       "grade": "Merit",
-      "dissertation": "Final project: causal and predictive modelling of UK energy policy impacts on 1.8M EPC records (XGBoost, SHAP, Airflow, FastAPI)."
+      "dissertation": "I analysed 1.8M+ Energy Performance Certificate records from South West England (2008–2025) to study housing energy efficiency across policy periods. A reproducible pipeline prepared the data for fixed-effects analysis and wild-cluster bootstrap; a separate XGBoost and SHAP workflow explored predictive patterns. The results show statistical patterns and model explanations, not definitive proof that a policy caused a change."
     },
     {
       "institution": "PES University",

@@ -7,6 +7,7 @@ import Blog from './sections/Blog'
 import Contact from './sections/Contact'
 import AIAssistant from './components/AIAssistant'
 import { transition } from './lib/motionTokens'
+import { readActiveTab, storeActiveTab } from './lib/navigationState'
 import portfolioData from '../data/portfolioData.json'
 
 const pages = [
@@ -18,9 +19,10 @@ const pages = [
 ]
 
 const App = () => {
-  const [navigation, setNavigation] = useState(null)
-  const active = navigation?.tab ?? 'about'
+  const [navigation, setNavigation] = useState(() => ({ tab: readActiveTab(pages.map(({ id }) => id)), anchorId: null }))
+  const active = navigation.tab
   const select = (tab, anchorId) => {
+    storeActiveTab(tab)
     setNavigation({ tab, anchorId })
     window.scrollTo(0, 0)
   }
