@@ -250,7 +250,10 @@ main.workspace-main { display: block; width: auto; max-width: 1344px; margin: 0 
 .workspace .project-workflow li > span { display: grid; border-radius: 3px; }
 .workspace .project-proof strong { color: var(--cyan); }
 .workspace .project-proof > span { display: block; margin-top: 7px; }
-.workspace .case-study-details summary { font: 12px/1.7 var(--mono); padding: 20px 0; }
+.workspace .case-study-toggle { display: flex; align-items: baseline; gap: .5ch; width: 100%; padding: 20px 0; color: var(--accent); font: 12px/1.7 var(--mono); text-align: left; cursor: pointer; }
+.workspace .case-study-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.workspace .case-study-toggle > span { transition: transform var(--dur-quick) var(--ease); }
+.workspace .case-study-toggle[aria-expanded="true"] > span { transform: rotate(90deg); }
 .workspace .chip { border-radius: 3px; font-family: var(--mono); background: #151d2a; border-color: #303a4c; font-size: 10px; color: var(--text-secondary); }
 .workspace .more-project { border-radius: 6px; background: #10151e; }
 
@@ -493,6 +496,9 @@ main.workspace-main { display: block; width: auto; max-width: 1344px; margin: 0 
 
 @media (prefers-reduced-motion: reduce) {
   .workspace *, .workspace *::before, .workspace *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  /* Motion's reduced-motion setting leaves explicit height and opacity tweens active. */
+  .workspace .case-study-region { height: auto !important; opacity: 1 !important; }
+  .workspace .case-study-region[inert] { height: 0 !important; opacity: 0 !important; }
   .workspace article.active { animation: workspace-enter-fade var(--dur-normal) var(--ease) both !important; }
   .workspace :is(.portfolio-action, .console-action, .demo-toggle-labelled, .workspace-nav button, .about-project, .more-project):is(:hover, :focus-visible),
   .workspace .more-project:has(:focus-visible) { translate: none; }

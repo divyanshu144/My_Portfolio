@@ -1,10 +1,12 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
+import { motion } from 'motion/react'
 import portfolioData from '../../data/portfolioData.json'
 import { useAmbient } from '../components/useAmbient'
 import DemoPlayer from '../components/explorer/DemoPlayer'
 import { deepScripts } from '../components/explorer/deepScripts'
 import { DEEP_STEP_MS } from '../components/explorer/playback'
 import { askAssistant } from '../lib/assistantEvents'
+import { transition } from '../lib/motionTokens'
 
 const studies = Object.fromEntries(portfolioData.projects.filter((p) => p.caseStudy).map((p) => [p.name, p.caseStudy]))
 const deepOrders = Object.fromEntries(Object.keys(studies).map((name) => [name, [name]]))
@@ -14,8 +16,11 @@ const TechList = ({ items }) => (
 )
 
 const CaseStudy = ({ project, index }) => {
+  const [open, setOpen] = useState(false)
   const study = project.caseStudy
   const question = portfolioData.assistant?.askAbout?.[study.id]
+  const detailsId = `${study.id}-details`
+  const toggleId = `${detailsId}-toggle`
   return (
     <li className="case-study" id={study.id}>
       <div className="case-study-heading">
@@ -42,17 +47,39 @@ const CaseStudy = ({ project, index }) => {
           <DemoPlayer variant="deep" title="How it works · example run" order={deepOrders[project.name]} scripts={deepScripts} studies={studies} stepMs={DEEP_STEP_MS} playWhenVisible autoplay={false} loop={false} />
         </div>
       )}
-      <details className="case-study-details">
-        <summary>Engineering decisions &amp; evidence</summary>
-        <div className="case-study-detail-grid">
-          <div><h4>The technical decision</h4><p>{study.decision}</p></div>
-          <div><h4>Result &amp; evidence</h4><p>{study.outcome}</p></div>
-          <div className="case-study-limits"><h4>What this does not establish</h4><p>{study.limitation}</p></div>
-        </div>
-        <ul className="evidence-links">
-          {study.evidence.map((source) => <li key={source.url}><a href={source.url} target="_blank" rel="noreferrer">{source.label} <span aria-hidden="true">↗</span></a></li>)}
-        </ul>
-      </details>
+      <div className="case-study-details">
+        <button
+          type="button"
+          className="case-study-toggle"
+          id={toggleId}
+          aria-expanded={open}
+          aria-controls={detailsId}
+          onClick={() => setOpen((previous) => !previous)}
+        >
+          <span aria-hidden="true">▸</span>
+          Engineering decisions &amp; evidence
+        </button>
+        <motion.div
+          className="case-study-region"
+          id={detailsId}
+          role="region"
+          aria-labelledby={toggleId}
+          inert={open ? undefined : ''}
+          initial={false}
+          animate={{ height: open ? 'auto' : 0, opacity: open ? 1 : 0 }}
+          transition={transition('normal')}
+          style={{ overflow: 'hidden' }}
+        >
+          <div className="case-study-detail-grid">
+            <div><h4>The technical decision</h4><p>{study.decision}</p></div>
+            <div><h4>Result &amp; evidence</h4><p>{study.outcome}</p></div>
+            <div className="case-study-limits"><h4>What this does not establish</h4><p>{study.limitation}</p></div>
+          </div>
+          <ul className="evidence-links">
+            {study.evidence.map((source) => <li key={source.url}><a href={source.url} target="_blank" rel="noreferrer">{source.label} <span aria-hidden="true">↗</span></a></li>)}
+          </ul>
+        </motion.div>
+      </div>
       <div className="case-study-footer">
         <TechList items={project.tech} />
         {project.repo && <a className="project-source" href={project.repo} target="_blank" rel="noreferrer">View repository <span aria-hidden="true">↗</span></a>}
