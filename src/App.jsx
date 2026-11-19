@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
+import { motion } from 'motion/react'
 import About from './sections/About'
 import Resume from './sections/Resume'
 import Portfolio from './sections/Portfolio'
 import Blog from './sections/Blog'
 import Contact from './sections/Contact'
 import AIAssistant from './components/AIAssistant'
+import { transition } from './lib/motionTokens'
 import portfolioData from '../data/portfolioData.json'
 
 const pages = [
@@ -57,9 +59,14 @@ const App = () => {
       <a className="skip-link" href="#workspace-main">Skip to content</a>
       <header className="workspace-header">
         <button className="workspace-brand" onClick={() => select('about')} aria-label="Divyanshu Charak, overview"><span className="brand-mark" aria-hidden="true">dc<span>.</span></span><span className="brand-copy">Divyanshu Charak<small>APPLIED AI ENGINEER</small></span></button>
-        <nav className="workspace-nav" aria-label="Main navigation">
-          {pages.map(({ id, label }, i) => <button key={id} onClick={() => select(id)} aria-current={active === id ? 'page' : undefined}><span aria-hidden="true">0{i + 1}</span>{label}</button>)}
-        </nav>
+        <motion.nav className="workspace-nav" aria-label="Main navigation" layoutScroll>
+          {pages.map(({ id, label }, i) => (
+            <button key={id} onClick={() => select(id)} aria-current={active === id ? 'page' : undefined}>
+              {active === id && <motion.span layoutId="nav-highlight" className="nav-highlight" transition={transition('normal')} aria-hidden="true" />}
+              <span className="nav-number" aria-hidden="true">0{i + 1}</span>{label}
+            </button>
+          ))}
+        </motion.nav>
         <a className="workspace-github" href={portfolioData.contact.github} target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
       </header>
       <main id="workspace-main" className="workspace-main" tabIndex={-1}>
