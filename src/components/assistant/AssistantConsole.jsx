@@ -1,5 +1,5 @@
-import { createContext, useCallback, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { motion, useAnimationControls } from 'motion/react'
+import { createContext, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import * as m from 'motion/react-m'
 import portfolioData from '../../../data/portfolioData.json'
 import { buildCatalog, emailHref } from '../../lib/assistantCatalog'
 import { clampHeight, fitHeight, MIN_HEIGHT } from '../../lib/consoleSize'
@@ -143,7 +143,7 @@ function FitResult({ result, goTo }) {
       {result.items.length === 0 && <p className="console-empty">No specific requirements were found in that text.</p>}
       <ul className="console-fit-items">
         {result.items.map((item, i) => (
-          <motion.li
+          <m.li
             key={i}
             className="console-fit-item"
             initial={{ opacity: 0, y: 6 }}
@@ -156,7 +156,7 @@ function FitResult({ result, goTo }) {
               <p className="console-fit-reason">{item.reason}</p>
               <Sources ids={item.sources} goTo={goTo} />
             </div>
-          </motion.li>
+          </m.li>
         ))}
       </ul>
       <Actions ids={result.actions} goTo={goTo} emailSubject={subject} />
@@ -206,7 +206,10 @@ export default function AssistantConsole({ open, onClose, tab, onTab, active, go
   const tabRefs = useRef({})
   const consoleRef = useRef(null)
   const drag = useRef(null)
-  const consoleAnimation = useAnimationControls()
+  // A declarative target also reaches Motion when it finishes loading after an early interaction.
+  const slide = useMemo(() => open
+    ? { y: 0, opacity: 1, transition: transition('normal') }
+    : { ...CONSOLE_CLOSED, transition: CONSOLE_EXIT }, [open])
   const page = { tab: active, caseStudyId }
   const [exitFinished, setExitFinished] = useState(true)
   const [fitText, setFitText] = useState('')
@@ -231,20 +234,9 @@ export default function AssistantConsole({ open, onClose, tab, onTab, active, go
   }, [])
 
   useLayoutEffect(() => {
-    if (open) {
-      setExitFinished(false)
-      void consoleAnimation.start({ y: 0, opacity: 1, transition: transition('normal') })
-      return
-    }
-
-    stopResize()
-    // A reopened console can start a new exit before this one finishes.
-    let cancelled = false
-    consoleAnimation.start({ ...CONSOLE_CLOSED, transition: CONSOLE_EXIT }).then(() => {
-      if (!cancelled) setExitFinished(true)
-    })
-    return () => { cancelled = true }
-  }, [open, consoleAnimation, stopResize])
+    if (open) setExitFinished(false)
+    else stopResize()
+  }, [open, stopResize])
 
   useEffect(() => {
     const onResize = () => setViewportHeight(window.innerHeight)
@@ -336,12 +328,15 @@ export default function AssistantConsole({ open, onClose, tab, onTab, active, go
 
   return (
     <PlayContext.Provider value={playFromConsole}>
-    <motion.section
+    <m.section
       id="assistant-console"
       ref={consoleRef}
       className={`assistant-console${tab === 'fit' ? ' is-fit' : ''}${dragHeight !== null ? ' is-resizing' : ''}`}
       initial={CONSOLE_CLOSED}
-      animate={consoleAnimation}
+      animate={slide}
+      onAnimationComplete={(finished) => {
+        if (!open && finished === slide) setExitFinished(true)
+      }}
       style={{
         '--console-h': height === null ? undefined : `${Math.round(height)}px`,
         visibility: open || !exitFinished ? 'visible' : 'hidden',
@@ -392,7 +387,7 @@ export default function AssistantConsole({ open, onClose, tab, onTab, active, go
       <div className="console-panel" role="tabpanel" id="console-panel-fit" ref={fitPanel} aria-labelledby="console-tab-fit" hidden={tab !== 'fit'} tabIndex={0}>
         <FitPanel assistant={assistant} goTo={goTo} text={fitText} setText={setFitText} />
       </div>
-    </motion.section>
+    </m.section>
     </PlayContext.Provider>
   )
 }

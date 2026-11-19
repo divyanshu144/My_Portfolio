@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react'
-import { motion } from 'motion/react'
+import { useEffect, useState } from 'react'
+import * as m from 'motion/react-m'
 import About from './sections/About'
 import Resume from './sections/Resume'
 import Portfolio from './sections/Portfolio'
@@ -18,55 +18,46 @@ const pages = [
 ]
 
 const App = () => {
-  const [active, setActive] = useState('about')
-  const focusPage = useRef(false)
-  useEffect(() => {
-    if (focusPage.current) {
-      document.getElementById(`${active}-title`)?.focus({ preventScroll: true })
-      focusPage.current = false
-    }
-  }, [active])
-  const select = (id) => {
-    focusPage.current = true
-    setActive(id)
+  const [navigation, setNavigation] = useState(null)
+  const active = navigation?.tab ?? 'about'
+  const select = (tab, anchorId) => {
+    setNavigation({ tab, anchorId })
     window.scrollTo(0, 0)
   }
-  const targetTimer = useRef(null)
-  const targetEl = useRef(null)
-  const clearTarget = () => {
-    clearTimeout(targetTimer.current)
-    targetEl.current?.classList.remove('is-targeted')
-    targetEl.current = null
-  }
-  useEffect(() => clearTarget, [])
-  // Select a tab and, once it has rendered, bring one element on it into view and highlight it briefly.
-  const goTo = (tab, anchorId) => {
-    select(tab)
+  useEffect(() => {
+    if (!navigation) return
+    const { tab, anchorId } = navigation
+    document.getElementById(`${tab}-title`)?.focus({ preventScroll: true })
     if (!anchorId) return
-    requestAnimationFrame(() => {
-      const el = document.getElementById(anchorId)
+    let el
+    let timer
+    const frame = requestAnimationFrame(() => {
+      el = document.getElementById(anchorId)
       if (!el) return
       const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-      clearTarget()
       el.classList.add('is-targeted')
-      targetEl.current = el
       el.scrollIntoView({ block: 'start', behavior: reduced ? 'auto' : 'smooth' })
-      targetTimer.current = setTimeout(clearTarget, 1600)
+      timer = setTimeout(() => el.classList.remove('is-targeted'), 1600)
     })
-  }
+    return () => {
+      cancelAnimationFrame(frame)
+      clearTimeout(timer)
+      el?.classList.remove('is-targeted')
+    }
+  }, [navigation])
   return (
     <div className="workspace">
       <a className="skip-link" href="#workspace-main">Skip to content</a>
       <header className="workspace-header">
         <button className="workspace-brand" onClick={() => select('about')} aria-label="Divyanshu Charak, overview"><span className="brand-mark" aria-hidden="true">dc<span>.</span></span><span className="brand-copy">Divyanshu Charak<small>APPLIED AI ENGINEER</small></span></button>
-        <motion.nav className="workspace-nav" aria-label="Main navigation" layoutScroll>
+        <m.nav className="workspace-nav" aria-label="Main navigation" layoutScroll>
           {pages.map(({ id, label }, i) => (
             <button key={id} onClick={() => select(id)} aria-current={active === id ? 'page' : undefined}>
-              {active === id && <motion.span layoutId="nav-highlight" className="nav-highlight" transition={transition('normal')} aria-hidden="true" />}
+              {active === id && <m.span layoutId="nav-highlight" className="nav-highlight" transition={transition('normal')} aria-hidden="true" />}
               <span className="nav-number" aria-hidden="true">0{i + 1}</span>{label}
             </button>
           ))}
-        </motion.nav>
+        </m.nav>
         <a className="workspace-github" href={portfolioData.contact.github} target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
       </header>
       <main id="workspace-main" className="workspace-main" tabIndex={-1}>
@@ -79,7 +70,7 @@ const App = () => {
         </div>
         <footer className="workspace-footer"><span>Divyanshu Charak <span aria-hidden="true">/</span> Built with intent.</span><div><a href={portfolioData.contact.linkedin} target="_blank" rel="noreferrer">LinkedIn ↗</a><a href={`mailto:${portfolioData.contact.email}`}>Email ↗</a>{portfolioData.cv && <a href={portfolioData.cv} download>CV ↓</a>}</div></footer>
       </main>
-      <AIAssistant active={active} goTo={goTo} />
+      <AIAssistant active={active} goTo={select} />
     </div>
   )
 }

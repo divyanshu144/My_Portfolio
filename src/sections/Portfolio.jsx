@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { motion } from 'motion/react'
+import * as m from 'motion/react-m'
 import portfolioData from '../../data/portfolioData.json'
 import { useAmbient } from '../components/useAmbient'
 import DemoPlayer from '../components/explorer/DemoPlayer'
@@ -59,7 +59,7 @@ const CaseStudy = ({ project, index }) => {
           <span aria-hidden="true">▸</span>
           Engineering decisions &amp; evidence
         </button>
-        <motion.div
+        <m.div
           className="case-study-region"
           id={detailsId}
           role="region"
@@ -78,7 +78,7 @@ const CaseStudy = ({ project, index }) => {
           <ul className="evidence-links">
             {study.evidence.map((source) => <li key={source.url}><a href={source.url} target="_blank" rel="noreferrer">{source.label} <span aria-hidden="true">↗</span></a></li>)}
           </ul>
-        </motion.div>
+        </m.div>
       </div>
       <div className="case-study-footer">
         <TechList items={project.tech} />

@@ -1,0 +1,42 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Navigation focus regression</title>
+<p id="result">Running navigation focus check…</p>
+<div id="root"></div>
+<script type="module">
+  import { act } from 'react'
+
+  window.IS_REACT_ACT_ENVIRONMENT = true
+  window.fetch = async (url) => Response.json(url === '/api/assistant'
+    ? { text: 'Play the demo.', actions: ['play:docchat'] }
+    : { posts: [] })
+
+  const result = document.querySelector('#result')
+  try {
+    await act(async () => { await import('../src/main.jsx') })
+    await act(() => document.querySelector('.about .portfolio-action-primary').click())
+    const ask = document.querySelector('#docchat .ask-about')
+    ask.focus()
+    await act(async () => ask.click())
+    await act(() => document.querySelector('.console-actions button').click())
+    await new Promise(requestAnimationFrame)
+
+    if (document.activeElement.id !== 'portfolio-title') {
+      throw Error('Playing a demo from Projects must move focus to the Projects heading')
+    }
+    if (!document.querySelector('#docchat-demo.is-targeted')) {
+      throw Error('Playing a demo must target its anchor on the next frame')
+    }
+    await act(async () => ask.click())
+    await act(() => document.querySelector('.console-actions button').click())
+    await act(() => document.querySelector('.workspace-brand').click())
+    await new Promise(requestAnimationFrame)
+    if (document.activeElement.id !== 'about-title' || document.querySelector('.is-targeted')) {
+      throw Error('A newer navigation must cancel the previous demo jump')
+    }
+    result.textContent = 'PASS'
+  } catch (error) {
+    result.textContent = 'FAIL · ' + error.message
+    throw error
+  }
+</script>
