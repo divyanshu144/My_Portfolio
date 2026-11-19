@@ -63,7 +63,7 @@ const CaseStudy = ({ project, index }) => {
 
 const Portfolio = () => {
   const moreProjectsRef = useRef(null)
-  useAmbient(moreProjectsRef)
+  useAmbient(moreProjectsRef, '.more-project')
 
   const featured = portfolioData.projects.filter((project) => project.caseStudy)
   const other = portfolioData.projects.filter((project) => !project.caseStudy)

@@ -9,7 +9,7 @@ const About = ({ onNavigate }) => {
   const heroRef = useRef(null)
   const projectGridRef = useRef(null)
   useAmbient(heroRef)
-  useAmbient(projectGridRef)
+  useAmbient(projectGridRef, '.about-project')
 
   return (
   <div className="about-layout">

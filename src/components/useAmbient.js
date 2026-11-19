@@ -1,38 +1,42 @@
 import { useEffect } from 'react'
 import { shouldAnimate } from '../lib/ambient.js'
 
-// Keeps ref.current.dataset.ambient at 'on' or 'off' so CSS can pause ambient
-// animations when the element is off screen or the tab is hidden. It writes to
-// the DOM directly, so it never causes a re-render.
-export function useAmbient(ref) {
+// Lets the root and any selected descendants pause independently when off screen.
+// Writing their ambient state directly to the DOM avoids React re-renders.
+export function useAmbient(ref, childSelector) {
   useEffect(() => {
     const el = ref.current
     if (!el) return undefined
 
-    let inView = true
-    const update = () => {
+    const elements = [el, ...(childSelector ? el.querySelectorAll(childSelector) : [])]
+    const canObserve = typeof IntersectionObserver !== 'undefined'
+    const inView = new Map(elements.map((element) => [element, !canObserve]))
+    const update = (element) => {
       const pageVisible = document.visibilityState === 'visible'
-      el.dataset.ambient = shouldAnimate({ inView, pageVisible }) ? 'on' : 'off'
+      element.dataset.ambient = shouldAnimate({ inView: inView.get(element), pageVisible }) ? 'on' : 'off'
     }
+    const updateAll = () => elements.forEach(update)
 
     let observer
-    if (typeof IntersectionObserver !== 'undefined') {
+    if (canObserve) {
       observer = new IntersectionObserver(
         (entries) => {
-          inView = entries[entries.length - 1].isIntersecting
-          update()
+          for (const { target, isIntersecting } of entries) {
+            inView.set(target, isIntersecting)
+            update(target)
+          }
         },
         { threshold: 0 }
       )
-      observer.observe(el)
+      elements.forEach((element) => observer.observe(element))
     }
 
-    document.addEventListener('visibilitychange', update)
-    update()
+    document.addEventListener('visibilitychange', updateAll)
+    updateAll()
 
     return () => {
       observer?.disconnect()
-      document.removeEventListener('visibilitychange', update)
+      document.removeEventListener('visibilitychange', updateAll)
     }
-  }, [ref])
+  }, [ref, childSelector])
 }
