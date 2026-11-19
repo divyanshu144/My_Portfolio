@@ -403,3 +403,15 @@ main.workspace-main { display: block; width: auto; max-width: 1344px; margin: 0 
 @media (prefers-reduced-motion: reduce) {
   .workspace .is-targeted { animation: none !important; outline: 2px solid #83e3db; outline-offset: 6px; }
 }
+
+/* Ambient effects (see useAmbient): paused while off screen or in a hidden tab.
+   Put .ambient-anim on animated elements inside, or on, the element that
+   carries data-ambient. */
+[data-ambient="off"] .ambient-anim,
+[data-ambient="off"] .ambient-anim::before,
+[data-ambient="off"] .ambient-anim::after,
+[data-ambient="off"].ambient-anim,
+[data-ambient="off"].ambient-anim::before,
+[data-ambient="off"].ambient-anim::after {
+  animation-play-state: paused !important;
+}
