@@ -1,9 +1,11 @@
-import { createContext, useContext, useEffect, useRef, useState } from 'react'
+import { createContext, useCallback, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { motion, useAnimationControls } from 'motion/react'
 import portfolioData from '../../../data/portfolioData.json'
 import { buildCatalog, emailHref } from '../../lib/assistantCatalog'
 import { clampHeight, fitHeight, MIN_HEIGHT } from '../../lib/consoleSize'
 import { suggestionsFor } from '../../lib/assistantSuggestions'
 import { playDemo } from '../../lib/assistantEvents'
+import { DURATION, STAGGER, transition } from '../../lib/motionTokens'
 
 const catalog = buildCatalog(portfolioData)
 const EMPTY_ASK = 'Ask about my projects, experience or fit for a role'
@@ -11,6 +13,8 @@ const QUESTION_MAX = 500 // matches the server's limit
 const JOB_DESCRIPTION_MAX = 8000 // matches the server's limit
 const FIT_NOTE = "Your description is sent to the AI to compare against this portfolio. It isn't stored."
 const RESIZE_STEP = 24
+const CONSOLE_CLOSED = { y: '100%', opacity: 0 }
+const CONSOLE_EXIT = { ...transition('quick'), duration: (DURATION.quick + DURATION.normal) / 2 }
 const LEVELS = {
   strong: 'STRONG',
   partial: 'PARTIAL',
@@ -139,14 +143,20 @@ function FitResult({ result, goTo }) {
       {result.items.length === 0 && <p className="console-empty">No specific requirements were found in that text.</p>}
       <ul className="console-fit-items">
         {result.items.map((item, i) => (
-          <li key={i} className="console-fit-item">
+          <motion.li
+            key={i}
+            className="console-fit-item"
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ ...transition('normal'), delay: i * STAGGER }}
+          >
             <span className="console-level" data-level={item.level}>{LEVELS[item.level] || LEVELS.not_shown}</span>
             <div>
               <p className="console-fit-requirement">{item.requirement}</p>
               <p className="console-fit-reason">{item.reason}</p>
               <Sources ids={item.sources} goTo={goTo} />
             </div>
-          </li>
+          </motion.li>
         ))}
       </ul>
       <Actions ids={result.actions} goTo={goTo} emailSubject={subject} />
@@ -194,18 +204,45 @@ export default function AssistantConsole({ open, onClose, tab, onTab, active, go
   const tabRefs = useRef({})
   const consoleRef = useRef(null)
   const drag = useRef(null)
+  const consoleAnimation = useAnimationControls()
   const page = { tab: active, caseStudyId }
+  const [exitFinished, setExitFinished] = useState(true)
   const [fitText, setFitText] = useState('')
   const [viewportHeight, setViewportHeight] = useState(() => window.innerHeight)
   const [userHeight, setUserHeight] = useState(null) // set once the visitor resizes; it then wins
+  const [dragHeight, setDragHeight] = useState(null)
   const [measured, setMeasured] = useState(0)
   const { fit, fitLoading } = assistant
   const fitHasContent = Boolean(fitText.trim() || fit.result || fit.error || fitLoading)
 
   // Grow for a fit check; otherwise the CSS default. Always within the clamp, and the visitor's own height wins.
-  let height
-  if (userHeight !== null) height = clampHeight(userHeight, viewportHeight)
-  else if (tab === 'fit' && fitHasContent) height = fitHeight(viewportHeight)
+  let height = dragHeight
+  if (height === null && userHeight !== null) height = clampHeight(userHeight, viewportHeight)
+  if (height === null && tab === 'fit' && fitHasContent) height = fitHeight(viewportHeight)
+
+  const stopResize = useCallback(() => {
+    if (!drag.current) return
+    const { handle, pointerId } = drag.current
+    drag.current = null
+    setDragHeight(null)
+    if (handle.hasPointerCapture(pointerId)) handle.releasePointerCapture(pointerId)
+  }, [])
+
+  useLayoutEffect(() => {
+    if (open) {
+      setExitFinished(false)
+      void consoleAnimation.start({ y: 0, opacity: 1, transition: transition('normal') })
+      return
+    }
+
+    stopResize()
+    // A reopened console can start a new exit before this one finishes.
+    let cancelled = false
+    consoleAnimation.start({ ...CONSOLE_CLOSED, transition: CONSOLE_EXIT }).then(() => {
+      if (!cancelled) setExitFinished(true)
+    })
+    return () => { cancelled = true }
+  }, [open, consoleAnimation, stopResize])
 
   useEffect(() => {
     const onResize = () => setViewportHeight(window.innerHeight)
@@ -234,18 +271,28 @@ export default function AssistantConsole({ open, onClose, tab, onTab, active, go
   }, [open, measured])
 
   const currentHeight = () => consoleRef.current?.getBoundingClientRect().height || measured
-  const resizeTo = (px) => setUserHeight(clampHeight(px, window.innerHeight))
+  const resizeTo = (px) => {
+    const nextHeight = clampHeight(px, window.innerHeight)
+    setUserHeight(nextHeight)
+    if (drag.current) setDragHeight(nextHeight)
+  }
   const onHandlePointerDown = (e) => {
-    if (e.button !== undefined && e.button !== 0) return
-    e.currentTarget.setPointerCapture(e.pointerId)
-    drag.current = { startY: e.clientY, startHeight: currentHeight() }
+    if (drag.current || e.button !== 0) return
+    const handle = e.currentTarget
+    const startHeight = currentHeight()
+    handle.setPointerCapture(e.pointerId)
+    drag.current = { handle, pointerId: e.pointerId, startY: e.clientY, startHeight }
+    // Take over from the current height even if a fit-height transition is in progress.
+    setDragHeight(startHeight)
   }
   const onHandlePointerMove = (e) => {
-    if (drag.current) resizeTo(drag.current.startHeight + (drag.current.startY - e.clientY))
+    const activeDrag = drag.current
+    if (activeDrag && activeDrag.pointerId === e.pointerId) {
+      resizeTo(activeDrag.startHeight + (activeDrag.startY - e.clientY))
+    }
   }
   const endDrag = (e) => {
-    drag.current = null
-    if (e.currentTarget.hasPointerCapture?.(e.pointerId)) e.currentTarget.releasePointerCapture(e.pointerId)
+    if (drag.current?.pointerId === e.pointerId) stopResize()
   }
   const onHandleKeyDown = (e) => {
     if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return
@@ -272,13 +319,19 @@ export default function AssistantConsole({ open, onClose, tab, onTab, active, go
 
   return (
     <PlayContext.Provider value={playFromConsole}>
-    <section
+    <motion.section
       id="assistant-console"
       ref={consoleRef}
-      className={`assistant-console${tab === 'fit' ? ' is-fit' : ''}`}
-      style={height === undefined ? undefined : { '--console-h': `${Math.round(height)}px` }}
+      className={`assistant-console${tab === 'fit' ? ' is-fit' : ''}${dragHeight !== null ? ' is-resizing' : ''}`}
+      initial={CONSOLE_CLOSED}
+      animate={consoleAnimation}
+      style={{
+        '--console-h': height === null ? undefined : `${Math.round(height)}px`,
+        visibility: open || !exitFinished ? 'visible' : 'hidden',
+      }}
       aria-label="Portfolio assistant"
-      hidden={!open}
+      aria-hidden={open ? undefined : true}
+      inert={open ? undefined : ''}
       onKeyDown={onKeyDown}
     >
       <div
@@ -294,6 +347,7 @@ export default function AssistantConsole({ open, onClose, tab, onTab, active, go
         onPointerMove={onHandlePointerMove}
         onPointerUp={endDrag}
         onPointerCancel={endDrag}
+        onLostPointerCapture={endDrag}
         onKeyDown={onHandleKeyDown}
       />
       <div className="console-bar">
@@ -321,7 +375,7 @@ export default function AssistantConsole({ open, onClose, tab, onTab, active, go
       <div className="console-panel" role="tabpanel" id="console-panel-fit" aria-labelledby="console-tab-fit" hidden={tab !== 'fit'} tabIndex={0}>
         <FitPanel assistant={assistant} goTo={goTo} text={fitText} setText={setFitText} />
       </div>
-    </section>
+    </motion.section>
     </PlayContext.Provider>
   )
 }
