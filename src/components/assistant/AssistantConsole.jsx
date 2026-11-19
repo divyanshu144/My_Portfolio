@@ -200,6 +200,8 @@ function FitPanel({ assistant, goTo, text, setText }) {
 
 export default function AssistantConsole({ open, onClose, tab, onTab, active, goTo, assistant, caseStudyId, focusToken }) {
   const askInput = useRef(null)
+  const fitPanel = useRef(null)
+  const wasOpen = useRef(false)
   const playFromConsole = (id) => { onClose(); goTo('portfolio', `${id}-demo`); playDemo(id) }
   const tabRefs = useRef({})
   const consoleRef = useRef(null)
@@ -298,11 +300,26 @@ export default function AssistantConsole({ open, onClose, tab, onTab, active, go
     if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return
     e.preventDefault()
     e.stopPropagation()
-    resizeTo(currentHeight() + (e.key === 'ArrowUp' ? RESIZE_STEP : -RESIZE_STEP))
+    const step = e.key === 'ArrowUp' ? RESIZE_STEP : -RESIZE_STEP
+    if (drag.current) {
+      resizeTo(currentHeight() + step)
+      return
+    }
+    const startingHeight = userHeight ?? currentHeight()
+    const viewport = window.innerHeight
+    setUserHeight((target) => {
+      // The visual height can lag behind repeated key presses while it transitions.
+      const base = target === null ? startingHeight : clampHeight(target, viewport)
+      return clampHeight(base + step, viewport)
+    })
   }
 
   useEffect(() => {
-    if (open && tab === 'ask') askInput.current?.focus({ preventScroll: true })
+    if (open) {
+      if (tab === 'ask') askInput.current?.focus({ preventScroll: true })
+      else if (!wasOpen.current) fitPanel.current?.focus({ preventScroll: true })
+    }
+    wasOpen.current = open
   }, [open, tab, focusToken])
 
   const onKeyDown = (e) => {
@@ -372,7 +389,7 @@ export default function AssistantConsole({ open, onClose, tab, onTab, active, go
       <div className="console-panel" role="tabpanel" id="console-panel-ask" aria-labelledby="console-tab-ask" hidden={tab !== 'ask'}>
         <AskPanel assistant={assistant} page={page} goTo={goTo} inputRef={askInput} />
       </div>
-      <div className="console-panel" role="tabpanel" id="console-panel-fit" aria-labelledby="console-tab-fit" hidden={tab !== 'fit'} tabIndex={0}>
+      <div className="console-panel" role="tabpanel" id="console-panel-fit" ref={fitPanel} aria-labelledby="console-tab-fit" hidden={tab !== 'fit'} tabIndex={0}>
         <FitPanel assistant={assistant} goTo={goTo} text={fitText} setText={setFitText} />
       </div>
     </motion.section>
