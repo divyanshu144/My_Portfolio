@@ -16,6 +16,10 @@
   --ff-poppins: 'Space Grotesk', sans-serif;
   --mono: 'IBM Plex Mono', monospace;
   --cyan: #83e3db;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --dur-quick: 150ms;
+  --dur-normal: 250ms;
+  --dur-slow: 400ms;
 }
 body { padding: 0; background: #080c12; }
 button, a, summary { -webkit-tap-highlight-color: transparent; }
