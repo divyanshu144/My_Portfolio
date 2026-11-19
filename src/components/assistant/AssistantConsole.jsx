@@ -1,4 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { visualElementStore } from 'motion/react'
 import * as m from 'motion/react-m'
 import portfolioData from '../../../data/portfolioData.json'
 import { buildCatalog, emailHref } from '../../lib/assistantCatalog'
@@ -146,8 +147,7 @@ function FitResult({ result, goTo }) {
           <m.li
             key={i}
             className="console-fit-item"
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
+            animate={{ opacity: [0, 1], y: [6, 0] }}
             transition={{ ...transition('normal'), delay: i * STAGGER }}
           >
             <span className="console-level" data-level={item.level}>{LEVELS[item.level] || LEVELS.not_shown}</span>
@@ -235,7 +235,11 @@ export default function AssistantConsole({ open, onClose, tab, onTab, active, go
 
   useLayoutEffect(() => {
     if (open) setExitFinished(false)
-    else stopResize()
+    else {
+      stopResize()
+      // Without a renderer there is no exit animation to wait for.
+      if (!visualElementStore.has(consoleRef.current)) setExitFinished(true)
+    }
   }, [open, stopResize])
 
   useEffect(() => {
@@ -332,7 +336,6 @@ export default function AssistantConsole({ open, onClose, tab, onTab, active, go
       id="assistant-console"
       ref={consoleRef}
       className={`assistant-console${tab === 'fit' ? ' is-fit' : ''}${dragHeight !== null ? ' is-resizing' : ''}`}
-      initial={CONSOLE_CLOSED}
       animate={slide}
       onAnimationComplete={(finished) => {
         if (!open && finished === slide) setExitFinished(true)

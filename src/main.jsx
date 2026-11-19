@@ -6,7 +6,8 @@ import './vcard.css'
 import './index.css'
 import './workspace.css'
 
-const loadMotionFeatures = () => import('./lib/motionFeatures').then((module) => module.default)
+// An unavailable animation chunk leaves the interactive CSS states in control.
+const loadMotionFeatures = () => import('./lib/motionFeatures').then((module) => module.default, () => ({}))
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

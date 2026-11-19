@@ -331,6 +331,9 @@ main.workspace-main { display: block; width: auto; max-width: 1344px; margin: 0 
 .assistant-symbol { color: var(--cyan); font: 15px var(--mono); }
 .assistant-console { position: fixed; z-index: 60; left: 48px; right: 48px; bottom: 12px; max-width: 1180px; margin: 0 auto; height: var(--console-h, 320px); display: flex; flex-direction: column; background: #0c121d; border: 1px solid #303b50; border-radius: 8px; box-shadow: 0 -10px 40px #000a; color: var(--text-secondary); transition: height var(--dur-normal) var(--ease); }
 .assistant-console.is-resizing { transition: none; }
+/* These states also work before the async Motion renderer writes inline styles. */
+.assistant-console[inert] { opacity: 0; transform: translateY(100%); }
+.case-study-region[inert] { height: 0; opacity: 0; }
 .console-bar { display: flex; align-items: center; gap: 12px; padding: 0 8px 0 12px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
 .console-tabs { display: flex; gap: 2px; margin-right: auto; }
 .console-tabs button { padding: 11px 10px 9px; color: var(--text-muted); font: 9.5px var(--mono); letter-spacing: 1px; border-bottom: 2px solid transparent; }

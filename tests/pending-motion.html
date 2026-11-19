@@ -1,0 +1,54 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Interactions while animation features are unavailable</title>
+<link rel="stylesheet" href="../src/workspace.css">
+<p id="result">Running pending Motion checks…</p>
+<div id="root"></div>
+<script type="module">
+  import { act, createElement } from 'react'
+  import { createRoot } from 'react-dom/client'
+  import { LazyMotion } from 'motion/react'
+  import AIAssistant from '../src/components/AIAssistant.jsx'
+  import Portfolio from '../src/sections/Portfolio.jsx'
+
+  window.IS_REACT_ACT_ENVIRONMENT = true
+  const root = createRoot(document.querySelector('#root'))
+  const result = document.querySelector('#result')
+  const failures = []
+  function check(condition, message) {
+    if (!condition) failures.push(message)
+  }
+  try {
+    const never = () => new Promise(() => {})
+    await act(async () => root.render(createElement(LazyMotion, { features: never, strict: true },
+      createElement(AIAssistant, { active: 'portfolio' }), createElement(Portfolio))))
+    const launcher = document.querySelector('.assistant-launcher')
+    const panel = document.querySelector('#assistant-console')
+    launcher.focus()
+    await act(() => launcher.click())
+    const panelStyle = getComputedStyle(panel)
+    check(panelStyle.visibility === 'visible' && (panelStyle.opacity || '1') === '1'
+      && (panelStyle.transform || 'none') === 'none', 'The open console must be fully visible and on screen')
+    check(document.activeElement === panel.querySelector('textarea'), 'The question field must receive focus')
+    await act(() => panel.querySelector('.console-close').click())
+    check(getComputedStyle(panel).visibility === 'hidden' && panel.hasAttribute('inert')
+      && document.activeElement === launcher, 'Closing the console must hide it and restore focus')
+
+    const toggle = document.querySelector('.case-study-toggle')
+    const region = document.getElementById(toggle.getAttribute('aria-controls'))
+    await act(() => toggle.click())
+    const regionStyle = getComputedStyle(region)
+    check(!region.hasAttribute('inert') && regionStyle.height !== '0px'
+      && (regionStyle.opacity || '1') === '1', 'The expanded disclosure must show its contents')
+    await act(() => toggle.click())
+    check(region.hasAttribute('inert') && getComputedStyle(region).height === '0px',
+      'The collapsed disclosure must take up no space')
+    if (failures.length) throw Error(failures.join(' · '))
+    result.textContent = 'PASS'
+  } catch (error) {
+    result.textContent = 'FAIL · ' + error.message
+    throw error
+  } finally {
+    await act(() => root.unmount())
+  }
+</script>

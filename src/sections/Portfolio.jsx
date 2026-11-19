@@ -65,7 +65,6 @@ const CaseStudy = ({ project, index }) => {
           role="region"
           aria-labelledby={toggleId}
           inert={open ? undefined : ''}
-          initial={false}
           animate={{ height: open ? 'auto' : 0, opacity: open ? 1 : 0 }}
           transition={transition('normal')}
           style={{ overflow: 'hidden' }}
