@@ -7,7 +7,9 @@ const { about, aboutCards, projects } = portfolioData
 
 const About = ({ onNavigate }) => {
   const heroRef = useRef(null)
+  const projectGridRef = useRef(null)
   useAmbient(heroRef)
+  useAmbient(projectGridRef)
 
   return (
   <div className="about-layout">
@@ -42,10 +44,10 @@ const About = ({ onNavigate }) => {
         <div><p className="about-eyebrow">01 / Selected systems</p><h3 id="about-work-title">Built for the real world.</h3></div>
         <span className="about-section-note">Explore the code <span aria-hidden="true">↗</span></span>
       </div>
-      <ul className="about-project-grid">
+      <ul className="about-project-grid" ref={projectGridRef}>
         {about.projects.map(({ name, icon, label, text }) => (
           <li key={name}>
-            <a className="about-project" href={projects.find((project) => project.name === name)?.repo} target="_blank" rel="noreferrer" aria-label={`${name}: ${label} (GitHub, opens in a new tab)`}>
+            <a className="about-project ambient-anim" href={projects.find((project) => project.name === name)?.repo} target="_blank" rel="noreferrer" aria-label={`${name}: ${label} (GitHub, opens in a new tab)`}>
               <span className="about-project-icon"><ion-icon name={icon} aria-hidden="true" /></span>
               <div><span className="about-project-name">{name}</span><h4>{label}</h4><p>{text}</p></div>
               <span className="about-project-arrow" aria-hidden="true">↗</span>

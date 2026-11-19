@@ -39,10 +39,10 @@ a, button { touch-action: manipulation; }
 .brand-copy { font-size: 12px; font-weight: 500; }
 .brand-copy small { display: block; color: var(--text-muted); font: 8px/1.5 var(--mono); letter-spacing: 1.4px; margin-top: 5px; }
 .workspace-nav { display: flex; align-items: center; gap: 4px; }
-.workspace-nav button { display: flex; align-items: center; gap: 7px; padding: 11px 13px; color: var(--text-muted); font-size: 12px; border: 1px solid transparent; border-radius: 5px; transition: color .2s, background .2s; }
+.workspace-nav button { display: flex; align-items: center; gap: 7px; padding: 11px 13px; color: var(--text-muted); font-size: 12px; border: 1px solid transparent; border-radius: 5px; }
 .workspace-nav button > span { font: 9px var(--mono); opacity: .65; }
-.workspace-nav button:hover { color: var(--text-primary); background: #ffffff05; }
 .workspace-nav button[aria-current] { color: var(--text-primary); border-color: #303b50; background: #a8bfff0b; }
+.workspace-nav button:is(:hover, :focus-visible) { color: var(--text-primary); background: #a8bfff17; }
 .workspace-nav button[aria-current] > span { color: var(--cyan); opacity: 1; }
 .workspace-github { color: var(--text-secondary); display: flex; gap: 12px; font: 11px var(--mono); }
 main.workspace-main { display: block; width: auto; max-width: 1344px; margin: 0 auto; padding: 0 48px; min-width: 0; }
@@ -115,8 +115,9 @@ main.workspace-main { display: block; width: auto; max-width: 1344px; margin: 0 
 .workspace .hero-actions { margin-top: 30px; gap: 9px; }
 .workspace .portfolio-action { font-size: 11px; border-radius: 4px; min-height: 43px; padding: 11px 15px; border-color: #34415c; }
 .workspace .portfolio-action-primary { background: var(--accent); color: #0a1020; border-color: var(--accent); box-shadow: 0 0 24px #a8bfff0d; }
-.workspace .portfolio-action-primary:hover { background: var(--accent-hover); }
 .workspace .portfolio-action-text { padding-left: 5px; padding-right: 5px; border-color: transparent; }
+.workspace .portfolio-action:is(:hover, :focus-visible) { border-color: var(--accent); background: var(--surface-raised); }
+.workspace .portfolio-action-primary:is(:hover, :focus-visible) { background: var(--accent-hover); border-color: var(--accent-hover); color: #0a1020; }
 .workspace .about-location { font: 10px var(--mono); color: var(--text-muted); margin-top: 24px; }
 .workspace .about-location ion-icon { color: var(--text-muted); }
 .system-map { min-width: 0; border: 1px solid #303b50; background: #0c121de8; border-radius: 8px; position: relative; box-shadow: 0 24px 80px #00000026; }
@@ -218,8 +219,7 @@ main.workspace-main { display: block; width: auto; max-width: 1344px; margin: 0 
 .workspace .about-project-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 .workspace .about-project-grid li:last-child { grid-column: auto; }
 .workspace .about-project-grid li:first-child { grid-column: span 2; }
-.workspace .about-project { border-radius: 6px; padding: 24px; background: #10151eb3; border-color: var(--border); min-height: 155px; gap: 16px; transition: transform .2s, border-color .2s, background .2s; }
-.workspace .about-project:hover { transform: translateY(-3px); border-color: var(--accent-border); background: #151e2d; }
+.workspace .about-project { border-radius: 6px; padding: 24px; background: #10151eb3; border-color: var(--border); min-height: 155px; gap: 16px; }
 .workspace .about-project-icon { border-radius: 5px; background: #a8bfff08; color: var(--accent); border-color: #3b4966; }
 .workspace .about-project-name { display: block; font: 9px var(--mono); color: var(--cyan); margin: 4px 0 11px; text-transform: uppercase; letter-spacing: 1px; }
 .workspace .about-project h4 { font-size: 17px; font-weight: 500; margin-bottom: 9px; }
@@ -252,6 +252,49 @@ main.workspace-main { display: block; width: auto; max-width: 1344px; margin: 0 
 .workspace .case-study-details summary { font: 12px/1.7 var(--mono); padding: 20px 0; }
 .workspace .chip { border-radius: 3px; font-family: var(--mono); background: #151d2a; border-color: #303a4c; font-size: 10px; color: var(--text-secondary); }
 .workspace .more-project { border-radius: 6px; background: #10151e; }
+
+@property --card-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+.workspace :is(.about-project, .more-project) {
+  --card-float: project-card-float 10s ease-in-out var(--card-delay, 0s) infinite;
+  position: relative;
+  animation: var(--card-float);
+  transition: translate var(--dur-quick) var(--ease), border-color var(--dur-quick) var(--ease), background-color var(--dur-quick) var(--ease);
+}
+:is(.about-project-grid, .more-projects) > li:nth-child(5n + 2) { --card-delay: -2s; }
+:is(.about-project-grid, .more-projects) > li:nth-child(5n + 3) { --card-delay: -4s; }
+:is(.about-project-grid, .more-projects) > li:nth-child(5n + 4) { --card-delay: -6s; }
+:is(.about-project-grid, .more-projects) > li:nth-child(5n + 5) { --card-delay: -8s; }
+.workspace :is(.about-project, .more-project)::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  padding: 1px;
+  border-radius: inherit;
+  pointer-events: none;
+  background: conic-gradient(from var(--card-angle, 0deg), transparent 0%, #83e3db55 10%, transparent 20%);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  animation: project-card-light 24s linear infinite;
+  animation-delay: var(--card-delay, 0s);
+}
+@keyframes project-card-light { from { --card-angle: 0deg; } to { --card-angle: 360deg; } }
+@keyframes project-card-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+.workspace .about-project:is(:hover, :focus-visible),
+.workspace .more-project:is(:hover, :has(:focus-visible)) {
+  /* The hover lift uses translate so the paused transform keeps its place. */
+  translate: 0 -3px;
+  animation-play-state: paused;
+  border-color: var(--accent-border);
+  background-color: #151e2d;
+}
 .workspace .timeline .title-wrapper { margin-bottom: 22px; }
 .workspace .timeline-list { max-width: 900px; }
 .workspace .timeline-item-title { font-size: 18px; }
@@ -306,14 +349,13 @@ main.workspace-main { display: block; width: auto; max-width: 1344px; margin: 0 
 .console-sources button:hover { background: #83e3db26; }
 .console-actions { display: flex; flex-wrap: wrap; gap: 6px; }
 .console-action { display: inline-flex; align-items: center; min-height: 30px; padding: 0 11px; border: 1px solid #303b50; border-radius: 4px; color: var(--text-secondary); font: 10px var(--mono); letter-spacing: .3px; }
-.console-action:hover { border-color: #83e3db88; color: var(--cyan); }
+.console-action:is(:hover, :focus-visible) { border-color: #83e3db88; color: var(--cyan); }
 .console-action.is-primary { background: var(--cyan); border-color: var(--cyan); color: #0a1020; }
-.console-action.is-primary:hover { background: #a9eee8; color: #0a1020; }
+.console-action.is-primary:is(:hover, :focus-visible) { background: #a9eee8; border-color: #a9eee8; color: #0a1020; }
 .console-thinking { color: var(--text-muted); font: 11px var(--mono); }
 .console-thinking span { color: var(--cyan); animation: demo-blink 1s infinite; }
 .console-chips { display: flex; gap: 6px; padding: 8px 16px; overflow-x: auto; border-top: 1px solid var(--border); flex-shrink: 0; }
 .console-chips button { white-space: nowrap; padding: 5px 9px; border: 1px solid var(--border); border-radius: 3px; color: var(--text-secondary); font: 9.5px var(--mono); }
-.console-chips button:hover:not(:disabled) { border-color: #83e3db88; color: var(--cyan); }
 .console-chips button:disabled { opacity: .5; }
 .console-form { display: flex; align-items: flex-end; gap: 10px; padding: 8px 8px 8px 16px; border-top: 1px solid var(--border); flex-shrink: 0; }
 .console-prompt { color: var(--cyan); font: 13px/30px var(--mono); }
@@ -423,9 +465,33 @@ main.workspace-main { display: block; width: auto; max-width: 1344px; margin: 0 
   .workspace:has(.assistant-console:not([hidden])) .workspace-footer { padding-bottom: calc(60dvh + 40px); }
   .workspace:has(.assistant-console.is-fit:not([hidden])) .workspace-footer { padding-bottom: calc(92dvh + 40px); }
 }
+/* Interaction feedback shares the workspace timing and keyboard states. */
+.workspace :is(.portfolio-action, .console-action, .demo-toggle-labelled, .workspace-nav button) {
+  transition: translate var(--dur-quick) var(--ease), color var(--dur-quick) var(--ease), border-color var(--dur-quick) var(--ease), background-color var(--dur-quick) var(--ease);
+}
+.workspace :is(.portfolio-action, .console-action, .demo-toggle-labelled, .workspace-nav button):is(:hover, :focus-visible) {
+  translate: 0 -1px;
+}
+.workspace :is(.project-source, .more-project-links a, .evidence-links a, .workspace-footer a) {
+  text-decoration: none;
+  background: linear-gradient(currentColor, currentColor) left bottom / 0 1px no-repeat;
+  transition: background-size var(--dur-normal) var(--ease);
+}
+.workspace :is(.project-source, .more-project-links a, .evidence-links a, .workspace-footer a):is(:hover, :focus-visible) {
+  background-size: 100% 1px;
+}
+.workspace :is(.console-chips button, .chip) {
+  transition: color var(--dur-quick) var(--ease), border-color var(--dur-quick) var(--ease);
+}
+.workspace :is(.console-chips button:enabled, .chip):is(:hover, :focus-visible) {
+  color: var(--cyan);
+  border-color: var(--cyan);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .workspace *, .workspace *::before, .workspace *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
-  .workspace .about-project:hover { transform: none; }
+  .workspace :is(.portfolio-action, .console-action, .demo-toggle-labelled, .workspace-nav button, .about-project, .more-project):is(:hover, :focus-visible),
+  .workspace .more-project:has(:focus-visible) { translate: none; }
   /* The demo still plays for everyone; with reduced motion its pieces simply fade in, without sliding, growing or glowing. */
   .workspace .system-map .demo-front, .workspace .system-map .demo-feed > *, .workspace .system-map .demo-readout, .workspace .system-map .demo-checklist li, .workspace .system-map .demo-trace-line.is-fresh { animation: demo-fade .4s both !important; }
   .workspace .system-map .demo-step { transition: opacity .3s !important; }
@@ -442,7 +508,13 @@ main.workspace-main { display: block; width: auto; max-width: 1344px; margin: 0 
 }
 
 /* Briefly outlines an element the assistant has scrolled to. */
-.workspace .is-targeted { animation: target-fade 1.6s ease-out; scroll-margin-top: 96px; }
+.workspace .is-targeted {
+  --target-highlight: target-fade 1.6s ease-out;
+  animation: var(--target-highlight);
+  scroll-margin-top: 96px;
+}
+.workspace .more-project.is-targeted { animation: var(--card-float), var(--target-highlight); }
+.workspace .more-project.is-targeted:is(:hover, :has(:focus-visible)) { animation-play-state: paused, running; }
 @keyframes target-fade {
   0%, 35% { outline: 2px solid #83e3db; outline-offset: 6px; }
   100% { outline: 2px solid transparent; outline-offset: 6px; }
