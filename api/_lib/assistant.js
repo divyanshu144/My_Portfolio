@@ -53,6 +53,8 @@ const plainText = (s, max) => {
     .replace(/(?<![\w*])\*(?=[^\s*])([^*\n]*?[^\s*])\*(?![\w*])/g, '$1')
     .replace(/(?<!\w)_(?=[^\s_])([^_\n]*?[^\s_])_(?!\w)/g, '$1')
     .replace(/[`]|\*\*/g, '')
+    // The model occasionally misspells the owner's first name (e.g. "Divyesh"); no common word starts with "Divy".
+    .replace(/\bDivy[A-Za-z]*\b/gi, 'Divyanshu')
     .replace(/\s+/g, ' ')
     .trim();
   if (t.length <= max) return t;
