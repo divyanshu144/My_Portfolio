@@ -36,7 +36,7 @@ const CaseStudy = ({ project, index }) => {
         </figure>
       </div>
       {deepScripts[project.name] && (
-        <div className="case-study-demo">
+        <div className="case-study-demo" id={`${project.id}-demo`}>
           <DemoPlayer variant="deep" title="How it works · example run" order={deepOrders[project.name]} scripts={deepScripts} studies={studies} stepMs={DEEP_STEP_MS} playWhenVisible autoplay={false} loop={false} />
         </div>
       )}

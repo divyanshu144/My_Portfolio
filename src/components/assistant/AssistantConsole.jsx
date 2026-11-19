@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import portfolioData from '../../../data/portfolioData.json'
 import { buildCatalog, emailHref } from '../../lib/assistantCatalog'
 import { clampHeight, fitHeight, MIN_HEIGHT } from '../../lib/consoleSize'
@@ -21,7 +21,12 @@ const TABS = [
   { id: 'fit', label: 'FIT CHECK' },
 ]
 
+// The demo is taller than the space above the console, so playing it closes the console (the conversation is kept),
+// scrolls to the demo itself and starts it, all in the same click.
+const PlayContext = createContext(() => {})
+
 function ActionButton({ action, primary, goTo }) {
+  const playFromConsole = useContext(PlayContext)
   const className = `console-action${primary ? ' is-primary' : ''}`
   if (action.kind === 'navigate') {
     const target = catalog.byId.get(action.target)
@@ -29,9 +34,7 @@ function ActionButton({ action, primary, goTo }) {
     return <button type="button" className={className} onClick={() => goTo(target.tab, target.anchor)}>{action.label}</button>
   }
   if (action.kind === 'play') {
-    // Both in the same click: goTo switches tab and scrolls, then the demo on that case study starts.
-    const play = () => { goTo('portfolio', action.target); playDemo(action.target) }
-    return <button type="button" className={className} onClick={play}>{action.label}</button>
+    return <button type="button" className={className} onClick={() => playFromConsole(action.target)}>{action.label}</button>
   }
   if (action.kind === 'link') {
     return action.download
@@ -107,7 +110,7 @@ function AskPanel({ assistant, page, goTo, inputRef }) {
       <p className="sr-only" aria-live="polite">{loading ? 'Thinking' : lastAnswer?.text || ''}</p>
       {chips.length > 0 && (
         <ul className="console-chips" aria-label="Suggested questions">
-          {chips.map((q) => <li key={q}><button type="button" onClick={() => ask(q, page)} disabled={loading}>{q}</button></li>)}
+          {chips.map((q) => <li key={q}><button type="button" onClick={() => { ask(q, page); inputRef.current?.focus({ preventScroll: true }) }} disabled={loading}>{q}</button></li>)}
         </ul>
       )}
       <form className="console-form" onSubmit={submit}>
@@ -187,6 +190,7 @@ function FitPanel({ assistant, goTo, text, setText }) {
 
 export default function AssistantConsole({ open, onClose, tab, onTab, active, goTo, assistant, caseStudyId, focusToken }) {
   const askInput = useRef(null)
+  const playFromConsole = (id) => { onClose(); goTo('portfolio', `${id}-demo`); playDemo(id) }
   const tabRefs = useRef({})
   const consoleRef = useRef(null)
   const drag = useRef(null)
@@ -267,6 +271,7 @@ export default function AssistantConsole({ open, onClose, tab, onTab, active, go
   }
 
   return (
+    <PlayContext.Provider value={playFromConsole}>
     <section
       id="assistant-console"
       ref={consoleRef}
@@ -317,5 +322,6 @@ export default function AssistantConsole({ open, onClose, tab, onTab, active, go
         <FitPanel assistant={assistant} goTo={goTo} text={fitText} setText={setFitText} />
       </div>
     </section>
+    </PlayContext.Provider>
   )
 }

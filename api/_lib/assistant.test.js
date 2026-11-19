@@ -178,3 +178,17 @@ test('handler: provider 401 gives the key message, other failures the generic on
     assert.equal(res.statusCode, 500); assert.equal(res.body.error, 'Failed to generate a response.');
   } finally { console.error = quiet; }
 });
+
+test('misspellings of the owner\'s first name are corrected in answers and fit results', () => {
+  const c = buildCatalog(data);
+  const ask = parseAsk(JSON.stringify({ text: "Divyesh built DocChat. Divyansh's and Divyanshi's work, and DIVYESH too; Divyanshu stays.", sources: [], actions: [] }), c);
+  assert.equal(ask.text, "Divyanshu built DocChat. Divyanshu's and Divyanshu's work, and Divyanshu too; Divyanshu stays.");
+  const fit = parseFit(JSON.stringify({ role: 'AI Engineer', items: [{ requirement: 'Python', level: 'strong', reason: 'Divyesh uses Python daily.', sources: [] }], actions: [] }), c);
+  assert.equal(fit.items[0].reason, 'Divyanshu uses Python daily.');
+});
+
+test('words that merely start with "Div" are left alone', () => {
+  const c = buildCatalog(data);
+  const text = 'Diverse teams, a dividend model, the Division head and a <div> tag.';
+  assert.equal(parseAsk(JSON.stringify({ text, sources: [], actions: [] }), c).text, text);
+});
