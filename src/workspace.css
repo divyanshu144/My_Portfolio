@@ -57,13 +57,60 @@ main.workspace-main { display: block; width: auto; max-width: 1344px; margin: 0 
 .workspace .article-title { color: var(--text-primary); font-size: clamp(34px, 5vw, 58px); font-weight: 500; letter-spacing: -2px; padding: 0; margin: 10px 0 0; }
 .workspace .article-title::after { display: none; }
 .workspace .about-layout { gap: 56px; padding: 12px 0 0; }
-.workspace-intro { display: grid; grid-template-columns: 1.05fr 1fr; align-items: center; gap: 52px; padding: 24px 0 28px; }
-.workspace .about-hero { border: none; background: none; border-radius: 0; padding: 0; overflow: visible; }
+.workspace-intro { position: relative; isolation: isolate; display: grid; grid-template-columns: 1.05fr 1fr; align-items: center; gap: 52px; padding: 24px 0 28px; }
+.workspace .about-hero { position: static; border: none; background: none; border-radius: 0; padding: 0; overflow: visible; }
 .workspace .about-eyebrow { font: 9px/1.8 var(--mono); letter-spacing: 1.6px; color: var(--cyan); }
 .workspace .about-hero > .about-eyebrow { display: flex; gap: 12px; align-items: center; }
 .hero-rule { height: 1px; width: 24px; background: var(--cyan); }
 .workspace .about-hero h2 { font-size: clamp(42px, 4.75vw, 68px); line-height: 1.06; font-weight: 500; letter-spacing: -3.5px; margin: 25px 0; color: var(--text-primary); }
 .workspace .about-hero h2 > span { display: inline; color: var(--accent); }
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+  /* The accent colour above is the fallback; the fill only goes transparent
+     together with the clip, so the text is never invisible. */
+  .workspace .about-hero h2 > span {
+    background-image: linear-gradient(90deg, #a8bfff, #83e3db, #a8bfff);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    animation: hero-shimmer 8s ease-in-out infinite;
+  }
+}
+/* Ambient hero layer: behind the hero and the System explorer, clipped to the
+   intro row so it can never add a horizontal scrollbar. transform-only motion. */
+.hero-ambient {
+  position: absolute; inset: -48px 0; z-index: -1; overflow: hidden; pointer-events: none;
+  -webkit-mask-image: linear-gradient(transparent, #000 22%, #000 78%, transparent);
+  mask-image: linear-gradient(transparent, #000 22%, #000 78%, transparent);
+}
+.hero-glow {
+  position: absolute; left: 62%; top: 46%; width: 900px; height: 900px; opacity: 0.3;
+  background:
+    radial-gradient(circle at 68% 42%, #2c4f8a 0, #2c4f8a00 34%),
+    radial-gradient(circle at 36% 64%, #83e3db 0, #83e3db00 26%);
+  transform: translate(-50%, -50%);
+  animation: hero-glow-drift 48s linear infinite;
+}
+.hero-grid {
+  position: absolute; inset: -18px; opacity: 0.8;
+  background: radial-gradient(#7084ad26 1px, transparent 1px); background-size: 18px 18px;
+  -webkit-mask-image: radial-gradient(ellipse at 30% 30%, #000, transparent 70%);
+  mask-image: radial-gradient(ellipse at 30% 30%, #000, transparent 70%);
+  animation: hero-grid-drift 24s linear infinite;
+}
+@keyframes hero-glow-drift {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  50% { transform: translate(-46%, -53%) rotate(180deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+@keyframes hero-grid-drift { to { transform: translate(18px, 18px); } }
+@keyframes hero-shimmer { 50% { background-position: 100% 0; } }
+@media (max-width: 580px) { .hero-glow { width: 600px; height: 600px; left: 50%; top: 40%; } }
+@media (prefers-reduced-motion: reduce) {
+  .hero-glow, .hero-grid, .workspace .about-hero h2 > span { animation: none !important; }
+}
 .workspace .about-intro { font-size: 14px; line-height: 1.95; color: var(--text-secondary); max-width: 480px; font-weight: 400; }
 .workspace .hero-actions { margin-top: 30px; gap: 9px; }
 .workspace .portfolio-action { font-size: 11px; border-radius: 4px; min-height: 43px; padding: 11px 15px; border-color: #34415c; }

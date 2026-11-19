@@ -1,14 +1,21 @@
+import { useRef } from 'react'
+import { useAmbient } from '../components/useAmbient'
 import SystemMap from '../components/SystemMap'
 import portfolioData from '../../data/portfolioData.json'
 
 const { about, aboutCards, projects } = portfolioData
 
-const About = ({ onNavigate }) => (
+const About = ({ onNavigate }) => {
+  const heroRef = useRef(null)
+  useAmbient(heroRef)
+
+  return (
   <div className="about-layout">
     <div className="workspace-intro">
-    <section className="about-hero" aria-labelledby="about-headline">
+    <section className="about-hero" aria-labelledby="about-headline" ref={heroRef}>
+      <div className="hero-ambient" aria-hidden="true"><span className="hero-glow ambient-anim" /><span className="hero-grid ambient-anim" /></div>
       <p className="about-eyebrow"><span className="hero-rule" aria-hidden="true" /> APPLIED AI / SOFTWARE ENGINEERING</p>
-      <h2 id="about-headline">{about.headline}<br /><span>{about.highlight}</span></h2>
+      <h2 id="about-headline">{about.headline}<br /><span className="ambient-anim">{about.highlight}</span></h2>
       <p className="about-intro">{about.intro}</p>
       <div className="hero-actions">
         <button className="portfolio-action portfolio-action-primary" onClick={() => onNavigate('portfolio')}>View my work <span aria-hidden="true">↗</span></button>
@@ -60,6 +67,7 @@ const About = ({ onNavigate }) => (
       </ul>
     </section>
   </div>
-)
+  )
+}
 
 export default About
